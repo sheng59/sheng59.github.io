@@ -1,0 +1,162 @@
+/*--------------------------------------------------------------
+# Table
+--------------------------------------------------------------*/
+table.table {
+    table-layout: fixed;
+}
+table.table tr th, table.table tr td {
+    border-color: #e9e9e9;
+}
+table.table th i {
+    font-size: 13px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+table.table th:last-child {
+    width: 100px;
+}
+
+table.table td a {
+    cursor: pointer;
+    display: inline-block;
+    margin: 0 5px;
+    min-width: 24px;
+}    
+table.table td a.add {
+    color: #27C46B;
+}
+table.table td a.edit {
+    color: #FFC107;
+}
+table.table td a.delete {
+    color: #E34724;
+}
+table.table td i {
+    font-size: 28px;
+}
+table.table td a.add i {
+    font-size: 28px;
+    margin-right: -1px;
+    position: relative;
+    top: 3px;
+}    
+table.table .form-control {
+    height: 32px;
+    line-height: 32px;
+    box-shadow: none;
+    border-radius: 2px;
+}
+table.table .form-control.error {
+    border-color: #f50000;
+}
+table.table td .add {
+    display: none;
+}
+/*--------------------------------------------------------------
+# Upload Image
+--------------------------------------------------------------*/
+.picture__input {
+  display: none;
+}
+
+.picture {
+  width: 120px;
+  height: 120px;
+  background: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #aaa;
+  border: 1px solid currentcolor;
+  cursor: pointer;
+  transition: color 300ms ease-in-out, background 300ms ease-in-out;
+  outline: none;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.picture:hover {
+  color: #777;
+  background: #ccc;
+}
+
+.picture:focus {
+  color: #777;
+  background: #ccc;
+}
+
+.picture__img {
+  max-width: 100%;
+}
+
+.picture__image img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain; /* 縮放完整顯示 */
+}
+
+/*--------------------------------------------------------------
+# pagination
+--------------------------------------------------------------*/
+.num_rows {
+    width: 120px;
+}
+
+.tb_search {
+    width: 400px;
+}
+
+.pagination-container {
+  width: 70%;
+}
+
+.pagination {
+  margin: 0;
+  padding: 20px;
+}
+
+.pagination li {
+  display: inline;
+}
+
+.pagination li span {
+  margin: -1px;
+  position: relative;
+  padding: 6px 12px;
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #337ab7;
+  cursor: pointer;
+}
+
+.pagination li span:hover {
+  background: #f2f2f2;
+}
+
+.pagination li.active span {
+  background: #337ab7;
+  color: #fff;
+  border-color: #337ab7;
+}
+
+.rows_count {
+  padding: 20px;
+  width: 20%;
+  text-align:right;
+  color: #999;
+}
+
+/*--------------------------------------------------------------
+# Add New Button
+--------------------------------------------------------------*/
+.add-new {
+  position: fixed;
+  right: 40px;
+  bottom: 80px;
+  z-index: 99999;
+  width: 100px;
+  height: 50px;
+  border-radius: 50px;
+  transition: all 0.4s;
+}
+
