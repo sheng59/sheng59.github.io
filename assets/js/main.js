@@ -1,118 +1,78 @@
 const new_products = [
   {
-    title: "Sunstar Fresh Melon Juice",
-    qty: "1 Unit",
-    rating: 4.5,
-    price: "$18.00",
-    image: "assets/img/thumb-tomatoes.png"
+    feature: "鋼琴",
+    type: "鏡子",
+    price: "NT$130",
+    image: "assets/img/1.png"
   },
   {
-    title: "Organic Bananas",
-    qty: "1 Bunch",
-    rating: 4.8,
-    price: "$12.00",
-    image: "assets/img/thumb-bananas.png"
+    feature: "畢卡索",
+    type: "鏡子",
+    price: "NT$130",
+    image: "assets/img/2.png"
   },
   {
-    title: "Organic Bananas",
-    qty: "1 Bunch",
-    rating: 4.8,
-    price: "$12.00",
-    image: "assets/img/thumb-bananas.png"
+    feature: "花",
+    type: "鏡子",
+    price: "NT$12",
+    image: "assets/img/3.png"
   },
   {
-    title: "Organic Bananas",
-    qty: "1 Bunch",
-    rating: 4.8,
-    price: "$12.00",
-    image: "assets/img/thumb-bananas.png"
+    feature: "花",
+    type: "大畫",
+    price: "NT$2000",
+    image: "assets/img/4.png"
   },
   {
-    title: "Organic Bananas",
-    qty: "1 Bunch",
-    rating: 4.8,
-    price: "$12.00",
-    image: "assets/img/thumb-bananas.png"
+    feature: "花",
+    type: "大畫",
+    price: "NT$2000",
+    image: "assets/img/5.png"
   },
   {
-    title: "Organic Bananas",
-    qty: "1 Bunch",
-    rating: 4.8,
-    price: "$12.00",
-    image: "assets/img/thumb-bananas.png"
-  },
-  {
-    title: "Organic Bananas",
-    qty: "1 Bunch",
-    rating: 4.8,
-    price: "$12.00",
-    image: "assets/img/thumb-bananas.png"
-  },
-  {
-    title: "Organic Bananas",
-    qty: "1 Bunch",
-    rating: 4.8,
-    price: "$12.00",
-    image: "assets/img/thumb-bananas.png"
-  },
-  {
-    title: "Organic Bananas",
-    qty: "1 Bunch",
-    rating: 4.8,
-    price: "$12.00",
-    image: "assets/img/thumb-bananas.png"
-  },
-  {
-    title: "Organic Bananas",
-    qty: "1 Bunch",
-    rating: 4.8,
-    price: "$12.00",
-    image: "assets/img/thumb-bananas.png"
+    feature: "夢境",
+    type: "木板畫",
+    price: "NT$600",
+    image: "assets/img/6.png"
   }
 ];
 
 const popular_products = [
   {
-    title: "Sunstar Fresh Melon Juice",
-    qty: "1 Unit",
-    rating: 4.5,
-    price: "$18.00",
-    image: "assets/img/thumb-tomatoes.png"
+    feature: "鋼琴",
+    type: "鏡子",
+    price: "NT$130",
+    image: "assets/img/1.png"
   },
   {
-    title: "Organic Bananas",
-    qty: "1 Bunch",
-    rating: 4.8,
-    price: "$12.00",
-    image: "assets/img/thumb-bananas.png"
+    feature: "畢卡索",
+    type: "鏡子",
+    price: "NT$130",
+    image: "assets/img/2.png"
   },
   {
-    title: "Sunstar Fresh Melon Juice",
-    qty: "1 Unit",
-    rating: 4.5,
-    price: "$18.00",
-    image: "assets/img/thumb-tomatoes.png"
+    feature: "花",
+    type: "鏡子",
+    price: "NT$12",
+    image: "assets/img/3.png"
   },
   {
-    title: "Sunstar Fresh Melon Juice",
-    qty: "1 Unit",
-    rating: 4.5,
-    price: "$18.00",
-    image: "assets/img/thumb-tomatoes.png"
+    feature: "花",
+    type: "大畫",
+    price: "NT$2000",
+    image: "assets/img/4.png"
   },
   {
-    title: "Sunstar Fresh Melon Juice",
-    qty: "1 Unit",
-    rating: 4.5,
-    price: "$18.00",
-    image: "assets/img/thumb-tomatoes.png"
+    feature: "花",
+    type: "大畫",
+    price: "NT$2000",
+    image: "assets/img/5.png"
   },
   {
-    title: "Sunstar Fresh Melon Juice",
-    qty: "1 Unit",
-    rating: 4.5,
-    price: "$18.00",
-    image: "assets/img/thumb-tomatoes.png"
+    feature: "夢境",
+    type: "木板畫",
+    price: "NT$600",
+    image: "assets/img/6.png"
   }
 ];
 
@@ -127,16 +87,12 @@ function renderProducts(products, wrapper) {
         <svg width="24" height="24"><use xlink:href="#heart"></use></svg>
       </a>
       <figure>
-        <a href="index.html" title="${p.title}">
+        <a href="index.html" title="${p.feature}">
           <img src="${p.image}" class="tab-image">
         </a>
       </figure>
-      <h3>${p.title}</h3>
-      <span class="qty">${p.qty}</span>
-      <span class="rating">
-        <svg width="24" height="24" class="text-primary"><use xlink:href="#star-solid"></use></svg> 
-        ${p.rating}
-      </span>
+      <h3>${p.feature}</h3>
+      <span class="type">${p.type}</span>
       <span class="price">${p.price}</span>
       <div class="d-flex align-items-center justify-content-between">
         <div class="input-group product-qty">

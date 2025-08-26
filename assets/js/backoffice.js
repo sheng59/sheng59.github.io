@@ -85,7 +85,7 @@ let currentTableId = "mirrorTable"; // 預設第一個 table
 				'<td>' + index + '</td>' +
 				'<td>' + img_box + '</td>' +
 				'<td><input type="text" class="form-control text-center" name="feature" id="feature"></td>' +
-				'<td><input type="text" class="form-control text-center" name="price" id="price" value="$130"></td>' +
+				'<td><input type="text" class="form-control text-center" name="price" id="price" value="NT$0"></td>' +
 				'<td><input type="text" class="form-control text-center" name="quantity" id="quantity"></td>' +
 				'<td>' + actions + '</td>' +
 			'</tr>';
