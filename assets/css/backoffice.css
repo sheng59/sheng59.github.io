@@ -1,4 +1,33 @@
 /*--------------------------------------------------------------
+# Nav tab
+--------------------------------------------------------------*/
+/* 只改 product-subtabs，不影響上層 */
+.product-subtabs {
+  border-bottom: 1px solid #dee2e6; /* 保留底線 */
+}
+
+.product-subtabs .nav-link {
+  background: #fff;                 /* 背景白色 */
+  border: 1px solid transparent;    /* 預設透明 */
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+  color: #555;
+  margin-right: 2px;                /* 分開一點 */
+}
+
+.product-subtabs .nav-link:hover {
+  color: #000;
+  border-color: #dee2e6 #dee2e6 #fff; /* hover 時有框線但不影響底線 */
+}
+
+.product-subtabs .nav-link.active {
+  color: #000;
+  background: #fff;
+  border-color: #dee2e6 #dee2e6 #fff; /* active 底線接到內容區 */
+  font-weight: bold;
+}
+
+/*--------------------------------------------------------------
 # Table
 --------------------------------------------------------------*/
 table.table {

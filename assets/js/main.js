@@ -1,3 +1,97 @@
+(function($) {
+
+  "use strict";
+
+  // init Chocolat light box
+	var initChocolat = function() {
+		Chocolat(document.querySelectorAll('.image-link'), {
+		  imageSize: 'contain',
+		  loop: true,
+		})
+	}
+
+  var initSwiper = function() {
+
+    var swiper = new Swiper(".main-swiper", {
+      speed: 500,
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+    });
+
+    var new_products_swiper = new Swiper(".new-products-carousel", {
+      slidesPerView: 5,
+      spaceBetween: 30,
+      speed: 500,
+      navigation: {
+        nextEl: ".new-products-carousel-next",
+        prevEl: ".new-products-carousel-prev",
+      },
+      breakpoints: {
+        0: {
+          slidesPerView: 1,
+        },
+        768: {
+          slidesPerView: 3,
+        },
+        991: {
+          slidesPerView: 4,
+        },
+        1500: {
+          slidesPerView: 5,
+        },
+      }
+    });
+
+    var popular_products_swiper = new Swiper(".popular-products-carousel", {
+      slidesPerView: 5,
+      spaceBetween: 30,
+      speed: 500,
+      navigation: {
+        nextEl: ".popular-products-carousel-next",
+        prevEl: ".popular-products-carousel-prev",
+      },
+      breakpoints: {
+        0: {
+          slidesPerView: 1,
+        },
+        768: {
+          slidesPerView: 3,
+        },
+        991: {
+          slidesPerView: 4,
+        },
+        1500: {
+          slidesPerView: 5,
+        },
+      }
+    });
+  }
+
+  var initProducts = function() {
+    // 當 index.html 載入時
+    document.addEventListener("DOMContentLoaded", () => {
+      const new_wrapper = document.querySelector(".new-products-carousel .swiper-wrapper");
+      const popular_wrapper = document.querySelector(".popular-products-carousel .swiper-wrapper");
+
+      if (new_wrapper) renderProducts(new_products, new_wrapper);
+      if (popular_wrapper) renderProducts(popular_products, popular_wrapper);
+    });
+  }
+
+  // document ready
+  $(document).ready(function() {
+    initSwiper();
+    initChocolat();
+    initProducts();
+  }); // End of a document
+
+})(jQuery);
+
+
+
+
 const new_products = [
   {
     feature: "鋼琴",
@@ -116,7 +210,6 @@ function renderProducts(products, wrapper) {
   });
 }
 
-// 當 index.html 載入時
 document.addEventListener("DOMContentLoaded", () => {
   const new_wrapper = document.querySelector(".new-products-carousel .swiper-wrapper");
   const popular_wrapper = document.querySelector(".popular-products-carousel .swiper-wrapper");
@@ -124,132 +217,3 @@ document.addEventListener("DOMContentLoaded", () => {
   if (new_wrapper) renderProducts(new_products, new_wrapper);
   if (popular_wrapper) renderProducts(popular_products, popular_wrapper);
 });
-
-(function($) {
-
-  "use strict";
-
-  var initPreloader = function() {
-    $(document).ready(function($) {
-    var Body = $('body');
-        Body.addClass('preloader-site');
-    });
-    $(window).load(function() {
-        $('.preloader-wrapper').fadeOut();
-        $('body').removeClass('preloader-site');
-    });
-  }
-
-  // init Chocolat light box
-	var initChocolat = function() {
-		Chocolat(document.querySelectorAll('.image-link'), {
-		  imageSize: 'contain',
-		  loop: true,
-		})
-	}
-
-  var initSwiper = function() {
-
-    var swiper = new Swiper(".main-swiper", {
-      speed: 500,
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-      },
-    });
-
-    var new_products_swiper = new Swiper(".new-products-carousel", {
-      slidesPerView: 5,
-      spaceBetween: 30,
-      speed: 500,
-      navigation: {
-        nextEl: ".new-products-carousel-next",
-        prevEl: ".new-products-carousel-prev",
-      },
-      breakpoints: {
-        0: {
-          slidesPerView: 1,
-        },
-        768: {
-          slidesPerView: 3,
-        },
-        991: {
-          slidesPerView: 4,
-        },
-        1500: {
-          slidesPerView: 5,
-        },
-      }
-    });
-
-    var popular_products_swiper = new Swiper(".popular-products-carousel", {
-      slidesPerView: 5,
-      spaceBetween: 30,
-      speed: 500,
-      navigation: {
-        nextEl: ".popular-products-carousel-next",
-        prevEl: ".popular-products-carousel-prev",
-      },
-      breakpoints: {
-        0: {
-          slidesPerView: 1,
-        },
-        768: {
-          slidesPerView: 3,
-        },
-        991: {
-          slidesPerView: 4,
-        },
-        1500: {
-          slidesPerView: 5,
-        },
-      }
-    });
-  }
-
-  var initProductQty = function(){
-
-    $('.product-qty').each(function(){
-
-      var $el_product = $(this);
-      var quantity = 0;
-
-      $el_product.find('.quantity-right-plus').click(function(e){
-          e.preventDefault();
-          var quantity = parseInt($el_product.find('#quantity').val());
-          $el_product.find('#quantity').val(quantity + 1);
-      });
-
-      $el_product.find('.quantity-left-minus').click(function(e){
-          e.preventDefault();
-          var quantity = parseInt($el_product.find('#quantity').val());
-          if(quantity>0){
-            $el_product.find('#quantity').val(quantity - 1);
-          }
-      });
-
-    });
-
-  }
-
-  // init jarallax parallax
-  var initJarallax = function() {
-    jarallax(document.querySelectorAll(".jarallax"));
-
-    jarallax(document.querySelectorAll(".jarallax-keep-img"), {
-      keepImg: true,
-    });
-  }
-
-  // document ready
-  $(document).ready(function() {
-    
-    initPreloader();
-    initSwiper();
-    initProductQty();
-    initJarallax();
-    initChocolat();
-
-  }); // End of a document
-
-})(jQuery);

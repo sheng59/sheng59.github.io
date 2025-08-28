@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>FoodMart - Free eCommerce Grocery Store HTML Website Template</title>
+    <title>Matt Art</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,7 +27,7 @@
       <div class="container-fluid">
         <div class="row py-3">
           <div class="d-flex  justify-content-center justify-content-between align-items-center">
-            <nav class="main-menu d-flex navbar navbar-expand-lg">
+            <nav class="main-menu d-flex navbar navbar-expand-xl">
 
               <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
                 aria-controls="offcanvasNavbar">
@@ -46,20 +46,24 @@
                     <li class="nav-item active"><a href="index.html" class="nav-link">首頁</a></li>
                     <li class="nav-item"><a href="about.html" class="nav-link">關於我們</a></li>
                     <li class="nav-item"><a href="news.html" class="nav-link">訊息公佈</a></li>
-                    <li class="nav-item"><a href="draw.html" class="nav-link">繪畫課程</a></li>
+                    <li class="nav-item"><a href="teach.html" class="nav-link">繪畫課程</a></li>
                     <li class="nav-item"><a href="products.html" class="nav-link">全部商品</a></li>
                     <li class="nav-item"><a href="contact.html" class="nav-link">擺攤位置</a></li>
                   </ul>
                   
                   <div class="search-bar row bg-light p-2 my-2 rounded-4 ms-lg-5">
-                    <div class="col-10">
-                      <form id="search-form" class="text-center" action="index.html" method="post">
-                        <input type="text" class="form-control border-0 bg-transparent" placeholder="找商品" />
-                      </form>
-                    </div>
-                    <div class="col-1">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z"/></svg>
-                    </div>
+                    <form id="search-form" class="d-flex w-100" action="search.html" method="get">
+                      <div class="col-11">
+                        <input type="text" name="keyword" class="form-control border-0 bg-transparent" placeholder="找商品" />
+                      </div>
+                      <div class="col-1">
+                        <button type="submit" class="btn border-0 bg-transparent p-0">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z"/>
+                          </svg>
+                        </button>
+                      </div>
+                    </form>
                   </div>
 
                   
@@ -90,14 +94,14 @@
       </div>
     </header>
 
-     <section class="py-3" style="background-image: url('assets/img/background-pattern.jpg');background-repeat: no-repeat;background-size: cover;">
+    <section class="py-3" style="background-image: url('assets/img/background-pattern.jpg');background-repeat: no-repeat;background-size: cover;">
       <div class="container-fluid">
         <div class="row">
           <div class="col-md-12">
 
             <div class="banner-blocks">
             
-              <div class="banner-ad large bg-info block-1">
+              <div class="banner-ad large block-1" style="background-color: #e6f3fa;">
 
                 <div class="swiper main-swiper">
                   <div class="swiper-wrapper">
@@ -106,9 +110,8 @@
                       <div class="row banner-content p-5">
                         <div class="content-wrapper col-md-7">
                           <div class="categories my-3">100% natural</div>
-                          <h3 class="display-4">Fresh Smoothie & Summer Juice</h3>
-                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum.</p>
-                          <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1 px-4 py-3 mt-3">Shop Now</a>
+                          <h3 class="display-4">珪藻土杯墊</h3>
+                          <p>我們的珪藻土杯墊有快速吸水特性，不容易讓桌子有積水。另外在購買時也會附贈一個架子，提供放置杯墊使用。</p>
                         </div>
                         <div class="img-wrapper col-md-5">
                           <img src="assets/img/product-thumb-1.png" class="img-fluid">
@@ -120,7 +123,7 @@
                       <div class="row banner-content p-5">
                         <div class="content-wrapper col-md-7">
                           <div class="categories mb-3 pb-3">100% natural</div>
-                          <h3 class="banner-title">Fresh Smoothie & Summer Juice</h3>
+                          <h3 class="banner-title">木板畫</h3>
                           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum.</p>
                           <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">Shop Collection</a>
                         </div>
@@ -134,7 +137,7 @@
                       <div class="row banner-content p-5">
                         <div class="content-wrapper col-md-7">
                           <div class="categories mb-3 pb-3">100% natural</div>
-                          <h3 class="banner-title">Heinz Tomato Ketchup</h3>
+                          <h3 class="banner-title">大畫</h3>
                           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum.</p>
                           <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">Shop Collection</a>
                         </div>
@@ -155,19 +158,19 @@
 
                   <div class="content-wrapper col-md-7">
                     <div class="categories sale mb-3 pb-3">20% off</div>
-                    <h3 class="banner-title">Fruits & Vegetables</h3>
+                    <h3 class="banner-title">鏡子</h3>
                     <a href="#" class="d-flex align-items-center nav-link">Shop Collection <svg width="24" height="24"><use xlink:href="#arrow-right"></use></svg></a>
                   </div>
 
                 </div>
               </div>
 
-              <div class="banner-ad bg-danger block-3" style="background:url('assets/img/ad-image-2.png') no-repeat;background-position: right bottom">
+              <div class="banner-ad block-3" style="background:url('assets/img/ad-image-2.png') no-repeat;background-position: right bottom; background-color: #f9ebe7;">
                 <div class="row banner-content p-5">
 
                   <div class="content-wrapper col-md-7">
                     <div class="categories sale mb-3 pb-3">15% off</div>
-                    <h3 class="item-title">Baked Products</h3>
+                    <h3 class="item-title">磁鐵</h3>
                     <a href="#" class="d-flex align-items-center nav-link">Shop Collection <svg width="24" height="24"><use xlink:href="#arrow-right"></use></svg></a>
                   </div>
 
@@ -259,7 +262,7 @@
       <div class="container-fluid">
         <div class="row">
 
-          <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="col-lg-6 col-md-4">
             <div class="footer-menu">
               <img src="assets/img/logo.png" alt="logo">
               <div class="social-links mt-5">
@@ -294,89 +297,51 @@
             </div>
           </div>
 
-          <div class="col-md-2 col-sm-6">
+          <div class="col-lg-2 col-md-2">
             <div class="footer-menu">
-              <h5 class="widget-title">Ultras</h5>
+              <h5 class="widget-title">Products</h5>
               <ul class="menu-list list-unstyled">
                 <li class="menu-item">
-                  <a href="#" class="nav-link">About us</a>
+                  <a href="products.html" class="nav-link">鏡子</a>
                 </li>
                 <li class="menu-item">
-                  <a href="#" class="nav-link">Conditions </a>
+                  <a href="products.html" class="nav-link">磁鐵</a>
                 </li>
                 <li class="menu-item">
-                  <a href="#" class="nav-link">Our Journals</a>
+                  <a href="products.html" class="nav-link">珪藻土杯墊</a>
                 </li>
                 <li class="menu-item">
-                  <a href="#" class="nav-link">Careers</a>
+                  <a href="products.html" class="nav-link">木板畫</a>
                 </li>
                 <li class="menu-item">
-                  <a href="#" class="nav-link">Affiliate Programme</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#" class="nav-link">Ultras Press</a>
+                  <a href="products.html" class="nav-link">大畫</a>
                 </li>
               </ul>
             </div>
           </div>
-          <div class="col-md-2 col-sm-6">
+          <div class="col-lg-2 col-md-2">
             <div class="footer-menu">
-              <h5 class="widget-title">Customer Service</h5>
+              <h5 class="widget-title">Infomation</h5>
               <ul class="menu-list list-unstyled">
                 <li class="menu-item">
                   <a href="#" class="nav-link">FAQ</a>
                 </li>
                 <li class="menu-item">
-                  <a href="#" class="nav-link">Contact</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#" class="nav-link">Privacy Policy</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#" class="nav-link">Returns & Refunds</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#" class="nav-link">Cookie Guidelines</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#" class="nav-link">Delivery Information</a>
+                  <a href="#" class="nav-link">客製化服務</a>
                 </li>
               </ul>
             </div>
           </div>
-          <div class="col-md-2 col-sm-6">
+
+          <div class="col-lg-2 col-md-2">
             <div class="footer-menu">
-              <h5 class="widget-title">Customer Service</h5>
-              <ul class="menu-list list-unstyled">
-                <li class="menu-item">
-                  <a href="#" class="nav-link">FAQ</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#" class="nav-link">Contact</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#" class="nav-link">Privacy Policy</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#" class="nav-link">Returns & Refunds</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#" class="nav-link">Cookie Guidelines</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#" class="nav-link">Delivery Information</a>
-                </li>
+              <h5 class="widget-title">Contact</h5>
+              <ul class="list-unstyled">
+                <li>ADD: 123456789</li>
+                <li>TEL: 123456789</li>
+                <li>FAX: 123456789</li>
+                <li>E-MAIL: 123456789@gmail.com</li>
               </ul>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-6">
-            <div class="footer-menu">
-              <h5 class="widget-title">Subscribe Us</h5>
-              <p>Subscribe to our newsletter to get updates about our grand offers.</p>
-              <form class="d-flex mt-3 gap-0" role="newsletter">
-                <input class="rounded-start rounded-0 bg-light" type="email" placeholder="Email Address" aria-label="Email Address">
-                <button class="btn btn-dark rounded-end rounded-0" type="submit">Subscribe</button>
-              </form>
             </div>
           </div>
           
@@ -447,5 +412,15 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="assets/js/plugins.js"></script>
     <script src="assets/js/main.js"></script>
+    <script>
+      $(document).ready(function($) {
+          var Body = $('body');
+          Body.addClass('preloader-site');
+      });
+      $(window).load(function() {
+          $('.preloader-wrapper').fadeOut();
+          $('body').removeClass('preloader-site');
+      });
+    </script>
   </body>
 </html>

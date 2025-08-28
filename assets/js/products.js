@@ -7,7 +7,9 @@ $(document).ready(function(){
   loadAllProducts();
 });
 
-// 從 Supabase 取資料，並轉換成 products 陣列
+/**
+   * 從 Supabase 取資料，並轉換成 products 陣列
+   */
 async function fetchTableData(tableName) {
   const { data, error } = await supabase
     .from(tableName)
@@ -53,6 +55,9 @@ async function fetchTableData(tableName) {
   return products;
 }
 
+/**
+   * 載入所有表格資料
+   */
 async function loadAllProducts() {
   const tables = ["mirror", "magnet", "coaster", "wood", "painting"]; // 你有的 table 名稱
 
@@ -69,17 +74,24 @@ async function loadAllProducts() {
   renderProducts(allProducts);
 }
 
-// 渲染商品到指定 grid
+/**
+   * 載入表格資料，動態建立商品
+   */
 function renderProducts(products) {
   products.forEach(p => {
     let gridId = `#nav-${p.category} .product-grid`;
     let grid = document.querySelector(gridId);
     let allGrid = document.querySelector("#nav-all .product-grid");
 
+    const emptyBadge = p.qty === 0
+      ? '<span class="badge bg-danger position-absolute m-3" style="font-size: 18px;">完售</span>'
+      : '';
+
     const col = document.createElement("div");
     col.className = "col";
     col.innerHTML = `
       <div class="product-item">
+        ${emptyBadge}
         <a href="#" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#heart"></use></svg></a>
         <figure>
           <a title="${p.title}">
@@ -92,7 +104,7 @@ function renderProducts(products) {
           <svg width="24" height="24" class="text-primary"><use xlink:href="#star-solid"></use></svg> 
           ${p.rating}
         </span>
-        <span class="price">${p.price}</span>
+        <span class="price">$${p.price}</span>
         <div class="d-flex align-items-center justify-content-between">
           <div class="input-group product-qty">
             <span class="input-group-btn">

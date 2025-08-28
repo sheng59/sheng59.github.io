@@ -85,7 +85,7 @@ let currentTableId = "mirrorTable"; // 預設第一個 table
 				'<td>' + index + '</td>' +
 				'<td>' + img_box + '</td>' +
 				'<td><input type="text" class="form-control text-center" name="feature" id="feature"></td>' +
-				'<td><input type="text" class="form-control text-center" name="price" id="price" value="NT$0"></td>' +
+				'<td><input type="text" class="form-control text-center" name="price" id="price"></td>' +
 				'<td><input type="text" class="form-control text-center" name="quantity" id="quantity"></td>' +
 				'<td>' + actions + '</td>' +
 			'</tr>';
@@ -213,8 +213,12 @@ let currentTableId = "mirrorTable"; // 預設第一個 table
 						const id = rowIndex + 1;
 						const name = $row.find("td:eq(0)").text().trim();
 						const feature = $row.find("td:eq(2)").text().trim();
-						const price = $row.find("td:eq(3)").text().trim();
-						const quantity = $row.find("td:eq(4)").text().trim();
+						var price = $row.find("td:eq(3)").text().trim();
+						var quantity = $row.find("td:eq(4)").text().trim();
+
+                        // 轉型處理：空字串 → null，有值 → number
+                        price = price === "" ? null : parseInt(price, 10);
+                        quantity = quantity === "" ? null : parseInt(quantity, 10);
 
 						// 已存在的圖片
 						const existingPath = $row.attr("data-file-path");
