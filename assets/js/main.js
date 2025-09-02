@@ -12,12 +12,14 @@
 
   var initSwiper = function() {
 
-    var swiper = new Swiper(".main-swiper", {
+    var main_swiper = new Swiper(".main-carousel", {
+      slidesPerView: 1,
+      spaceBetween: 30,
       speed: 500,
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-      },
+      navigation: {
+        nextEl: ".main-carousel-next",
+        prevEl: ".main-carousel-prev",
+      }
     });
 
     var new_products_swiper = new Swiper(".new-products-carousel", {
@@ -176,7 +178,7 @@ function renderProducts(products, wrapper) {
     const slide = document.createElement("div");
     slide.className = "product-item swiper-slide";
 
-    slide.innerHTML = `
+    /*slide.innerHTML = `
       <a href="#" class="btn-wishlist">
         <svg width="24" height="24"><use xlink:href="#heart"></use></svg>
       </a>
@@ -204,6 +206,19 @@ function renderProducts(products, wrapper) {
         </div>
         <a href="#" class="nav-link">Add to Cart <iconify-icon icon="uil:shopping-cart"></iconify-icon></a>
       </div>
+    `;*/
+    slide.innerHTML = `
+      <a href="#" class="btn-wishlist">
+        <svg width="24" height="24"><use xlink:href="#heart"></use></svg>
+      </a>
+      <figure>
+        <a href="index.html" title="${p.feature}">
+          <img src="${p.image}" class="tab-image">
+        </a>
+      </figure>
+      <h3>${p.feature}</h3>
+      <span class="type">${p.type}</span>
+      <span class="price">${p.price}</span>
     `;
 
     wrapper.appendChild(slide);

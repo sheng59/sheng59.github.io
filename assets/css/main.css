@@ -1,0 +1,113 @@
+.main-carousel {
+  padding: 80px 0;
+}
+
+.main-carousel .swiper-slide {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  gap: 80px;
+}
+
+.main-carousel .banner-content {
+    max-width: 500px;
+    flex: 1;
+}
+
+.main-carousel .banner-image {
+  max-width: 480px;
+  flex-shrink: 0;
+}
+
+.banner-content h2.banner-title {
+  margin: 40px 0;
+  font-size: 4.5em;
+  font-weight: 500;
+  color: #222;
+}
+
+.banner-content p {
+  margin: 0 0 30px 0;
+}
+
+.slick-dots {
+  left: 200px;
+  bottom: 110px;
+  width: 10%;
+  text-align: inherit;
+}
+
+button.main-carousel-prev, button.main-carousel-next {
+  background: transparent;
+  border: 1px solid #E5E3DA;
+  padding: initial;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  z-index: 5;
+  cursor: pointer;
+}
+
+button.main-carousel-prev, button.main-carousel-next:hover {
+  border: 1px solid #74642F;
+}
+
+button.main-carousel-prev {
+  left: 110px;
+}
+
+button.main-carousel-next {
+  right: 110px;
+}
+
+.slick-arrow i svg {
+  color: #8C8C8C;
+}
+
+/* 先預設大螢幕顯示 */
+button.main-carousel-prev,
+button.main-carousel-next {
+  display: block; /* 或 inline-block，依需求 */
+}
+
+/* 螢幕小於 992px 隱藏 */
+@media screen and (max-width: 992px) {
+  button.main-carousel-prev,
+  button.main-carousel-next {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 999px) {
+  .banner-content h2.banner-title {
+    font-size: 3.5em;
+  }
+
+  .main-carousel {
+    margin: 70px 0;
+    padding: 0;
+  }
+
+  .main-carousel .swiper-slide {
+    flex-wrap: wrap;
+    text-align: center;
+    flex-direction: column-reverse;
+  }
+
+  .main-carousel .banner-content {
+    width: 100%;
+    margin-top: 60px;
+    margin-right: 0;
+    margin-bottom: 80px;
+  }
+
+  .slick-dots {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+  }
+}

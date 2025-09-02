@@ -39,7 +39,7 @@ async function fetchTableData(tableName) {
     const url = `${img_base}${tableName}/${row.name}.png`;
 
     // 加上時間戳，破快取
-    const bustUrl = `${url}?t=${Date.now()}`;
+    //const bustUrl = `${url}?t=${Date.now()}`;
 
     return {
       id: row.id,
@@ -48,7 +48,8 @@ async function fetchTableData(tableName) {
       qty: row.quantity,
       price: row.price,
       rating: 5,
-      image: bustUrl  // 用 bustUrl
+      //image: bustUrl  // 用 bustUrl
+      image: url
     };
   });
 
@@ -89,7 +90,7 @@ function renderProducts(products) {
 
     const col = document.createElement("div");
     col.className = "col";
-    col.innerHTML = `
+    /*col.innerHTML = `
       <div class="product-item">
         ${emptyBadge}
         <a href="#" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#heart"></use></svg></a>
@@ -121,6 +122,24 @@ function renderProducts(products) {
           </div>
           <a href="#" class="nav-link">Add to Cart <iconify-icon icon="uil:shopping-cart"></iconify-icon></a>
         </div>
+      </div>
+    `;*/
+    col.innerHTML = `
+      <div class="product-item">
+        ${emptyBadge}
+        <a href="#" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#heart"></use></svg></a>
+        <figure>
+          <a title="${p.title}">
+            <img src="${p.image}" class="tab-image">
+          </a>
+        </figure>
+        <h3>${p.title}</h3>
+        <span class="qty">${p.qty}</span>
+        <span class="rating">
+          <svg width="24" height="24" class="text-primary"><use xlink:href="#star-solid"></use></svg> 
+          ${p.rating}
+        </span>
+        <span class="price">$${p.price}</span>
       </div>
     `;
 

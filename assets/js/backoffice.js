@@ -23,6 +23,87 @@ let currentTableId = "mirrorTable"; // 預設第一個 table
 (function($) {
     "use strict";
 
+    /*var options_sales_overview = {
+        series: [
+        {
+            name: "Ample Admin",
+            data: [355, 390, 300, 350, 390],
+        },
+        {
+            name: "Pixel Admin",
+            data: [280, 250, 325, 215, 250],
+        },
+        ],
+        chart: {
+        type: "bar",
+        height: 275,
+        toolbar: {
+            show: false,
+        },
+        foreColor: "#adb0bb",
+        fontFamily: "inherit",
+        sparkline: {
+            enabled: false,
+        },
+        },
+        grid: {
+        show: false,
+        borderColor: "transparent",
+        padding: {
+            left: 0,
+            right: 0,
+            bottom: 0,
+        },
+        },
+        plotOptions: {
+        bar: {
+            horizontal: false,
+            columnWidth: "25%",
+            endingShape: "rounded",
+            borderRadius: 5,
+        },
+        },
+        colors: ["var(--bs-primary)", "var(--bs-secondary)"],
+        dataLabels: {
+        enabled: false,
+        },
+        yaxis: {
+        show: true,
+        min: 100,
+        max: 400,
+        tickAmount: 3,
+        },
+        stroke: {
+        show: true,
+        width: 5,
+        lineCap: "butt",
+        colors: ["transparent"],
+        },
+        xaxis: {
+        type: "category",
+        categories: ["鏡子", "磁鐵", "杯墊", "木板畫", "大畫"],
+        axisBorder: {
+            show: false,
+        },
+        },
+        fill: {
+        opacity: 1,
+        },
+        tooltip: {
+        theme: "dark",
+        },
+        legend: {
+        show: false,
+        },
+    };
+
+
+    var chart_column_basic = new ApexCharts(
+        document.querySelector("#sales-overview"),
+        options_sales_overview
+    );
+    chart_column_basic.render();*/
+
     $(document).ready(function() {
 		const tabs = document.querySelectorAll("#productTabs .nav-link");
 		const tables = document.querySelectorAll(".tab-content table");
@@ -47,6 +128,8 @@ let currentTableId = "mirrorTable"; // 預設第一個 table
 
 		getPagination(currentTableId);
 		$('#maxRows').trigger('change');
+
+        checkUser();
 		/**
 		   * 下載所有table
 		   */
@@ -58,6 +141,18 @@ let currentTableId = "mirrorTable"; // 預設第一個 table
 			getPagination(currentTableId);
 			$('#maxRows').trigger('change');
 		});
+        /**
+		   * 登出
+		   */
+        $(".logout-btn").click(async function(){
+            const { error } = await supabase.auth.signOut();
+            if (error) {
+                alert("登出失敗: " + error.message);
+            } else {
+                alert("已登出");
+                window.location.href = "login.html"; // 登出後跳回登入頁
+            }
+        });
 		/**
 		   * add-new 點擊事件
 		   */
@@ -268,11 +363,11 @@ let currentTableId = "mirrorTable"; // 預設第一個 table
 
                         if (!error) {
                             const { data: urlData } = supabase.storage.from(bucketName).getPublicUrl(task.filePath);
-                            const bustUrl = `${urlData.publicUrl}?t=${Date.now()}`;
+                            //const bustUrl = `${urlData.publicUrl}?t=${Date.now()}`;
 
                             // 更新這一列的資料屬性 & 圖片 src
-                            task.$row.attr("data-image-url", bustUrl);
-                            task.$row.find("img.picture__image").attr("src", bustUrl);
+                            task.$row.attr("data-image-url", urlData.publicUrl);
+                            task.$row.find("img.picture__image").attr("src", urlData.publicUrl);
 
                             // 鎖定 input
                             task.$row.find(".picture__input").prop("disabled", true);
@@ -313,6 +408,19 @@ let currentTableId = "mirrorTable"; // 預設第一個 table
 })(jQuery);
 
 /**
+   * 檢查使用者是否登入
+   */
+async function checkUser() {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      console.log("目前登入的使用者:", user.email);
+    } else {
+      alert("尚未登入，請先登入！");
+      window.location.href = "login.html";
+    }
+}
+
+/**
    * 抓取spabase資料庫載入網頁table
    */
 async function fetchTableData(tableName, $table) {
@@ -340,12 +448,12 @@ async function fetchTableData(tableName, $table) {
         const img_url = img_base + filePath;
         
         // 加上 bust query
-        var bust_url = img_url + "?t=" + Date.now();
+        //var bust_url = img_url + "?t=" + Date.now();
 
         // 圖片欄位
         var img_box =   '<label class="picture" for="' + inputId + '" tabIndex="0">' +
                             '<span class="picture__image">' +
-                            '<img src="' + bust_url + '" class="picture__image" alt="' + row.name + '">' +
+                            '<img src="' + img_url + '" class="picture__image" alt="' + row.name + '">' +
                             '</span>' +
                         '</label>' +
                         '<input type="file" class="picture__input" id="' + inputId + '" disabled>';
