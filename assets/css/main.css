@@ -11,17 +11,16 @@
 }
 
 .main-carousel .banner-content {
-    max-width: 500px;
-    flex: 1;
+  max-width: 500px;
 }
 
 .main-carousel .banner-image {
   max-width: 480px;
-  flex-shrink: 0;
+  width: 100%;
 }
 
 .banner-content h2.banner-title {
-  margin: 40px 0;
+  margin: 25px 0;
   font-size: 4.5em;
   font-weight: 500;
   color: #222;
@@ -73,15 +72,12 @@ button.main-carousel-next {
   display: block; /* 或 inline-block，依需求 */
 }
 
-/* 螢幕小於 992px 隱藏 */
 @media screen and (max-width: 992px) {
   button.main-carousel-prev,
   button.main-carousel-next {
     display: none;
   }
-}
 
-@media screen and (max-width: 999px) {
   .banner-content h2.banner-title {
     font-size: 3.5em;
   }
@@ -95,6 +91,7 @@ button.main-carousel-next {
     flex-wrap: wrap;
     text-align: center;
     flex-direction: column-reverse;
+    gap: 0;
   }
 
   .main-carousel .banner-content {

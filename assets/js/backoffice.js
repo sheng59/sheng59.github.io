@@ -12,18 +12,13 @@ const folderMap = {
   woodTable:     "wood",
   paintingTable: "painting",
 };
-/**
-   * table全域變數
-   */
+
 let currentTableId = "mirrorTable"; // 預設第一個 table
 
 /**
-   * Main function
+   * apexcharts變數
    */
-(function($) {
-    "use strict";
-
-    /*var options_sales_overview = {
+/*var options_sales_overview = {
         series: [
         {
             name: "Ample Admin",
@@ -95,16 +90,190 @@ let currentTableId = "mirrorTable"; // 預設第一個 table
         legend: {
         show: false,
         },
-    };
+    };*/
 
+(function($) {
+    "use strict";
 
-    var chart_column_basic = new ApexCharts(
+    /*var chart_column_basic = new ApexCharts(
         document.querySelector("#sales-overview"),
         options_sales_overview
     );
     chart_column_basic.render();*/
 
+    /**
+      * 檢查使用者是否登入
+      */
+    async function checkUser() {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) {
+        console.log("目前登入的使用者:", user.email);
+        } else {
+        alert("尚未登入，請先登入！");
+        window.location.href = "login.html";
+        }
+    }
+    /**
+      * 抓取supabase資料
+      */
+    async function fetchTableData(tableName, $table) {
+        const { data, error } = await supabase
+            .from(tableName)
+            .select("*")
+            .order("id", { ascending: true });
+
+        if (error) {
+            console.error(`[${tableName}] 讀取資料失敗:`, error);
+            return;
+        }
+
+        // 清空 tbody
+        const $tbody = $table.find("tbody");
+        $tbody.empty();
+
+        data.forEach((row, i) => {
+            const index = i + 1; // 從 1 開始計數
+            const inputId = "picture__input_" + tableName + "_" + index;
+
+            const img_base = "https://yvemaakibhtbtohrenjc.supabase.co/storage/v1/object/public/cloud/";
+            const fileName = row.name ? row.name + '.png' : `${index}.png`;
+            const filePath = `${tableName}/${fileName}`;
+            const img_url = img_base + filePath;
+            
+            // 加上 bust query
+            //var bust_url = img_url + "?t=" + Date.now();
+
+            // 圖片欄位
+            var img_box =   '<label class="picture" for="' + inputId + '" tabIndex="0">' +
+                                '<span class="picture__image">' +
+                                '<img src="' + img_url + '" class="picture__image" alt="' + row.name + '">' +
+                                '</span>' +
+                            '</label>' +
+                            '<input type="file" class="picture__input" id="' + inputId + '" disabled>';
+
+            // 操作按鈕
+            const actions = '<a class="add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>' + 
+                            '<a class="edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>' + 
+                            '<a class="delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>';
+
+            // 建立表格列
+            const tr = `<tr data-file-path="${filePath}" data-image-url="${img_url}">
+                <td>${index}</td>
+                <td>${img_box}</td>
+                <td>${row.feature}</td>
+                <td>${row.price}</td>
+                <td>${row.quantity}</td>
+                <td>${actions}</td>
+            </tr>`;
+            $tbody.append(tr);
+        });
+
+        // 初始化 tooltip
+        $('[data-toggle="tooltip"]').tooltip();
+
+        // 更新分頁
+        //getPagination($table.attr("id"));
+        //$('#maxRows').trigger('change');
+    }
+
+    /**
+      * 跳到最後一頁
+      */
+    function goLastPage(table) {
+        var maxRows = parseInt($('#maxRows').val());   // 每頁顯示數量
+        var totalRows = $('#' + table + ' tbody tr').length; // 總列數
+        if (totalRows <= maxRows) return;  // 如果總列數不足一頁就不需要翻頁
+
+        var lastPage = Math.ceil(totalRows / maxRows); // 最後一頁的頁碼
+        var trIndex = 0;
+
+        // 更新 pagination 樣式
+        $('.pagination li').removeClass('active');
+        $('.pagination li[data-page="' + lastPage + '"]').addClass('active');
+
+        // 顯示最後一頁的資料
+        $('#' + table + ' tr:gt(0)').each(function () {
+            trIndex++;
+            if (trIndex > (maxRows * lastPage) || trIndex <= ((maxRows * lastPage) - maxRows)) {
+                $(this).hide();
+            } else {
+                $(this).show();
+            }
+        });
+
+        // 更新顯示行數 (如果有 showig_rows_count 函數)
+        if (typeof showig_rows_count === "function") {
+            showig_rows_count(maxRows, lastPage, totalRows);
+        }
+    }
+
+    /**
+      * 處理分頁
+      */
+    function getPagination (table){
+        $('#maxRows').off('change').on('change', function(){
+            $('.pagination').html('');						// reset pagination div
+            var trnum = 0 ;									// reset tr counter 
+            var maxRows = parseInt($(this).val());			// get Max Rows from select option
+
+            var totalRows = $('#' + table+' tbody tr').length;		// numbers of rows
+            $('#' + table + ' tr:gt(0)').each(function(){			// each TR in  table and not the header
+                trnum++;									// Start Counter 
+                if (trnum > maxRows ){						// if tr number gt maxRows
+                    $(this).hide();							// fade it out 
+                }
+                if (trnum <= maxRows ){$(this).show();} // else fade in Important in case if it ..
+            });											//  was fade out to fade it in 
+            if (totalRows > maxRows){						// if tr total rows gt max rows option
+                var pagenum = Math.ceil(totalRows/maxRows);	// ceil total(rows/maxrows) to get ..  
+                                                            //	numbers of pages 
+                for (var i = 1; i <= pagenum ;){			// for each page append pagination li 
+                    $('.pagination').append('<li data-page="'+i+'"> <span>'+ i++ +'</span></li>').show();
+                }											// end for i 
+            } 												// end if row count > max rows
+            $('.pagination li:first-child').addClass('active'); // add active class to the first li 
+            
+            //SHOWING ROWS NUMBER OUT OF TOTAL DEFAULT
+            showig_rows_count(maxRows, 1, totalRows);
+            //SHOWING ROWS NUMBER OUT OF TOTAL DEFAULT
+
+            $('.pagination li').on('click',function(e){		// on click each page
+                e.preventDefault();
+                var pageNum = $(this).attr('data-page');	// get it's number
+                var trIndex = 0 ;							// reset tr counter
+                $('.pagination li').removeClass('active');	// remove active class from all li 
+                $(this).addClass('active');					// add active class to the clicked 
+            
+                //SHOWING ROWS NUMBER OUT OF TOTAL
+                showig_rows_count(maxRows, pageNum, totalRows);
+                //SHOWING ROWS NUMBER OUT OF TOTAL
+            
+                $('#' + table+' tr:gt(0)').each(function(){		// each tr in table not the header
+                    trIndex++;								// tr index counter 
+                    // if tr index gt maxRows*pageNum or lt maxRows*pageNum-maxRows fade if out
+                    if (trIndex > (maxRows*pageNum) || trIndex <= ((maxRows*pageNum)-maxRows)){
+                        $(this).hide();		
+                    }else {$(this).show();} 				//else fade in 
+                    }); 										// end of for each tr in table
+            });										// end of on click pagination list
+        }); // end of on select change 
+
+    }   // END OF PAGINATION 
+
+    /**
+      * 顯示分頁筆數
+      */
+    function showig_rows_count(maxRows, pageNum, totalRows) {
+    //Default rows showing
+        var end_index = maxRows*pageNum;
+        var start_index = ((maxRows*pageNum)- maxRows) + parseFloat(1);
+        var string = 'Showing '+ start_index + ' to ' + end_index +' of ' + totalRows + ' entries';             
+        $('.rows_count').html(string);
+    }
+
     $(document).ready(function() {
+        checkUser();
+
 		const tabs = document.querySelectorAll("#productTabs .nav-link");
 		const tables = document.querySelectorAll(".tab-content table");
 
@@ -129,7 +298,6 @@ let currentTableId = "mirrorTable"; // 預設第一個 table
 		getPagination(currentTableId);
 		$('#maxRows').trigger('change');
 
-        checkUser();
 		/**
 		   * 下載所有table
 		   */
@@ -154,7 +322,7 @@ let currentTableId = "mirrorTable"; // 預設第一個 table
             }
         });
 		/**
-		   * add-new 點擊事件
+		   * 增加表格col資料
 		   */
 		$(".add-new").click(function(){
 			$('[data-toggle="tooltip"]').tooltip();
@@ -193,7 +361,7 @@ let currentTableId = "mirrorTable"; // 預設第一個 table
 			goLastPage(currentTableId);
 		});
 		/**
-		   * 表格新增資料按鈕
+		   * 確定增加表格col資料按鈕
 		   */
 		$(document).on("click", ".add", function(){
 			var empty = false;
@@ -408,182 +576,10 @@ let currentTableId = "mirrorTable"; // 預設第一個 table
 })(jQuery);
 
 /**
-   * 檢查使用者是否登入
-   */
-async function checkUser() {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (user) {
-      console.log("目前登入的使用者:", user.email);
-    } else {
-      alert("尚未登入，請先登入！");
-      window.location.href = "login.html";
-    }
-}
-
-/**
-   * 抓取spabase資料庫載入網頁table
-   */
-async function fetchTableData(tableName, $table) {
-    const { data, error } = await supabase
-        .from(tableName)
-        .select("*")
-        .order("id", { ascending: true });
-
-    if (error) {
-        console.error(`[${tableName}] 讀取資料失敗:`, error);
-        return;
-    }
-
-    // 清空 tbody
-    const $tbody = $table.find("tbody");
-    $tbody.empty();
-
-    data.forEach((row, i) => {
-        const index = i + 1; // 從 1 開始計數
-        const inputId = "picture__input_" + tableName + "_" + index;
-
-        const img_base = "https://yvemaakibhtbtohrenjc.supabase.co/storage/v1/object/public/cloud/";
-        const fileName = row.name ? row.name + '.png' : `${index}.png`;
-        const filePath = `${tableName}/${fileName}`;
-        const img_url = img_base + filePath;
-        
-        // 加上 bust query
-        //var bust_url = img_url + "?t=" + Date.now();
-
-        // 圖片欄位
-        var img_box =   '<label class="picture" for="' + inputId + '" tabIndex="0">' +
-                            '<span class="picture__image">' +
-                            '<img src="' + img_url + '" class="picture__image" alt="' + row.name + '">' +
-                            '</span>' +
-                        '</label>' +
-                        '<input type="file" class="picture__input" id="' + inputId + '" disabled>';
-
-        // 操作按鈕
-        const actions = '<a class="add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>' + 
-                        '<a class="edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>' + 
-                        '<a class="delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>';
-
-        // 建立表格列
-        const tr = `<tr data-file-path="${filePath}" data-image-url="${img_url}">
-            <td>${index}</td>
-            <td>${img_box}</td>
-            <td>${row.feature}</td>
-            <td>${row.price}</td>
-            <td>${row.quantity}</td>
-            <td>${actions}</td>
-        </tr>`;
-        $tbody.append(tr);
-    });
-
-    // 初始化 tooltip
-    $('[data-toggle="tooltip"]').tooltip();
-
-    // 更新分頁
-    //getPagination($table.attr("id"));
-    //$('#maxRows').trigger('change');
-}
-
-/**
-   * 去分頁的最後一頁 function
-   */
-function goLastPage(table) {
-    var maxRows = parseInt($('#maxRows').val());   // 每頁顯示數量
-    var totalRows = $('#' + table + ' tbody tr').length; // 總列數
-    if (totalRows <= maxRows) return;  // 如果總列數不足一頁就不需要翻頁
-
-    var lastPage = Math.ceil(totalRows / maxRows); // 最後一頁的頁碼
-    var trIndex = 0;
-
-    // 更新 pagination 樣式
-    $('.pagination li').removeClass('active');
-    $('.pagination li[data-page="' + lastPage + '"]').addClass('active');
-
-    // 顯示最後一頁的資料
-    $('#' + table + ' tr:gt(0)').each(function () {
-        trIndex++;
-        if (trIndex > (maxRows * lastPage) || trIndex <= ((maxRows * lastPage) - maxRows)) {
-            $(this).hide();
-        } else {
-            $(this).show();
-        }
-    });
-
-    // 更新顯示行數 (如果有 showig_rows_count 函數)
-    if (typeof showig_rows_count === "function") {
-        showig_rows_count(maxRows, lastPage, totalRows);
-    }
-}
-
-/**
-   * 計算分頁數量 function
-   */
-
-function getPagination (table){
-    $('#maxRows').off('change').on('change', function(){
-        $('.pagination').html('');						// reset pagination div
-        var trnum = 0 ;									// reset tr counter 
-        var maxRows = parseInt($(this).val());			// get Max Rows from select option
-
-        var totalRows = $('#' + table+' tbody tr').length;		// numbers of rows
-        $('#' + table + ' tr:gt(0)').each(function(){			// each TR in  table and not the header
-            trnum++;									// Start Counter 
-            if (trnum > maxRows ){						// if tr number gt maxRows
-                $(this).hide();							// fade it out 
-            }
-            if (trnum <= maxRows ){$(this).show();} // else fade in Important in case if it ..
-        });											//  was fade out to fade it in 
-        if (totalRows > maxRows){						// if tr total rows gt max rows option
-            var pagenum = Math.ceil(totalRows/maxRows);	// ceil total(rows/maxrows) to get ..  
-                                                        //	numbers of pages 
-            for (var i = 1; i <= pagenum ;){			// for each page append pagination li 
-                $('.pagination').append('<li data-page="'+i+'"> <span>'+ i++ +'</span></li>').show();
-            }											// end for i 
-        } 												// end if row count > max rows
-        $('.pagination li:first-child').addClass('active'); // add active class to the first li 
-        
-        //SHOWING ROWS NUMBER OUT OF TOTAL DEFAULT
-        showig_rows_count(maxRows, 1, totalRows);
-        //SHOWING ROWS NUMBER OUT OF TOTAL DEFAULT
-
-        $('.pagination li').on('click',function(e){		// on click each page
-            e.preventDefault();
-            var pageNum = $(this).attr('data-page');	// get it's number
-            var trIndex = 0 ;							// reset tr counter
-            $('.pagination li').removeClass('active');	// remove active class from all li 
-            $(this).addClass('active');					// add active class to the clicked 
-        
-            //SHOWING ROWS NUMBER OUT OF TOTAL
-            showig_rows_count(maxRows, pageNum, totalRows);
-            //SHOWING ROWS NUMBER OUT OF TOTAL
-        
-            $('#' + table+' tr:gt(0)').each(function(){		// each tr in table not the header
-                trIndex++;								// tr index counter 
-                // if tr index gt maxRows*pageNum or lt maxRows*pageNum-maxRows fade if out
-                if (trIndex > (maxRows*pageNum) || trIndex <= ((maxRows*pageNum)-maxRows)){
-                    $(this).hide();		
-                }else {$(this).show();} 				//else fade in 
-                }); 										// end of for each tr in table
-        });										// end of on click pagination list
-    }); // end of on select change 
-
-}   // END OF PAGINATION 
-
-/**
-   * 顯示分頁數量 function
-   */
-function showig_rows_count(maxRows, pageNum, totalRows) {
-   //Default rows showing
-    var end_index = maxRows*pageNum;
-    var start_index = ((maxRows*pageNum)- maxRows) + parseFloat(1);
-    var string = 'Showing '+ start_index + ' to ' + end_index +' of ' + totalRows + ' entries';             
-    $('.rows_count').html(string);
-}
-
-/**
-   * 搜尋表格資料 function
-   */
+  * 快速搜尋
+  */
 function FilterkeyWord_all_table() {
-  
+
     // Count td if you want to search on all table instead of specific column
     var currentTable = document.getElementById(currentTableId);
 
@@ -600,7 +596,7 @@ function FilterkeyWord_all_table() {
 
         // Loop through all table rows, and hide those who don't match the search query
         for (i = 1; i < tr.length; i++) {
-          
+        
             var flag = 0;
             
             for(j = 0; j < count; j++){
@@ -624,7 +620,7 @@ function FilterkeyWord_all_table() {
             }
         }
     }else {
-      //RESET TABLE
-      $('#maxRows').trigger('change');
+    //RESET TABLE
+    $('#maxRows').trigger('change');
     }
 }
