@@ -149,6 +149,16 @@ const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
   // document ready
   $(document).ready(function() {
+    const params = new URLSearchParams(window.location.search);
+    const tabId = params.get("tab"); // 例如 ?tab=nav-magnets
+    if (tabId) {
+      const tabTriggerEl = document.querySelector(`[data-bs-target="#${tabId}"]`);
+      if (tabTriggerEl) {
+        const tab = new bootstrap.Tab(tabTriggerEl);
+        tab.show(); // 顯示對應的 tab
+      }
+    }
+    
     loadAllProducts();
   }); // End of a document
 

@@ -48,7 +48,20 @@
                     <li class="nav-item"><a href="about.html" class="nav-link">關於我們</a></li>
                     <li class="nav-item"><a href="news.html" class="nav-link">訊息公佈</a></li>
                     <li class="nav-item"><a href="teach.html" class="nav-link">繪畫課程</a></li>
-                    <li class="nav-item"><a href="products.html" class="nav-link">全部商品</a></li>
+
+                    <li class="nav-item d-none d-xl-block"><a href="products.html" class="nav-link">全部商品</a></li>
+
+                    <li class="nav-item dropdown d-block d-xl-none">
+                      <a class="nav-link dropdown-toggle" role="button" id="pages" data-bs-toggle="dropdown" aria-expanded="false">全部商品</a>
+                      <ul class="dropdown-menu" aria-labelledby="pages">
+                        <li><a class="dropdown-item" href="products.html?tab=nav-mirrors">鏡子</a></li>
+                        <li><a class="dropdown-item" href="products.html?tab=nav-coasters">杯墊</a></li>
+                        <li><a class="dropdown-item" href="products.html?tab=nav-magnets">磁鐵</a></li>
+                        <li><a class="dropdown-item" href="products.html?tab=nav-woods">木板畫</a></li>
+                        <li><a class="dropdown-item" href="products.html?tab=nav-paintings">大畫</a></li>
+                      </ul>
+                    </li>
+
                     <li class="nav-item"><a href="contact.html" class="nav-link">擺攤位置</a></li>
                   </ul>
                   
@@ -111,7 +124,7 @@
               </i>
             </button>
 
-            <div class="main-carousel swiper">
+            <div class="main-carousel swiper text-center">
               <div class="swiper-wrapper">
 
                 <div class="swiper-slide">
@@ -186,16 +199,7 @@
           <div class="col-md-12">
 
             <div class="section-header d-flex flex-wrap flex-wrap justify-content-between">
-              
-              <h2 class="section-title">本月新商品</h2>
-
-              <div class="d-flex align-items-center">
-                <a href="#" class="btn-link text-decoration-none">查看所有商品 →</a>
-                <div class="swiper-buttons">
-                  <button class="swiper-prev new-products-carousel-prev btn btn-primary">❮</button>
-                  <button class="swiper-next new-products-carousel-next btn btn-primary">❯</button>
-                </div>  
-              </div>
+              <h4 class="section-title" style="padding-bottom: 0;">新商品</h4>
             </div>
             
           </div>
@@ -207,8 +211,22 @@
               <div class="swiper-wrapper">
               <!-- 動態建立 -->
               </div>
+
+              <div class="new-pagination"></div>
             </div>
             <!-- / products-carousel -->
+
+            <div class="tab-content" id="nav-tabContent">
+              <div class="tab-pane fade show active" id="nav-jarr" role="tabpanel" aria-labelledby="nav-jarr-tab">
+
+                <div class="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+                
+                </div>
+                <!-- / product-grid -->
+                
+              </div>
+
+            </div>
 
           </div>
         </div>
@@ -222,16 +240,7 @@
           <div class="col-md-12">
 
             <div class="section-header d-flex flex-wrap flex-wrap justify-content-between">
-              
-              <h2 class="section-title">熱銷商品</h2>
-
-              <div class="d-flex align-items-center">
-                <a href="#" class="btn-link text-decoration-none">查看所有商品 →</a>
-                <div class="swiper-buttons">
-                  <button class="swiper-prev popular-products-carousel-prev btn btn-primary">❮</button>
-                  <button class="swiper-next popular-products-carousel-next btn btn-primary">❯</button>
-                </div>  
-              </div>
+              <h4 class="section-title" style="padding-bottom: 0;">熱銷商品</h4>
             </div>
             
           </div>
@@ -243,8 +252,21 @@
               <div class="swiper-wrapper">
               <!-- 動態建立 -->
               </div>
+              <div class="new-pagination"></div>
             </div>
             <!-- / products-carousel -->
+            
+            <div class="tab-content" id="nav-tabContent">
+              <div class="tab-pane fade show active" id="nav-hot" role="tabpanel" aria-labelledby="nav-hot-tab">
+
+                <div class="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+                
+                </div>
+                <!-- / product-grid -->
+                
+              </div>
+
+            </div>
 
           </div>
         </div>

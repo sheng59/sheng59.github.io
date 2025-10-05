@@ -163,7 +163,7 @@ let currentTableId = "mirrorTable"; // 預設第一個 table
                 <td>${row.feature}</td>
                 <td>${row.price}</td>
                 <td>${row.quantity}</td>
-                <td><input type="checkbox" class="form-check-input text-center month" ${row.month ? "checked" : ""} disabled></td>
+                <td><input type="checkbox" class="form-check-input text-center jarr" ${row.jarr ? "checked" : ""} disabled></td>
                 <td><input type="checkbox" class="form-check-input text-center hot" ${row.hot ? "checked" : ""} disabled></td>
                 <td>${actions}</td>
             </tr>`;
@@ -352,7 +352,7 @@ let currentTableId = "mirrorTable"; // 預設第一個 table
 				'<td><input type="text" class="form-control text-center" name="feature" id="feature"></td>' +
 				'<td><input type="text" class="form-control text-center" name="price" id="price"></td>' +
 				'<td><input type="text" class="form-control text-center" name="quantity" id="quantity"></td>' +
-                '<td><input type="checkbox" class="form-check-input text-center month" name="month" id="month"></td>' +
+                '<td><input type="checkbox" class="form-check-input text-center jarr" name="jarr" id="jarr"></td>' +
                 '<td><input type="checkbox" class="form-check-input text-center hot" name="hot" id="hot"></td>' +
 				'<td>' + actions + '</td>' +
 			'</tr>';
@@ -389,7 +389,7 @@ let currentTableId = "mirrorTable"; // 預設第一個 table
 				
 				$(this).parents("tr").find(".add, .edit").toggle();
 				$(this).parents("tr").find(".picture__input").attr("disabled", "disabled");
-                $(this).parents("tr").find(".month").attr("disabled", "disabled");
+                $(this).parents("tr").find(".jarr").attr("disabled", "disabled");
                 $(this).parents("tr").find(".hot").attr("disabled", "disabled");
 				$(".add-new").removeAttr("disabled");
 			}		
@@ -404,7 +404,7 @@ let currentTableId = "mirrorTable"; // 預設第一個 table
 
 			$(this).parents("tr").find(".add, .edit").toggle();
 			$(this).parents("tr").find(".picture__input").removeAttr("disabled");
-            $(this).parents("tr").find(".month").removeAttr("disabled");
+            $(this).parents("tr").find(".jarr").removeAttr("disabled");
             $(this).parents("tr").find(".hot").removeAttr("disabled");
 			$(".add-new").attr("disabled", "disabled");
 		});
@@ -486,7 +486,7 @@ let currentTableId = "mirrorTable"; // 預設第一個 table
 						const feature = $row.find("td:eq(2)").text().trim();
 						var price = $row.find("td:eq(3)").text().trim();
 						var quantity = $row.find("td:eq(4)").text().trim();
-                        var month = $row.find("td:eq(5)").find("input[type=checkbox]").prop("checked");
+                        var jarr = $row.find("td:eq(5)").find("input[type=checkbox]").prop("checked");
                         var hot   = $row.find("td:eq(6)").find("input[type=checkbox]").prop("checked");
 
                         // 轉型處理：空字串 → null，有值 → number
@@ -510,7 +510,7 @@ let currentTableId = "mirrorTable"; // 預設第一個 table
                         }
 
 						// 收集表格的資料
-						upsertTasks.push({ id, name, feature, price, quantity, month, hot });
+						upsertTasks.push({ id, name, feature, price, quantity, jarr, hot });
 					});
 
 					// === 2️⃣ 刪除 Supabase Storage 多餘的檔案 ===

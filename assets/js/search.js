@@ -53,11 +53,12 @@ const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
       return {
         id: row.id,
         category: categoryMap[tableName],   // tab 對應 id
-        title: row.feature,
+        feature: row.feature,
         qty: row.quantity,
         price: row.price,
         rating: 5,
-        image: bustUrl  // 用 bustUrl
+        //image: bustUrl  // 用 bustUrl
+        image: url
       };
     });
 
@@ -73,10 +74,15 @@ const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
       let grid = document.querySelector(gridId);
       let allGrid = document.querySelector("#nav-all .product-grid");
 
+      const emptyBadge = p.qty === 0
+        ? '<span class="badge bg-danger position-absolute m-3" style="font-size: 18px;">完售</span>'
+        : '';
+
       const col = document.createElement("div");
       col.className = "col";
-      col.innerHTML = `
+      /*col.innerHTML = `
         <div class="product-item">
+          ${emptyBadge}
           <a href="#" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#heart"></use></svg></a>
           <figure>
             <a title="${p.title}">
@@ -89,7 +95,7 @@ const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
             <svg width="24" height="24" class="text-primary"><use xlink:href="#star-solid"></use></svg> 
             ${p.rating}
           </span>
-          <span class="price">${p.price}</span>
+          <span class="price">$${p.price}</span>
           <div class="d-flex align-items-center justify-content-between">
             <div class="input-group product-qty">
               <span class="input-group-btn">
@@ -105,6 +111,21 @@ const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
               </span>
             </div>
             <a href="#" class="nav-link">Add to Cart <iconify-icon icon="uil:shopping-cart"></iconify-icon></a>
+          </div>
+        </div>
+      `;*/
+      col.innerHTML = `
+        <div class="product-item">
+          ${emptyBadge}
+          <a href="#" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#heart"></use></svg></a>
+          <figure>
+            <a title="${p.feature}">
+              <img src="${p.image}" class="tab-image">
+            </a>
+          </figure>
+          <div class="py-2 text-center">
+            <span style="color: #222222;">${p.feature}</span>
+            <span class="price">$${p.price}</span>
           </div>
         </div>
       `;
@@ -143,9 +164,9 @@ const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
       allProducts = allProducts.concat(products);
     }
 
-    // 🔍 用關鍵字過濾 (這裡用 title 當篩選條件)
+    // 🔍 用關鍵字過濾 (這裡用 feature 當篩選條件)
     const filtered = allProducts.filter(p =>
-      p.title && p.title.toLowerCase().includes(keyword.toLowerCase())
+      p.feature && p.feature.toLowerCase().includes(keyword.toLowerCase())
     );
 
     // 清空 DOM

@@ -108,3 +108,15 @@ button.main-carousel-next {
     text-align: center;
   }
 }
+
+.swiper-horizontal > .swiper-pagination-bullets {
+  left: 0 !important;
+  width: 100%;
+}
+
+.swiper-horizontal > .swiper-pagination-progressbar {
+  top: auto !important;
+  bottom: 0 !important;
+  left: 45%;
+  width: 10%;
+}
