@@ -555,7 +555,9 @@ h1,h2,h3,h4,h5,h6 {
   --bs-nav-link-color: #555;
   --bs-nav-tabs-link-border-color: #fff;
   --bs-nav-tabs-link-hover-border-color: transparent;
-  --bs-nav-tabs-link-active-border-color: #fff;
+  --bs-nav-tabs-link-active-border-color: transparent;
+  /*--bs-nav-tabs-link-active-border-color: #d1d3d4;*/
+  --bs-nav-tabs-link-active-bg: transparent;
 }
 .product-tabs .nav-tabs .nav-link.active, 
 .product-tabs .nav-tabs .nav-item.show .nav-link {
@@ -601,21 +603,18 @@ h1,h2,h3,h4,h5,h6 {
 }
 .product-item .btn-wishlist {
   position: absolute;
-  top: 20px;
-  right: 20px;
+  bottom: 5px;
+  right: 10px;
   width: 50px;
   height: 50px;
-  border-radius: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: #fff;
-  border: 1px solid #d8d8d8;
   transition: all 0.3s ease-out;
 }
 .product-item .btn-wishlist:hover {
-  background: rgb(240, 56, 56);
-  color: #fff;
+  color: rgb(240, 56, 56);
 }
 .product-item .qty {
   font-weight: 400;
@@ -642,7 +641,7 @@ h1,h2,h3,h4,h5,h6 {
   font-size: 22px;
   line-height: 30px;
   text-transform: capitalize;
-  color: #222222;
+  color: #dc3545;
 }
 .product-item .product-qty {
   width: 85px;
@@ -698,7 +697,7 @@ h1,h2,h3,h4,h5,h6 {
   margin-right: 5px;
 }
 
-@media screen and (max-width: 991px) {
+@media screen and (max-width: 1199px) {
   /* offcanvas menu */
   .offcanvas-body .nav-item {
     font-weight: 700;
@@ -723,7 +722,6 @@ h1,h2,h3,h4,h5,h6 {
   }
   .dropdown-toggle::after {
     position: absolute;
-    right: 0;
     top: 21px;
   }
 }
@@ -747,5 +745,48 @@ h1,h2,h3,h4,h5,h6 {
 @media screen and (min-width:1200px) {
   .product-thumbnail-slider {
     height: 740px;
+  }
+}
+
+ /* user global elements */
+body {
+  background: #fff;
+}
+
+header {
+  background: #fff;
+  border-bottom: 1px solid #dee2e6;
+}
+
+footer {
+  background: #f4f4f4;
+  margin-top: 151px;
+}
+
+.product-item {
+  border-radius: 0;
+  padding: 0;
+  border: 1px solid #dee2e6;
+}
+
+.product-item figure {
+  border-radius: 0;
+  background: #f0f0f0;
+  margin: 0;
+}
+
+.container-title,.container-content {
+  width: 1200px;
+  margin: auto;
+}
+
+.container-title {
+  margin-top: 56px;
+}
+
+@media (max-width: 1200px) {
+  .container-title,.container-content {
+    width: 100%;
+    padding: 0 15px;
   }
 }

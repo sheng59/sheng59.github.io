@@ -1,0 +1,13 @@
+.date-style {
+    text-align: center;
+    min-width: 60px;
+}
+
+.date-number {
+    display: inline-block;
+    border-bottom: 4px solid #f1c40f; /* 黃色底線 */
+}
+
+.date-text {
+    font-size: 14px;
+}

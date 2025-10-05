@@ -46,7 +46,7 @@ const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
       return {
         id: row.id,
         category: categoryMap[tableName],   // tab 對應 id
-        title: row.feature,
+        feature: row.feature,
         qty: row.quantity,
         price: row.price,
         rating: 5,
@@ -112,17 +112,14 @@ const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
           ${emptyBadge}
           <a href="#" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#heart"></use></svg></a>
           <figure>
-            <a title="${p.title}">
+            <a title="${p.feature}">
               <img src="${p.image}" class="tab-image">
             </a>
           </figure>
-          <h3>${p.title}</h3>
-          <span class="qty">${p.qty}</span>
-          <span class="rating">
-            <svg width="24" height="24" class="text-primary"><use xlink:href="#star-solid"></use></svg> 
-            ${p.rating}
-          </span>
-          <span class="price">$${p.price}</span>
+          <div class="py-2 text-center">
+            <span style="color: #222222;">${p.feature}</span>
+            <span class="price">$${p.price}</span>
+          </div>
         </div>
       `;
 

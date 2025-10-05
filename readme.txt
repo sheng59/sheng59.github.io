@@ -1,74 +1,33 @@
-It is a free HTML CSS template by https://templatesjungle.com/
-You can use this template as a starter template and start building as you require.
+建立新Table流程:
+1. 加入新的tab名稱
+const folderMap = {
+  mirrorTable:   "mirror",
+  magnetTable:   "magnet",
+  coasterTable:  "coaster",
+  woodTable:     "wood",
+  paintingTable: "painting",
+  monthTable:    "month",
+  hotTable:      "hot",
+ [你的table名稱]: "supabase上的storage資料夾名稱"
+};
+2. <li class="nav-item"><a class="nav-link" data-target="[你的Table名稱]">熱銷</a></li>
+3. 在<div class="tab-content">加入
 
-The code is consistent and can be easily maintained as we have followed a good coding standard. We want everyone to easily understand it and modify it according to their requirement. As the main goal of providing these templates is to give you something to work on before even starting.
-
-Preview URL: 
-https://demo.templatesjungle.com/foodmart/
-
-Get the Full Version here: 
-https://templatesjungle.gumroad.com/l/foodmart-bootstrap-html-template
-
-
-FREE FOR BOTH PERSONAL AND COMMERCIAL USE
-
-This HTML Template is provided by TemplatesJungle.com and is free to use in both personal and commercial projects as long as you don't remove our credit link in the footer.
-
-However, you can remove the credit link by paying for No Attribution version of the template.
-
-
-RIGHTS
-
-You are allowed to use it in your personal projects and commercial projects.
-
-You can modify and sell it to your clients.
-
-
-PROHIBITIONS
-
-You cannot remove the credit link which links back to templatesjungle.com.
-
-You are not permitted to resell or redistribute (paid or free) as it is. 
-
-You cannot use it to build premium templates, themes or any other goods to be sold on marketplaces.
-
-If you want to share the free resource in your blog, you must point it to original TemplatesJungle.com resource page. 
-
-You cannot host the download file in your website.
-
-
-SUPPORT
-
-You can contact us to report any bugs and errors in the template. We will try and fix them immediately although it's a free resource.
-
-Feel free to let us know about what you want to see in the future downloads. We will definitely give it a thought while creating our next freebie.
-
-
-CREDITS & REFERENCES
-
-https://getbootstrap.com/
-
-Stock Photos
-https://unsplash.com/
-https://www.freepik.com/
-https://www.pexels.com/
-
-Fonts
-Google fonts
-https://fonts.google.com/
-
-Icons
-https://icon-sets.iconify.design/
-
-Bootstrap Framework
-https://getbootstrap.com/
-
-JQuery Plugins
-
-Swiper Slider - https://swiperjs.com/
-Chocolat.js – a Free Lightbox Plugin -http://chocolat.insipi.de/
-Magnific Lightbox - https://github.com/dimsemenov/Magnific-Popup
-
-Thanks for downloading from TemplatesJungle.com !
-
-
+<table class="table table-bordered table-hover mb-0 align-middle text-center" id="[你的Table名稱]">
+                      <thead>
+                        <tr>
+                          <th style="width: 80px">#</th>
+                          <th>圖片</th>
+                          <th>特徵</th>
+                          <th>價格(NT$)</th>
+                          <th>庫存</th>
+                          <th style="width: 400px">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <!-- 動態建立資料 -->
+                      </tbody>
+                    </table>
+4. 在supabase上的storage建立資料夾存放圖片
+5. 在supabase上的Table edit建立表格
+6. 在table edit建立RLS policy
