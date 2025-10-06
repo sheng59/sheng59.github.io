@@ -24,26 +24,43 @@ const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
   var initSwiper = function() {
 
     var main_swiper = new Swiper(".main-carousel", {
-      slidesPerView: 1,
-      spaceBetween: 30,
+      effect: 'creative',
       speed: 500,
-      /*pagination: {
-        el: '.main-pagination',
+      loop: true,
+      autoplay:{
+        delay:3000,
+        disableOnInteraction: false,
+        pauseOnMouseEnter: true
+      },
+      slidesPerView: 1,
+      grabCursor: true,
+      creativeEffect: {
+        prev: {
+          shadow: true,
+          translate: ["-20%", 0, -1],
+        },
+        next: {
+          translate: ["100%", 0, 0],
+          shadow: true,
+        }
+      },
+      pagination: {
+        el: '.main-carousel-pagination',
         type: 'bullets',
-      },*/
+      },
       navigation: {
         nextEl: ".main-carousel-next",
         prevEl: ".main-carousel-prev",
       }
     });
 
-    var new_products_swiper = new Swiper(".new-products-carousel", {
+    var new_swiper = new Swiper(".new-swiper", {
       slidesPerView: 5,
       spaceBetween: 30,
       speed: 500,
-      pagination: {
-        el: '.new-pagination',
-        type: 'progressbar',
+      scrollbar: {
+        el: '.new-swiper-scrollbar',
+        hide: false,
       },
       breakpoints: {
         0: {
@@ -61,13 +78,13 @@ const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
       }
     });
 
-    var popular_products_swiper = new Swiper(".popular-products-carousel", {
-      slidesPerView: 1,
+    var hot_swiper = new Swiper(".hot-swiper", {
+      slidesPerView: 5,
       spaceBetween: 30,
       speed: 500,
-      pagination: {
-        el: '.new-pagination',
-        type: 'progressbar',
+      scrollbar: {
+        el: '.hot-swiper-scrollbar',
+        hide: false,
       },
       breakpoints: {
         0: {
@@ -218,7 +235,7 @@ const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
     // 依 checkbox 狀態分類
     const new_products = allProducts.filter(p => p.jarr === true);
-    const popular_products = allProducts.filter(p => p.hot === true);
+    const hot_products = allProducts.filter(p => p.hot === true);
 
     var isMobileDevice = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
@@ -228,14 +245,14 @@ const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
       // 用你的 renderProducts 塞進去
       renderProducts_mobile(new_products, "#nav-jarr");
-      renderProducts_mobile(popular_products, "#nav-hot");
+      renderProducts_mobile(hot_products, "#nav-hot");
     } else {
       // 找到前端容器
-      const new_wrapper = document.querySelector(".new-products-carousel .swiper-wrapper");
-      const popular_wrapper = document.querySelector(".popular-products-carousel .swiper-wrapper");
+      const new_wrapper = document.querySelector(".new-swiper .swiper-wrapper");
+      const hot_wrapper = document.querySelector(".hot-swiper .swiper-wrapper");
 
       if (new_wrapper) renderProducts_desktop(new_products, new_wrapper);
-      if (popular_wrapper) renderProducts_desktop(popular_products, popular_wrapper);
+      if (hot_wrapper) renderProducts_desktop(hot_products, hot_wrapper);
     }
   }
 
@@ -244,11 +261,11 @@ const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
    */
   var initProducts = function() {
     // 當 index.html 載入時
-    const new_wrapper = document.querySelector(".new-products-carousel .swiper-wrapper");
-    const popular_wrapper = document.querySelector(".popular-products-carousel .swiper-wrapper");
+    const new_wrapper = document.querySelector(".new-swiper .swiper-wrapper");
+    const hot_wrapper = document.querySelector(".hot-swiper .swiper-wrapper");
 
     if (new_wrapper) renderProducts(new_products, new_wrapper);
-    if (popular_wrapper) renderProducts(popular_products, popular_wrapper);
+    if (hot_wrapper) renderProducts(hot_products, hot_wrapper);
   }
 
   // document ready

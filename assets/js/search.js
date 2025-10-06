@@ -79,6 +79,7 @@ const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
         : '';
 
       const col = document.createElement("div");
+      col.style.padding = "0 6px";
       col.className = "col";
       /*col.innerHTML = `
         <div class="product-item">
@@ -123,10 +124,11 @@ const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
               <img src="${p.image}" class="tab-image">
             </a>
           </figure>
-          <div class="py-2 text-center">
-            <span style="color: #222222;">${p.feature}</span>
+          <div class="p-0 text-center">
+            <span class="feature">${p.feature}</span>
             <span class="price">$${p.price}</span>
           </div>
+          <a href="#" class="btn-wishlist"><svg width="20" height="20"><use xlink:href="#heart"></use></svg></a>
         </div>
       `;
 

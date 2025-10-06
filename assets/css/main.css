@@ -1,8 +1,4 @@
-.main-carousel {
-  padding: 80px 0;
-}
-
-.main-carousel .swiper-slide {
+/*.main-carousel .swiper-slide {
   display: flex;
   width: 100%;
   justify-content: center;
@@ -64,12 +60,12 @@ button.main-carousel-next {
 
 .slick-arrow i svg {
   color: #8C8C8C;
-}
+}*/
 
 /* 先預設大螢幕顯示 */
-button.main-carousel-prev,
+/*button.main-carousel-prev,
 button.main-carousel-next {
-  display: block; /* 或 inline-block，依需求 */
+  display: block;
 }
 
 @media screen and (max-width: 992px) {
@@ -107,16 +103,88 @@ button.main-carousel-next {
     width: 100%;
     text-align: center;
   }
-}
+}*/
 
-.swiper-horizontal > .swiper-pagination-bullets {
-  left: 0 !important;
+/* swiper */
+.main-carousel {
   width: 100%;
+  height: auto;
 }
 
-.swiper-horizontal > .swiper-pagination-progressbar {
+.main-carousel .swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-carousel .swiper-slide img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.main-carousel .swiper-pagination {
+  position: relative !important;
+  bottom: 0 !important;
+}
+
+.swiper-pagination-bullet {
+  background: #000;
+  width: 8px;
+  height: 8px;
+}
+
+.swiper-button-next::after, .swiper-button-prev::after {
+  color: #000;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.swiper-horizontal > .swiper-scrollbar {
   top: auto !important;
   bottom: 0 !important;
   left: 45%;
   width: 10%;
+}
+
+.swiper-scrollbar-drag {
+  background: #000;
+}
+
+/* news */
+.news-section {
+  background: #f8f8f8;
+  padding: 20px 30px 40px 30px;
+  position: relative;
+}
+
+.news-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.news-list li {
+  margin-bottom: 8px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.news-content {
+  color: #222222;
+  width: 100%;
+  word-break: break-word;
+}
+
+.news-more {
+  position: absolute;
+  bottom: 15px;
+  right: 25px;
+  font-size: 14px;
+  color: #333;
+  text-decoration: none;
+}
+
+.news-more:hover {
+  text-decoration: underline;
 }
