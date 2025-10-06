@@ -153,7 +153,7 @@ const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
           </a>
         </figure>
         <div class="p-3">
-          <span style="color: #222222;">${p.feature}樣式的${p.category}</span>
+          <span class="feature">${p.feature}樣式的${p.category}</span>
           <span class="price">$${p.price}</span>
         </div>
         <a href="#" class="btn-wishlist">
@@ -179,6 +179,7 @@ const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
         : '';
 
       const col = document.createElement("div");
+      col.style.padding = "0 6px";
       col.innerHTML = `
         <div class="product-item">
           ${emptyBadge}
@@ -188,10 +189,13 @@ const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
               <img src="${p.image}" class="tab-image">
             </a>
           </figure>
-          <div class="py-2 text-center">
-            <span style="color: #222222;">${p.feature}</span>
+          <div class="ps-2 pb-2">
+            <span class="feature">${p.feature}樣式的${p.category}</span>
             <span class="price">$${p.price}</span>
           </div>
+          <a href="#" class="btn-wishlist">
+            <svg width="20" height="20"><use xlink:href="#heart"></use></svg>
+          </a>
         </div>
       `;
 
