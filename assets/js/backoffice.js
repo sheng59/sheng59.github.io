@@ -1,18 +1,3 @@
-/**
-   * supabase api全域變數
-   */
-const supabaseUrl = "https://yvemaakibhtbtohrenjc.supabase.co";
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl2ZW1hYWtpYmh0YnRvaHJlbmpjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU4NTg2NjMsImV4cCI6MjA3MTQzNDY2M30.gjCwUCG2onNhKjaHLPRrAz6NpWOq6TcdXsdcF3deYVY"; 
-const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-
-const folderMap = {
-  mirrorTable:   "mirror",
-  magnetTable:   "magnet",
-  coasterTable:  "coaster",
-  woodTable:     "wood",
-  paintingTable: "painting"
-};
-
 let currentTableId = "mirrorTable"; // 預設第一個 table
 
 /**
@@ -104,7 +89,7 @@ let currentTableId = "mirrorTable"; // 預設第一個 table
     /**
       * 檢查使用者是否登入
       */
-    async function checkUser() {
+    /*async function checkUser() {
         const { data: { user } } = await supabase.auth.getUser();
         if (user) {
         console.log("目前登入的使用者:", user.email);
@@ -112,11 +97,11 @@ let currentTableId = "mirrorTable"; // 預設第一個 table
         alert("尚未登入，請先登入！");
         window.location.href = "login.html";
         }
-    }
+    }*/
     /**
       * 抓取supabase資料
       */
-    async function fetchTableData(tableName, $table) {
+    /*async function fetchTableData(tableName, $table) {
         const { data, error } = await supabase
             .from(tableName)
             .select("*")
@@ -176,7 +161,7 @@ let currentTableId = "mirrorTable"; // 預設第一個 table
         // 更新分頁
         //getPagination($table.attr("id"));
         //$('#maxRows').trigger('change');
-    }
+    }*/
 
     /**
       * 跳到最後一頁
@@ -306,7 +291,7 @@ let currentTableId = "mirrorTable"; // 預設第一個 table
 		$(".tab-content table").each(async function () {
 			const $table = $(this);
 			const tableName = $table.attr("id").replace("Table", "");
-			await fetchTableData(tableName, $table);
+			await fetchTableData2(tableName, $table);
 
 			getPagination(currentTableId);
 			$('#maxRows').trigger('change');
@@ -314,7 +299,7 @@ let currentTableId = "mirrorTable"; // 預設第一個 table
         /**
 		   * 登出
 		   */
-        $(".logout-btn").click(async function(){
+        $(".logout-btn").click(/*async function(){
             const { error } = await supabase.auth.signOut();
             if (error) {
                 alert("登出失敗: " + error.message);
@@ -322,7 +307,7 @@ let currentTableId = "mirrorTable"; // 預設第一個 table
                 alert("已登出");
                 window.location.href = "login.html"; // 登出後跳回登入頁
             }
-        });
+        }*/logoutUser);
 		/**
 		   * 增加表格col資料
 		   */
@@ -450,7 +435,7 @@ let currentTableId = "mirrorTable"; // 預設第一個 table
 		/**
 		   * 同步supabase資料庫按鈕
 		   */
-		$(document).on("click", ".upload-btn", async function (e) {
+		$(document).on("click", ".upload-btn", syncDatabase/*async function (e) {
 			e.preventDefault();
 
             // 二次確認
@@ -581,7 +566,7 @@ let currentTableId = "mirrorTable"; // 預設第一個 table
             } finally {
                 $btn.prop("disabled", false).text("儲存全部資料");
             }
-		});
+		}*/);
     });
 })(jQuery);
 

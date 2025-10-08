@@ -1,10 +1,3 @@
-/**
-   * supabase api全域變數
-   */
-const supabaseUrl = "https://yvemaakibhtbtohrenjc.supabase.co";
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl2ZW1hYWtpYmh0YnRvaHJlbmpjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU4NTg2NjMsImV4cCI6MjA3MTQzNDY2M30.gjCwUCG2onNhKjaHLPRrAz6NpWOq6TcdXsdcF3deYVY"; 
-const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-
 (function($) {
 
   "use strict";
@@ -12,7 +5,7 @@ const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
   /**
    * 抓取supabase資料
    */
-  async function fetchTableData(tableName) {
+  /*async function fetchTableData(tableName) {
     const { data, error } = await supabase
       .from(tableName)
       .select("*")
@@ -56,7 +49,7 @@ const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
     });
 
     return products;
-  }
+  }*/
 
   /**
    * 建立商品框架
@@ -137,7 +130,7 @@ const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
     let allProducts = [];
     for (const t of tables) {
-      const products = await fetchTableData(t);
+      const products = await fetchTableData1(t);
       allProducts = allProducts.concat(products);
     }
 
