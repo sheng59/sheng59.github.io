@@ -215,6 +215,25 @@
   }
 
   /**
+    * 建立訊息框架
+    */
+  async function renderNews() {
+    const newsList = document.querySelector(".news-list");
+    const news = await fetchTableData3("news");
+    console.log(news);
+    newsList.innerHTML = ""; // 清空舊資料
+    news.forEach(item => {
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <div class="news-content">
+          ${item.date} 【${item.title}】 ${item.content}
+        </div>
+      `;
+      newsList.appendChild(li);
+    });
+  }
+
+  /**
    * 建立所有商品
    */
   async function loadAllProducts() {
@@ -266,6 +285,7 @@
     initSwiper();
     initChocolat();
     //initProducts();
+    renderNews();
     loadAllProducts();
   }); // End of a document
 

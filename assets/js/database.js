@@ -97,7 +97,7 @@ function initLogin(formId = "loginForm") {
 }
 
 /**
-  * 抓取supabase資料
+  * 抓取supabase資料 type1
   */
 async function fetchTableData1(tableName, filter=false, translate=false) {
 	const { data, error } = await supabase
@@ -142,7 +142,7 @@ async function fetchTableData1(tableName, filter=false, translate=false) {
 }
 
 /**
-  * 抓取supabase資料
+  * 抓取supabase資料 type2
   */
 
 async function fetchTableData2(tableName, $table) {
@@ -205,6 +205,34 @@ async function fetchTableData2(tableName, $table) {
 	// 更新分頁
 	//getPagination($table.attr("id"));
 	//$('#maxRows').trigger('change');
+}
+
+/**
+  * 抓取supabase資料 type3
+  */
+async function fetchTableData3(tableName) {
+	const { data, error } = await supabase
+	  .from(tableName)
+	  .select("*")
+	  .order("id", { ascending: true });
+
+	if (error) {
+	  console.error(`[${tableName}] 讀取資料失敗:`, error);
+	  return [];
+	}
+
+	// 把 DB row → 前台用的 news 格式
+
+	const news = data.map((row) => {
+		return {
+		  id: row.id,
+		  date: row.date,
+		  title: row.title,
+		  content: row.content
+		};
+	});
+
+  return news;
 }
 
 /**

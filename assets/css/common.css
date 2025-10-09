@@ -115,8 +115,8 @@ CSS STRUCTURE:
 
 /* Fonts */
 :root {
-    --body-font           : 'Noto Sans TC', sans-serif;
-    --heading-font        : 'Noto Sans TC', sans-serif;
+    --body-font           : "Open Sans", sans-serif;
+    --heading-font        : "Nunito", sans-serif;
 }
 
 body {
