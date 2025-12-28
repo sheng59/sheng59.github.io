@@ -5,7 +5,7 @@
 
 const supabaseUrl = "https://yvemaakibhtbtohrenjc.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl2ZW1hYWtpYmh0YnRvaHJlbmpjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU4NTg2NjMsImV4cCI6MjA3MTQzNDY2M30.gjCwUCG2onNhKjaHLPRrAz6NpWOq6TcdXsdcF3deYVY"; 
-const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+const mysupabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
 const bucketName = "cloud";
 const img_base = `${supabaseUrl}/storage/v1/object/public/cloud/`;
@@ -26,19 +26,11 @@ const categoryMap_en = {
     painting: "paintings"
 };
 
-const categoryMap_cn = {
-    mirror: "鏡子",
-    magnet: "磁鐵",
-    coaster: "杯墊",
-    wood: "木板畫",
-    painting: "大畫"
-};
-
 /**
   * 檢查使用者是否登入
   */
 async function checkUser() {
-	const { data: { user } } = await supabase.auth.getUser();
+	const { data: { user } } = await mysupabase.auth.getUser();
 	if (user) {
 	    console.log("目前登入的使用者:", user.email);
 	} else {
@@ -52,7 +44,7 @@ async function checkUser() {
   */
 
 async function logoutUser() {
-	const { error } = await supabase.auth.signOut();
+	const { error } = await mysupabase.auth.signOut();
 	if (error) {
 		alert("登出失敗: " + error.message);
 	} else {
@@ -78,7 +70,7 @@ function initLogin(formId = "loginForm") {
 		  const email = document.getElementById("email").value.trim();
 		  const password = document.getElementById("password").value.trim();
 
-		  const { data, error } = await supabase.auth.signInWithPassword({
+		  const { data, error } = await mysupabase.auth.signInWithPassword({
 			email,
 			password,
 		  });
@@ -99,8 +91,8 @@ function initLogin(formId = "loginForm") {
 /**
   * 抓取supabase資料 type1
   */
-async function fetchTableData1(tableName, filter=false, translate=false) {
-	const { data, error } = await supabase
+async function fetchTableData1(tableName, filter=false) {
+	const { data, error } = await mysupabase
 	  .from(tableName)
 	  .select("*")
 	  .order("id", { ascending: true });
@@ -120,14 +112,11 @@ async function fetchTableData1(tableName, filter=false, translate=false) {
 		  feature: row.feature,
 		  qty: row.quantity,
 		  price: row.price,
+		  jarr: row.jarr,
+		  hot: row.hot,
 		  image: url,
 		};
-
-        if (translate) {
-		    product.category = categoryMap_cn[tableName];
-        } else {
-            product.category = categoryMap_en[tableName];
-        }
+		product.category = categoryMap_en[tableName];
 
 		// ✅ 若指定 filter 才加入 jarr、hot 屬性
 		if (filter) {
@@ -146,7 +135,7 @@ async function fetchTableData1(tableName, filter=false, translate=false) {
   */
 
 async function fetchTableData2(tableName, $table) {
-	const { data, error } = await supabase
+	const { data, error } = await mysupabase
 		.from(tableName)
 		.select("*")
 		.order("id", { ascending: true });
@@ -211,7 +200,7 @@ async function fetchTableData2(tableName, $table) {
   * 抓取supabase資料 type3
   */
 async function fetchTableData3(tableName) {
-	const { data, error } = await supabase
+	const { data, error } = await mysupabase
 	  .from(tableName)
 	  .select("*")
 	  .order("id", { ascending: true });
@@ -301,7 +290,7 @@ async function syncDatabase(e) {
 			});
 
 			// === 2️⃣ 刪除 Supabase Storage 多餘的檔案 ===
-			const { data: listData, error: listError } = await supabase.storage.from(bucketName).list(folder);
+			const { data: listData, error: listError } = await mysupabase.storage.from(bucketName).list(folder);
 
 			if (!listError && listData) {
 				const deleteFiles = listData
@@ -309,7 +298,7 @@ async function syncDatabase(e) {
 					.filter(path => !keepFiles.includes(path) && !path.endsWith(".emptyFolderPlaceholder"));
 
 				if (deleteFiles.length > 0) {
-					const { error: delError } = await supabase.storage.from(bucketName).remove(deleteFiles);
+					const { error: delError } = await mysupabase.storage.from(bucketName).remove(deleteFiles);
 					if (delError) console.error(`[${folder}] 刪除失敗:`, delError);
 					else console.log(`[${folder}] 已刪除檔案:`, deleteFiles);
 				}
@@ -318,16 +307,16 @@ async function syncDatabase(e) {
 			// === 3️⃣ 上傳新圖片 ===
 			for (const task of uploadTasks) {
 				// 先刪掉舊的，再上傳，保證更新
-				await supabase.storage.from(bucketName).remove([task.filePath]);
+				await mysupabase.storage.from(bucketName).remove([task.filePath]);
 
-				const { error } = await supabase.storage.from(bucketName).upload(
+				const { error } = await mysupabase.storage.from(bucketName).upload(
 					task.filePath,
 					task.file,
 					{ upsert: true }
 				);
 
 				if (!error) {
-					const { data: urlData } = supabase.storage.from(bucketName).getPublicUrl(task.filePath);
+					const { data: urlData } = mysupabase.storage.from(bucketName).getPublicUrl(task.filePath);
 					//const bustUrl = `${urlData.publicUrl}?t=${Date.now()}`;
 
 					// 更新這一列的資料屬性 & 圖片 src
@@ -344,19 +333,19 @@ async function syncDatabase(e) {
 			}
 
 			// === 4️⃣ 同步資料庫 (刪除多餘 + upsert) ===
-			const { data: serverRows, error: fetchError } = await supabase.from(tableName).select("id");
+			const { data: serverRows, error: fetchError } = await mysupabase.from(tableName).select("id");
 			if (!fetchError && serverRows) {
 				const serverIds = serverRows.map(r => r.id);
 				const localIds = upsertTasks.map(r => r.id);
 				const deleteIds = serverIds.filter(id => !localIds.includes(id));
 				if (deleteIds.length > 0) {
-					const { error: delError } = await supabase.from(tableName).delete().in("id", deleteIds);
+					const { error: delError } = await mysupabase.from(tableName).delete().in("id", deleteIds);
 					if (delError) console.error(`[${tableName}] 刪除失敗:`, delError);
 					else console.log(`[${tableName}] 已刪除多餘資料:`, deleteIds);
 				}
 			}
 
-			const { error: dbError } = await supabase.from(tableName).upsert(upsertTasks, { onConflict: ["id"] });
+			const { error: dbError } = await mysupabase.from(tableName).upsert(upsertTasks, { onConflict: ["id"] });
 			if (dbError) console.error(`[${tableName}] DB 更新失敗:`, dbError);
 			else console.log(`[${tableName}] DB 已同步`);
 		});

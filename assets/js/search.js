@@ -58,6 +58,14 @@
     return products;
   }*/
 
+  const categoryMap_cn = {
+      mirrors: "鏡子",
+      magnets: "磁鐵",
+      coasters: "杯墊",
+      woods: "木板畫",
+      paintings: "大畫"
+  };
+
   /**
    * 建立商品框架
    */
@@ -67,13 +75,21 @@
       let grid = document.querySelector(gridId);
       let allGrid = document.querySelector("#nav-all .product-grid");
 
-      const emptyBadge = p.qty === 0
-        ? '<span class="badge bg-danger position-absolute m-3" style="font-size: 18px;">完售</span>'
-        : '';
+      var badge = '';
+      
+      if (p.qty === 0)
+        badge = '<span class="badge bg-danger position-absolute m-3" style="font-size: 18px;">完售</span>';
+      if (p.jarr === true)
+        badge = '<span class="badge bg-danger position-absolute m-3" style="font-size: 18px;">最新</span>';
+      if (p.hot === true)
+        badge = '<span class="badge bg-danger position-absolute m-3" style="font-size: 18px;">熱銷</span>';
+      if (p.jarr === true && p.hot === true)
+        badge = '<span class="badge bg-danger position-absolute m-3" style="font-size: 18px;">最新</span>';
 
       const col = document.createElement("div");
       col.style.padding = "0 6px";
       col.className = "col";
+      const cate_cn = categoryMap_cn[p.category];
       /*col.innerHTML = `
         <div class="product-item">
           ${emptyBadge}
@@ -110,18 +126,24 @@
       `;*/
       col.innerHTML = `
         <div class="product-item">
-          ${emptyBadge}
-          <a href="#" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#heart"></use></svg></a>
+          ${badge}
+          <a href="#" class="btn-wishlist">
+            <svg width="24" height="24"><use xlink:href="#heart"></use></svg>
+          </a>
           <figure>
-            <a title="${p.feature}">
+            <a href="index.html" title="${p.feature}">
               <img src="${p.image}" class="tab-image">
             </a>
           </figure>
-          <div class="p-0 text-center">
-            <span class="feature">${p.feature}</span>
-            <span class="price">$${p.price}</span>
+          <div class="p-2 d-flex justify-content-between align-items-center">
+            <div>
+              <span class="feature">${p.feature}樣式${cate_cn}</span>
+              <span class="price">$${p.price}</span>
+            </div>
+            <a href="#" class="pe-2 nav-link align-self-end">
+              <svg width="24" height="24"><use xlink:href="#add cart"></use></svg>
+            </a>
           </div>
-          <a href="#" class="btn-wishlist"><svg width="20" height="20"><use xlink:href="#heart"></use></svg></a>
         </div>
       `;
 
@@ -129,6 +151,7 @@
       if (allGrid) allGrid.appendChild(col.cloneNode(true));
     });
   }
+  
   /**
    * 建立所有商品
    */

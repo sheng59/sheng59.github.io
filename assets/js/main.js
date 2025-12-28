@@ -146,6 +146,14 @@
     return products;
   }*/
 
+  const categoryMap_cn = {
+      mirrors: "鏡子",
+      magnets: "磁鐵",
+      coasters: "杯墊",
+      woods: "木板畫",
+      paintings: "大畫"
+  };
+
   /**
    * 建立商品框架
    */
@@ -155,20 +163,26 @@
     products.forEach(p => {
       const slide = document.createElement("div");
       slide.className = "product-item swiper-slide";
-
+      
+      const cate_cn = categoryMap_cn[p.category];
       slide.innerHTML = `
+        <a href="#" class="btn-wishlist">
+          <svg width="24" height="24"><use xlink:href="#heart"></use></svg>
+        </a>
         <figure>
           <a href="index.html" title="${p.feature}">
             <img src="${p.image}" class="tab-image">
           </a>
         </figure>
-        <div class="p-3">
-          <span class="feature">${p.feature}樣式的${p.category}</span>
-          <span class="price">$${p.price}</span>
+        <div class="p-2 d-flex justify-content-between align-items-center">
+          <div>
+            <span class="feature">${p.feature}樣式${cate_cn}</span>
+            <span class="price">$${p.price}</span>
+          </div>
+          <a href="#" class="pe-2 nav-link align-self-end">
+            <svg width="24" height="24"><use xlink:href="#add cart"></use></svg>
+          </a>
         </div>
-        <a href="#" class="btn-wishlist">
-          <svg width="24" height="24"><use xlink:href="#heart"></use></svg>
-        </a>
       `;
 
       wrapper.appendChild(slide);
@@ -184,28 +198,28 @@
       let grid = document.querySelector(gridId);
       let allGrid = document.querySelector(`${tname} .product-grid`);
 
-      const emptyBadge = p.qty === 0
-        ? '<span class="badge bg-danger position-absolute m-3" style="font-size: 18px;">完售</span>'
-        : '';
-
+      const cate_cn = categoryMap_cn[p.category];
       const col = document.createElement("div");
       col.style.padding = "0 6px";
       col.innerHTML = `
         <div class="product-item">
-          ${emptyBadge}
-          <a href="#" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#heart"></use></svg></a>
+          <a href="#" class="btn-wishlist">
+            <svg width="24" height="24"><use xlink:href="#heart"></use></svg>
+          </a>
           <figure>
-            <a title="${p.feature}">
+            <a href="index.html" title="${p.feature}">
               <img src="${p.image}" class="tab-image">
             </a>
           </figure>
-          <div class="ps-2 pb-2">
-            <span class="feature">${p.feature}樣式的${p.category}</span>
-            <span class="price">$${p.price}</span>
+          <div class="p-2 d-flex justify-content-between align-items-center">
+            <div>
+              <span class="feature">${p.feature}樣式${cate_cn}</span>
+              <span class="price">$${p.price}</span>
+            </div>
+            <a href="#" class="pe-2 nav-link align-self-end">
+              <svg width="24" height="24"><use xlink:href="#add cart"></use></svg>
+            </a>
           </div>
-          <a href="#" class="btn-wishlist">
-            <svg width="20" height="20"><use xlink:href="#heart"></use></svg>
-          </a>
         </div>
       `;
 
@@ -241,7 +255,7 @@
 
     let allProducts = [];
     for (const t of tables) {
-      const products = await fetchTableData1(t, true, true);
+      const products = await fetchTableData1(t, true);
       allProducts = allProducts.concat(products);
     }
 
@@ -266,6 +280,25 @@
       if (new_wrapper) renderProducts_desktop(new_products, new_wrapper);
       if (hot_wrapper) renderProducts_desktop(hot_products, hot_wrapper);
     }
+  }
+
+  var initProductQty = function(){
+    $(document).on('click', '.quantity-right-plus', function(e) {
+      e.preventDefault();
+      const $container = $(this).closest('.product-qty');
+      const $input = $container.find('.quantity-input');
+      let val = parseInt($input.val()) || 0;
+      $input.val(val + 1);
+    });
+
+    $(document).on('click', '.quantity-left-minus', function(e) {
+      e.preventDefault();
+      const $container = $(this).closest('.product-qty');
+      const $input = $container.find('.quantity-input');
+      let val = parseInt($input.val()) || 0;
+      if (val > 0) $input.val(val - 1);
+    });
+
   }
 
   /**
