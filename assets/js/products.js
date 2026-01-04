@@ -71,13 +71,13 @@
       var badge = '';
       
       if (p.qty === 0)
-        badge = '<span class="badge bg-danger position-absolute m-3" style="font-size: 18px;">完售</span>';
+        badge = '<span class="badge bg-danger position-absolute m-2">0</span>';
       if (p.jarr === true)
-        badge = '<span class="badge bg-danger position-absolute m-3" style="font-size: 18px;">最新</span>';
+        badge = '<span class="badge bg-danger position-absolute m-2">NEW</span>';
       if (p.hot === true)
-        badge = '<span class="badge bg-danger position-absolute m-3" style="font-size: 18px;">熱銷</span>';
+        badge = '<span class="badge bg-danger position-absolute m-2">HOT</span>';
       if (p.jarr === true && p.hot === true)
-        badge = '<span class="badge bg-danger position-absolute m-3" style="font-size: 18px;">最新</span>';
+        badge = '<span class="badge bg-danger position-absolute m-2">NEW</span>';
 
       const col = document.createElement("div");
       col.style.padding = "0 6px";
@@ -120,9 +120,6 @@
       col.innerHTML = `
         <div class="product-item">
           ${badge}
-          <a href="#" class="btn-wishlist">
-            <svg width="24" height="24"><use xlink:href="#heart"></use></svg>
-          </a>
           <figure>
             <a href="index.html" title="${p.feature}">
               <img src="${p.image}" class="tab-image">
@@ -133,8 +130,8 @@
               <span class="feature">${p.feature}樣式${cate_cn}</span>
               <span class="price">$${p.price}</span>
             </div>
-            <a href="#" class="pe-2 nav-link align-self-end">
-              <svg width="24" height="24"><use xlink:href="#add cart"></use></svg>
+            <a class="pe-2 nav-link align-self-end">
+              <svg width="24" height="24"><use xlink:href="#add-cart"></use></svg>
             </a>
           </div>
         </div>

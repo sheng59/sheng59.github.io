@@ -1,6 +1,17 @@
+import {setCookie, loadCartFromCookie, renderCart, getCart, setCart} from './modules/cart.js';
+
 (function($) {
 
   "use strict";
+
+  const tables = ['mirror', 'magnet', 'coaster', 'wood', 'painting']; // 你有的 table 名稱
+  const categoryMap_cn = {
+      mirrors: '鏡子',
+      magnets: '磁鐵',
+      coasters: '杯墊',
+      woods: '木板畫',
+      paintings: '大畫'
+  };
 
   /**
    * 宣告Chocolat light box
@@ -16,7 +27,7 @@
    */
   var initSwiper = function() {
 
-    var main_swiper = new Swiper(".main-carousel", {
+    var main_swiper = new Swiper('.main-carousel', {
       effect: 'creative',
       speed: 500,
       loop: true,
@@ -42,12 +53,12 @@
         type: 'bullets',
       },
       navigation: {
-        nextEl: ".main-carousel-next",
-        prevEl: ".main-carousel-prev",
+        nextEl: '.main-carousel-next',
+        prevEl: '.main-carousel-prev',
       }
     });
 
-    var new_swiper = new Swiper(".new-swiper", {
+    var new_swiper = new Swiper('.new-swiper', {
       slidesPerView: 5,
       spaceBetween: 30,
       speed: 500,
@@ -71,7 +82,7 @@
       }
     });
 
-    var hot_swiper = new Swiper(".hot-swiper", {
+    var hot_swiper = new Swiper('.hot-swiper', {
       slidesPerView: 5,
       spaceBetween: 30,
       speed: 500,
@@ -146,95 +157,20 @@
     return products;
   }*/
 
-  const categoryMap_cn = {
-      mirrors: "鏡子",
-      magnets: "磁鐵",
-      coasters: "杯墊",
-      woods: "木板畫",
-      paintings: "大畫"
-  };
-
-  /**
-   * 建立商品框架
-   */
-  function renderProducts_desktop(products, wrapper) {
-    wrapper.innerHTML = "";
-
-    products.forEach(p => {
-      const slide = document.createElement("div");
-      slide.className = "product-item swiper-slide";
-      
-      const cate_cn = categoryMap_cn[p.category];
-      slide.innerHTML = `
-        <a href="#" class="btn-wishlist">
-          <svg width="24" height="24"><use xlink:href="#heart"></use></svg>
-        </a>
-        <figure>
-          <a href="index.html" title="${p.feature}">
-            <img src="${p.image}" class="tab-image">
-          </a>
-        </figure>
-        <div class="p-2 d-flex justify-content-between align-items-center">
-          <div>
-            <span class="feature">${p.feature}樣式${cate_cn}</span>
-            <span class="price">$${p.price}</span>
-          </div>
-          <a href="#" class="pe-2 nav-link align-self-end">
-            <svg width="24" height="24"><use xlink:href="#add cart"></use></svg>
-          </a>
-        </div>
-      `;
-
-      wrapper.appendChild(slide);
-    });
-  }
-
-  /**
-   * 建立商品框架
-   */
-  function renderProducts_mobile(products, tname) {
-    products.forEach(p => {
-      let gridId = `#nav-${p.category} .product-grid`;
-      let grid = document.querySelector(gridId);
-      let allGrid = document.querySelector(`${tname} .product-grid`);
-
-      const cate_cn = categoryMap_cn[p.category];
-      const col = document.createElement("div");
-      col.style.padding = "0 6px";
-      col.innerHTML = `
-        <div class="product-item">
-          <a href="#" class="btn-wishlist">
-            <svg width="24" height="24"><use xlink:href="#heart"></use></svg>
-          </a>
-          <figure>
-            <a href="index.html" title="${p.feature}">
-              <img src="${p.image}" class="tab-image">
-            </a>
-          </figure>
-          <div class="p-2 d-flex justify-content-between align-items-center">
-            <div>
-              <span class="feature">${p.feature}樣式${cate_cn}</span>
-              <span class="price">$${p.price}</span>
-            </div>
-            <a href="#" class="pe-2 nav-link align-self-end">
-              <svg width="24" height="24"><use xlink:href="#add cart"></use></svg>
-            </a>
-          </div>
-        </div>
-      `;
-
-      if (grid) grid.appendChild(col);
-      if (allGrid) allGrid.appendChild(col.cloneNode(true));
-    });
-  }
-
   /**
     * 建立訊息框架
     */
   async function renderNews() {
     const newsList = document.querySelector(".news-list");
     const news = await fetchTableData3("news");
-    console.log(news);
+
+    if (!news || news.length === 0) {
+      newsList.innerHTML = `
+        <li><div class="news-content" text-muted">暫無最新消息</div></li>
+      `;
+      reutrn;
+    }
+
     newsList.innerHTML = ""; // 清空舊資料
     news.forEach(item => {
       const li = document.createElement("li");
@@ -248,78 +184,188 @@
   }
 
   /**
-   * 建立所有商品
+   * 建立商品框架
    */
-  async function loadAllProducts() {
-    const tables = ["mirror", "magnet", "coaster", "wood", "painting"]; // 你有的 table 名稱
+  async function renderProducts(tag = "") {
+    let wrapper;
+    let products;
 
+    if (tag === 'new') {
+      wrapper = document.querySelector('.new-swiper .swiper-wrapper');
+    } else if (tag === 'hot') {
+      wrapper = document.querySelector('.hot-swiper .swiper-wrapper');
+    }
+    
     let allProducts = [];
     for (const t of tables) {
-      const products = await fetchTableData1(t, true);
-      allProducts = allProducts.concat(products);
+      const tmpProducts = await fetchTableData1(t, true);
+      allProducts = allProducts.concat(tmpProducts);
+    }
+    if (tag === 'new') {
+      products = allProducts.filter(p => p.jarr === true);
+    } else if (tag === 'hot') {
+      products = allProducts.filter(p => p.hot === true);
     }
 
-    // 依 checkbox 狀態分類
-    const new_products = allProducts.filter(p => p.jarr === true);
-    const hot_products = allProducts.filter(p => p.hot === true);
+    wrapper.innerHTML = "";
 
-    var isMobileDevice = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    products.forEach(p => {
+      const slide = document.createElement('div');
+      slide.className = 'product-item swiper-slide';
+      
+      const cate_cn = categoryMap_cn[p.category];
+      slide.innerHTML = `
+        <figure>
+          <a href="index.html" title="${p.feature}">
+            <img src="${p.image}" class="tab-image">
+          </a>
+        </figure>
+        <div class="p-2 d-flex justify-content-between align-items-center">
+          <div>
+            <span class="feature">${p.feature}樣式${cate_cn}</span>
+            <span class="price">$${p.price}</span>
+          </div>
+          <a class="pe-2 nav-link align-self-end add-to-cart" data-key="${p.category}-${p.id}" style="cursor: pointer;">
+            <svg width="24" height="24"><use xlink:href="#add-cart"></use></svg>
+          </a>
+        </div>
+      `;
 
-    if (isMobileDevice) {
-      // 清空舊的 DOM
-      document.querySelectorAll(".product-grid").forEach(grid => grid.innerHTML = "");
+      wrapper.appendChild(slide);
+    });
 
-      // 用你的 renderProducts 塞進去
-      renderProducts_mobile(new_products, "#nav-jarr");
-      renderProducts_mobile(hot_products, "#nav-hot");
-    } else {
-      // 找到前端容器
-      const new_wrapper = document.querySelector(".new-swiper .swiper-wrapper");
-      const hot_wrapper = document.querySelector(".hot-swiper .swiper-wrapper");
+    // ✅ 事件委托：监听 wrapper 下所有 .add-to-cart 点击
+    wrapper.addEventListener('click', function(e) {
+      const btn = e.target.closest('.add-to-cart');
+      if (!btn) return;
+      e.preventDefault();
+      
+      const key = btn.dataset.key;
+      const [category, idStr] = key.split('-');
+      const id = parseInt(idStr, 10);
 
-      if (new_wrapper) renderProducts_desktop(new_products, new_wrapper);
-      if (hot_wrapper) renderProducts_desktop(hot_products, hot_wrapper);
-    }
+      // 🔍 同時比對 category 和 id
+      const product = products.find(p => 
+        p.category === category && p.id === id
+      );
+
+      if (product) {
+        console.log('✅ 精準找到：', product.feature, '（', product.category, '#', product.id, '）');
+        addToCart(product);
+      } else {
+        console.error('❌ 未找到商品：', key);
+      }
+
+    });
   }
 
-  var initProductQty = function(){
-    $(document).on('click', '.quantity-right-plus', function(e) {
-      e.preventDefault();
-      const $container = $(this).closest('.product-qty');
-      const $input = $container.find('.quantity-input');
-      let val = parseInt($input.val()) || 0;
-      $input.val(val + 1);
-    });
+  function addToCart(product) {
+    const cart = getCart();
 
-    $(document).on('click', '.quantity-left-minus', function(e) {
-      e.preventDefault();
-      const $container = $(this).closest('.product-qty');
-      const $input = $container.find('.quantity-input');
-      let val = parseInt($input.val()) || 0;
-      if (val > 0) $input.val(val - 1);
-    });
+    // 1️⃣ 檢查是否已存在（同 category + id）
+    const item = cart.find(p =>
+      p.category === product.category && p.id === product.id
+    );
 
+    if (!item) {
+      cart.push({
+        ...product,
+        qty: 1
+      });
+    }
+    console.log(cart);
+    setCart(cart);
+    renderCart();
   }
 
   /**
-   * 建立所有商品
+   * 建立商品框架
    */
-  var initProducts = function() {
-    // 當 index.html 載入時
-    const new_wrapper = document.querySelector(".new-swiper .swiper-wrapper");
-    const hot_wrapper = document.querySelector(".hot-swiper .swiper-wrapper");
+  async function renderProducts_mobile(tag = "") {
+    let grid;
+    let products;
 
-    if (new_wrapper) renderProducts(new_products, new_wrapper);
-    if (hot_wrapper) renderProducts(hot_products, hot_wrapper);
+    let allProducts = [];
+    for (const t of tables) {
+      const tmpProducts = await fetchTableData1(t, true);
+      allProducts = allProducts.concat(tmpProducts);
+    }
+    if (tag === 'new') {
+      products = allProducts.filter(p => p.jarr === true);
+    } else if (tag === 'hot') {
+      products = allProducts.filter(p => p.hot === true);
+    }
+
+    products.forEach(p => {
+      if (tag === 'new') {
+        grid = document.querySelector(`#nav-jarr .product-grid`);
+      } else if (tag === 'hot') {
+        grid = document.querySelector(`#nav-hot .product-grid`);
+      }
+
+      const cate_cn = categoryMap_cn[p.category];
+      const col = document.createElement("div");
+      col.style.padding = "0 6px";
+      col.innerHTML = `
+        <div class="product-item">
+          <figure>
+            <a href="index.html" title="${p.feature}">
+              <img src="${p.image}" class="tab-image">
+            </a>
+          </figure>
+          <div class="p-2 d-flex justify-content-between align-items-center">
+            <div>
+              <span class="feature">${p.feature}樣式${cate_cn}</span>
+              <span class="price">$${p.price}</span>
+            </div>
+            <a class="pe-2 nav-link align-self-end add-to-cart" data-key="${p.category}-${p.id}" style="cursor: pointer;">
+              <svg width="24" height="24"><use xlink:href="#add-cart"></use></svg>
+            </a>
+          </div>
+        </div>
+      `;
+
+      grid.appendChild(col);
+    });
+
+    grid.addEventListener('click', function(e) {
+      const btn = e.target.closest('.add-to-cart');
+      if (!btn) return;
+      e.preventDefault();
+      
+      const key = btn.dataset.key;
+      const [category, idStr] = key.split('-');
+      const id = parseInt(idStr, 10);
+
+      // 🔍 同時比對 category 和 id
+      const product = products.find(p => 
+        p.category === category && p.id === id
+      );
+
+      if (product) {
+        console.log('✅ 精準找到：', product.feature, '（', product.category, '#', product.id, '）');
+        addToCart(product);
+      } else {
+        console.error('❌ 未找到商品：', key);
+      }
+
+    });
   }
 
   // document ready
   $(document).ready(function() {
+    let isMobileDevice = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
     initSwiper();
-    initChocolat();
-    //initProducts();
+    //initChocolat();
     renderNews();
-    loadAllProducts();
+    if (isMobileDevice) {
+      renderProducts_mobile('new');
+      renderProducts_mobile('hot')
+    } else {
+      renderProducts('new');
+      renderProducts('hot');
+    }
   }); // End of a document
 
 })(jQuery);
