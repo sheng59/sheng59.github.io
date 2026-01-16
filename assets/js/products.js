@@ -1,3 +1,5 @@
+import {setCookie, loadCartFromCookie, renderCart, getCart, setCart} from './modules/cart.js';
+
 (function($) {
 
   "use strict";
@@ -51,23 +53,33 @@
     return products;
   }*/
 
+  const tables = ["mirror", "magnet", "coaster", "wood", "painting"]; // 你有的 table 名稱
   const categoryMap_cn = {
-      mirrors: "鏡子",
-      magnets: "磁鐵",
-      coasters: "杯墊",
-      woods: "木板畫",
-      paintings: "大畫"
+      mirror: "鏡子",
+      magnet: "磁鐵",
+      coaster: "杯墊",
+      wood: "木板畫",
+      painting: "大畫"
   };
 
   /**
-   * 建立商品框架
+   * 建立所有商品
    */
-  function renderProducts(products) {
-    products.forEach(p => {
-      let gridId = `#nav-${p.category} .product-grid`;
-      let grid = document.querySelector(gridId);
-      let allGrid = document.querySelector("#nav-all .product-grid");
+  async function renderProducts(tname) {
+    let grid;
+    let products = [];
 
+    for (const t of tables) {
+      const tmpProducts = await fetchTableData1(t);
+      products = products.concat(tmpProducts);
+    }
+
+    // 清空舊的 DOM
+    document.querySelectorAll(".product-grid").forEach(grid => grid.innerHTML = "");
+
+    products.forEach(p => {
+      grid = document.querySelector(`#nav-${p.category} .product-grid`);
+      console.log(p.category);
       var badge = '';
       
       if (p.qty === 0)
@@ -130,50 +142,61 @@
               <span class="feature">${p.feature}樣式${cate_cn}</span>
               <span class="price">$${p.price}</span>
             </div>
-            <a class="pe-2 nav-link align-self-end">
+            <a class="pe-2 nav-link align-self-end add-to-cart" data-key="${p.category}-${p.id}" style="cursor: pointer;">
               <svg width="24" height="24"><use xlink:href="#add-cart"></use></svg>
             </a>
           </div>
         </div>
       `;
 
-      if (grid) grid.appendChild(col);
-      if (allGrid) allGrid.appendChild(col.cloneNode(true));
+      grid.appendChild(col);
     });
   }
 
-  /**
-   * 建立所有商品
-   */
-  async function loadAllProducts() {
-    const tables = ["mirror", "magnet", "coaster", "wood", "painting"]; // 你有的 table 名稱
+  function addToCart(product) {
+    const cart = getCart();
 
-    let allProducts = [];
-    for (const t of tables) {
-      const products = await fetchTableData1(t);
-      allProducts = allProducts.concat(products);
+    // 1️⃣ 檢查是否已存在（同 category + id）
+    const item = cart.find(p =>
+      p.category === product.category && p.id === product.id
+    );
+
+    if (!item) {
+      cart.push({
+        ...product,
+        qty: 1
+      });
     }
-
-    // 清空舊的 DOM
-    document.querySelectorAll(".product-grid").forEach(grid => grid.innerHTML = "");
-
-    // 用你的 renderProducts 塞進去
-    renderProducts(allProducts);
+    console.log(cart);
+    setCart(cart);
+    renderCart();
   }
 
   // document ready
   $(document).ready(function() {
-    const params = new URLSearchParams(window.location.search);
-    const tabId = params.get("tab"); // 例如 ?tab=nav-magnets
-    if (tabId) {
-      const tabTriggerEl = document.querySelector(`[data-bs-target="#${tabId}"]`);
-      if (tabTriggerEl) {
-        const tab = new bootstrap.Tab(tabTriggerEl);
-        tab.show(); // 顯示對應的 tab
-      }
-    }
+    /*renderProducts();
 
-    loadAllProducts();
+    $(document).on('click', '.add-to-cart', function(e) {
+      const btn = e.target.closest('.add-to-cart');
+      if (!btn) return;
+      e.preventDefault();
+      
+      const key = btn.dataset.key;
+      const [category, idStr] = key.split('-');
+      const id = parseInt(idStr, 10);
+
+      // 🔍 同時比對 category 和 id
+      const product = products.find(p => 
+        p.category === category && p.id === id
+      );
+
+      if (product) {
+        console.log('✅ 精準找到：', product.feature, '（', product.category, '#', product.id, '）');
+        addToCart(product);
+      } else {
+        console.error('❌ 未找到商品：', key);
+      }
+    });*/
   }); // End of a document
 
 })(jQuery);

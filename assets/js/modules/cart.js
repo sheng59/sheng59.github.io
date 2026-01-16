@@ -1,11 +1,11 @@
 let cart = [];
 
 const categoryMap_cn = {
-    mirrors: '鏡子',
-    magnets: '磁鐵',
-    coasters: '杯墊',
-    woods: '木板畫',
-    paintings: '大畫'
+    mirror: '鏡子',
+    magnet: '磁鐵',
+    coaster: '杯墊',
+    wood: '木板畫',
+    painting: '大畫'
 };
 
 const setCookie = function(name, value, days= 7) {
@@ -40,8 +40,8 @@ const saveCartToCookie = () => {
 }
 
 const renderCart = function() {
-    const cartList = document.querySelector('.cartList');
-    const badge = document.querySelector('.cartCount');
+    const cartList = document.querySelector('.cart-list');
+    const badge = document.querySelector('.cart-count');
 
     cartList.innerHTML = "";
 
@@ -68,7 +68,7 @@ const renderCart = function() {
         </span>
         `;
 
-    cartList.appendChild(li);
+        cartList.appendChild(li);
     });
 
     // 🔴 更新 badge

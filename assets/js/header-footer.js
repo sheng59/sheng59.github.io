@@ -1,5 +1,3 @@
-import {setCookie, loadCartFromCookie, renderCart, getCart, setCart} from './modules/cart.js';
-
 (function($) {
 
     "use strict";
@@ -92,35 +90,35 @@ import {setCookie, loadCartFromCookie, renderCart, getCart, setCart} from './mod
                         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
 
                             <div class="offcanvas-header justify-content-center">
-                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                             </div>
 
                             <div class="offcanvas-body align-items-center">
                         
                             <ul class="navbar-nav justify-content-end menu-list list-unstyled d-flex gap-md-3 mb-0">
-                                <li class="nav-item active"><a href="index.html" class="nav-link">首頁</a></li>
-                                <li class="nav-item"><a href="about.html" class="nav-link">關於我們</a></li>
-                                <li class="nav-item"><a href="news.html" class="nav-link">訊息公佈</a></li>
-                                <li class="nav-item"><a href="teach.html" class="nav-link">繪畫課程</a></li>
+                                <li class="nav-item active"><a href="/matt/index.html" class="nav-link text-dark">首頁</a></li>
+                                <li class="nav-item"><a href="/matt/about.html" class="nav-link text-dark">關於我們</a></li>
+                                <li class="nav-item"><a href="/matt/news.html" class="nav-link text-dark">訊息公佈</a></li>
+                                <li class="nav-item"><a href="/matt/teach.html" class="nav-link text-dark">繪畫課程</a></li>
 
-                                <li class="nav-item d-none d-xl-block"><a href="products.html" class="nav-link">全部商品</a></li>
+                                <li class="nav-item d-none d-xl-block"><a href="/matt/products.html" class="nav-link text-dark">全部商品</a></li>
 
                                 <li class="nav-item dropdown d-block d-xl-none">
                                 <a class="nav-link dropdown-toggle" role="button" id="pages" data-bs-toggle="dropdown" aria-expanded="false">全部商品</a>
                                 <ul class="dropdown-menu" aria-labelledby="pages">
-                                    <li><a class="dropdown-item" href="products.html?tab=nav-mirrors">鏡子</a></li>
-                                    <li><a class="dropdown-item" href="products.html?tab=nav-coasters">杯墊</a></li>
-                                    <li><a class="dropdown-item" href="products.html?tab=nav-magnets">磁鐵</a></li>
-                                    <li><a class="dropdown-item" href="products.html?tab=nav-woods">木板畫</a></li>
-                                    <li><a class="dropdown-item" href="products.html?tab=nav-paintings">大畫</a></li>
+                                    <li><a class="dropdown-item text-dark" href="/matt/products.html?tab=nav-mirrors">鏡子</a></li>
+                                    <li><a class="dropdown-item text-dark" href="/matt/products.html?tab=nav-coasters">杯墊</a></li>
+                                    <li><a class="dropdown-item text-dark" href="/matt/products.html?tab=nav-magnets">磁鐵</a></li>
+                                    <li><a class="dropdown-item text-dark" href="/matt/products.html?tab=nav-woods">木板畫</a></li>
+                                    <li><a class="dropdown-item text-dark" href="/matt/products.html?tab=nav-paintings">大畫</a></li>
                                 </ul>
                                 </li>
 
-                                <li class="nav-item"><a href="contact.html" class="nav-link">擺攤位置</a></li>
+                                <li class="nav-item"><a href="/matt/contact.html" class="nav-link text-dark">擺攤位置</a></li>
                             </ul>
                             
                             <div class="search-bar row bg-light p-2 my-2 rounded-4 ms-lg-5">
-                                <form id="search-form" class="d-flex w-100" action="search.html" method="get">
+                                <form id="search-form" class="d-flex w-100" action="/matt/search.html" method="get">
                                 <div class="col-11">
                                     <input type="text" name="keyword" class="form-control border-0 bg-transparent" placeholder="找商品" />
                                 </div>
@@ -144,7 +142,7 @@ import {setCookie, loadCartFromCookie, renderCart, getCart, setCart} from './mod
                         <li>
                             <a href="#" class="rounded-circle bg-light p-2 mx-1" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
                             <svg width="24" height="24" viewBox="0 0 24 24"><use xlink:href="#cart"></use></svg>
-                            <span class="position-absolute top-10 start-10 translate-middle badge rounded-pill bg-primary cartCount"></span>
+                            <span class="position-absolute top-10 start-10 translate-middle badge rounded-pill bg-primary cart-count">3</span>
                             </a>
                         </li>
                         <li>
@@ -153,7 +151,7 @@ import {setCookie, loadCartFromCookie, renderCart, getCart, setCart} from './mod
                             </a>
                         </li>
                         <li>
-                            <a href="login.html" class="rounded-circle bg-light p-2 mx-1">
+                            <a href="/matt/login.html" class="rounded-circle bg-light p-2 mx-1">
                             <svg width="24" height="24" viewBox="0 0 24 24"><use xlink:href="#user"></use></svg>
                             </a>
                         </li>
@@ -172,9 +170,51 @@ import {setCookie, loadCartFromCookie, renderCart, getCart, setCart} from './mod
                     <h4 class="d-flex justify-content-between align-items-center mb-3">
                         <span class="text-primary">購物車內商品</span>
                     </h4>
-                    <ul class="list-group mb-3 cartList"></ul>
+                    <ul class="list-group mb-3 cart-list">
+                        <li class="list-group-item d-flex justify-content-between lh-sm">
+                            <div>
+                                <div class="my-2">鋼琴樣式杯墊</div>
+                                <div class="my-2 text-danger fw-bold">
+                                    $130
+                                </div>
+                            </div>
+                            <span class="my-2 delete-item" data-key="coaster-1" style="cursor: pointer;">
+                                <svg width="24" height="24" viewBox="0 0 24 24">
+                                <use xlink:href="#delete"></use>
+                            </svg>
+                            </span>
+                        </li>
+
+                        <li class="list-group-item d-flex justify-content-between lh-sm">
+                            <div>
+                                <div class="my-2">花樣式杯墊</div>
+                                <div class="my-2 text-danger fw-bold">
+                                    $130
+                                </div>
+                            </div>
+                            <span class="my-2 delete-item" data-key="coaster-2" style="cursor: pointer;">
+                                <svg width="24" height="24" viewBox="0 0 24 24">
+                                <use xlink:href="#delete"></use>
+                            </svg>
+                            </span>
+                        </li>
+
+                        <li class="list-group-item d-flex justify-content-between lh-sm">
+                            <div>
+                                <div class="my-2">草原樣式杯墊</div>
+                                <div class="my-2 text-danger fw-bold">
+                                    $130
+                                </div>
+                            </div>
+                            <span class="my-2 delete-item" data-key="coaster-3" style="cursor: pointer;">
+                                <svg width="24" height="24" viewBox="0 0 24 24">
+                                    <use xlink:href="#delete"></use>
+                                </svg>
+                            </span>
+                        </li>
+                    </ul>
             
-                    <button class="w-100 btn btn-primary btn-lg" type="submit">前往結帳</button>
+                    <button class="w-100 btn btn-primary btn-lg" type="submit" onclick="location.href='/matt/myorder.html';">前往結帳</button>
                     </div>
                 </div>
             </div>
@@ -225,19 +265,19 @@ import {setCookie, loadCartFromCookie, renderCart, getCart, setCart} from './mod
                         <h5 class="widget-title">Matt Art</h5>
                         <ul class="menu-list list-unstyled">
                             <li class="menu-item">
-                            <a href="products.html" class="nav-link">關於我們</a>
+                            <a href="/matt/products.html" class="nav-link">關於我們</a>
                             </li>
                             <li class="menu-item">
-                            <a href="products.html" class="nav-link">訊息公布</a>
+                            <a href="/matt/products.html" class="nav-link">訊息公布</a>
                             </li>
                             <li class="menu-item">
-                            <a href="products.html" class="nav-link">繪畫課程</a>
+                            <a href="/matt/products.html" class="nav-link">繪畫課程</a>
                             </li>
                             <li class="menu-item">
-                            <a href="products.html" class="nav-link">全部商品</a>
+                            <a href="/matt/products.html" class="nav-link">全部商品</a>
                             </li>
                             <li class="menu-item">
-                            <a href="products.html" class="nav-link">擺攤位置</a>
+                            <a href="/matt/products.html" class="nav-link">擺攤位置</a>
                             </li>
                         </ul>
                         </div>
@@ -279,27 +319,5 @@ import {setCookie, loadCartFromCookie, renderCart, getCart, setCart} from './mod
     $(document).ready(function() {
         initLayout();
         initPreloader();
-        loadCartFromCookie();
-        renderCart();
-
-        // 購物車商刪除商品按鈕
-        $(document).on('click', '.delete-item', function(e) {
-            const cart = getCart();
-
-            e.preventDefault();
-            const $btn = $(this);
-            const [category, idStr] = $btn.data('key').split('-');
-            const id = parseInt(idStr, 10);
-
-            const index = cart.findIndex(p =>
-                p.category === category && p.id === id
-            );
-
-            if (index > -1) {
-                cart.splice(index, 1);
-                setCart(cart);
-                renderCart();
-            }
-        });
     });
 })(jQuery);

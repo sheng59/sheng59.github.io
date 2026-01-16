@@ -46,7 +46,7 @@
 
     // document ready
     $(document).ready(function() {
-        renderNews();
+        //renderNews();
     }); // End of a document
 
 })(jQuery);

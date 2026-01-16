@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Matt Art</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="author" content="">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <!-- Vendor CSS Files -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="assets/css/vendor.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/common.css">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+  </head>
+  <body>
+    
+    <!-- Content -->
+    <section class="py-5">
+      <div class="container-fluid">
+
+        <div class="order-header">
+          <h3 class="border-bottom py-3">購物清單</h3>
+        </div>
+
+        <table class="table mb-0 align-middle text-center d-none d-md-table">
+          <thead>
+            <tr>
+              <th style="width: 150px">圖示</th>
+              <th>名稱/規格</th>
+              <th>單價</th>
+              <th>數量</th>
+              <th>金額</th>
+              <th>刪除</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr>
+              <td>
+                <img src="assets/img/1.png" class="img-fluid" style="max-width: 150px; height: auto;">
+              </td>
+              <td>鋼琴樣式鏡子</td>
+              <td>$130</td>
+              <td>
+                <select class="form-select w-25 mx-auto" style="min-width: 60px;">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select>
+              </td>
+              <td>$130</td>
+              <td>
+                <span style="cursor: pointer;">
+                  <svg width="24" height="24" viewBox="0 0 24 24"><use xlink:href="#delete"></use>
+                  </svg>
+                </span>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <img src="assets/img/2.png" class="img-fluid" style="max-width: 150px; height: auto;">
+              </td>
+              <td>畢卡索樣式鏡子</td>
+              <td>$130</td>
+              <td>
+                <select class="form-select w-25 mx-auto" style="min-width: 60px;">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select>
+              </td>
+              <td>$130</td>
+              <td>
+                <span style="cursor: pointer;">
+                  <svg width="24" height="24" viewBox="0 0 24 24"><use xlink:href="#delete"></use>
+                  </svg>
+                </span>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <img src="assets/img/3.png" class="img-fluid" style="max-width: 150px; height: auto;">
+              </td>
+              <td>花樣式鏡子</td>
+              <td>$130</td>
+              <td>
+                <select class="form-select w-25 mx-auto" style="min-width: 60px;">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select>
+              </td>
+              <td>$130</td>
+              <td>
+                <span style="cursor: pointer;">
+                  <svg width="24" height="24" viewBox="0 0 24 24"><use xlink:href="#delete"></use>
+                  </svg>
+                </span>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+
+        <table class="table mb-0 align-middle text-center d-table d-md-none">
+          <thead class="d-none">
+            <tr>
+              <th>圖示</th>
+              <th>名稱/規格</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr>
+              <td>
+                <img src="assets/img/1.png" class="img-fluid" style="max-width: 150px; height: auto;">
+              </td>
+              <td>鋼琴樣式鏡子</td>
+              <td>
+                <div>
+                  <select class="form-select w-25 mx-auto" style="min-width: 60px;">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select>
+                </div>
+                <div>
+                  $130
+                </div>
+                <div>
+                  <span style="cursor: pointer;">
+                    <svg width="24" height="24" viewBox="0 0 24 24"><use xlink:href="#delete"></use>
+                    </svg>
+                  </span>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <img src="assets/img/2.png" class="img-fluid" style="max-width: 150px; height: auto;">
+              </td>
+              <td>畢卡索樣式鏡子</td>
+              <td>
+                <div>
+                  <select class="form-select w-25 mx-auto" style="min-width: 60px;">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select>
+                </div>
+                <div>
+                  $130
+                </div>
+                <div>
+                  <span style="cursor: pointer;">
+                    <svg width="24" height="24" viewBox="0 0 24 24"><use xlink:href="#delete"></use>
+                    </svg>
+                  </span>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <img src="assets/img/3.png" class="img-fluid" style="max-width: 150px; height: auto;">
+              </td>
+              <td>花樣式鏡子</td>
+              <td>
+                <div>
+                  <select class="form-select w-25 mx-auto" style="min-width: 60px;">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select>
+                </div>
+                <div>
+                  $130
+                </div>
+                <div>
+                  <span style="cursor: pointer;">
+                    <svg width="24" height="24" viewBox="0 0 24 24"><use xlink:href="#delete"></use>
+                    </svg>
+                  </span>
+                </div>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+
+        <div class="order-footer">
+          <div style="text-align: right; font-weight: bold; font-size: 28px; color: black; padding: 16px;">
+            <span>總金額:</span>
+            <span>$390</span>
+          </div>
+          <div class="d-flex flex-column flex-md-row justify-content-between fw-bold">
+            <span style="margin: 8px; padding: 8px 32px; border: solid 1px #ffc000; cursor: pointer; color: #ffc43f; text-align: center;">回上一頁</span>
+            <span style="margin: 8px; padding: 8px 32px; border: solid 1px #ffc000; background-color: #ffc43f; cursor: pointer; color: white; text-align: center;">確定購買</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Vendor JS Files -->
+    <script src="assets/js/jquery-1.11.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <script src="assets/js/plugins.js"></script>
+    <script type="module" src="assets/js/header-footer.js"></script>
+  </body>
+</html>

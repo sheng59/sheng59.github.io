@@ -199,12 +199,12 @@
 
   // document ready
   $(document).ready(function() {
-    const keyword = getQueryParam("keyword"); // 從網址讀取搜尋字
+    /*const keyword = getQueryParam("keyword"); // 從網址讀取搜尋字
     if (keyword) {
       loadSearchProducts(keyword);
     } else {
       loadAllProducts();
-    }
+    }*/
   }); // End of a document
 
 })(jQuery);

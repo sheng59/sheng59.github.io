@@ -18,14 +18,6 @@ const folderMap = {
   paintingTable: "painting"
 };
 
-const categoryMap_en = {
-    mirror: "mirrors",
-    magnet: "magnets",
-    coaster: "coasters",
-    wood: "woods",
-    painting: "paintings"
-};
-
 /**
   * 檢查使用者是否登入
   */
@@ -116,7 +108,7 @@ async function fetchTableData1(tableName, filter=false) {
 		  hot: row.hot,
 		  image: url,
 		};
-		product.category = categoryMap_en[tableName];
+		product.category = tableName;
 
 		// ✅ 若指定 filter 才加入 jarr、hot 屬性
 		if (filter) {

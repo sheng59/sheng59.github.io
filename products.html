@@ -29,45 +29,161 @@
         <div class="row">
           <!-- 左側導覽列 -->
           <div class="col-xl-2 mb-4 d-none d-xl-block">
-            <h4 class="mb-3">全部商品</h4>
-            <nav class="nav flex-column nav-pills" id="product-categories" role="tablist">
-              <a class="nav-link active" id="nav-mirrors-tab" style="cursor: pointer;" data-bs-toggle="tab" data-bs-target="#nav-mirrors" role="tab">鏡子</a>
-              <a class="nav-link" id="nav-coasters-tab" style="cursor: pointer;" data-bs-toggle="tab" data-bs-target="#nav-coasters" role="tab">杯墊</a>
-              <a class="nav-link" id="nav-magnets-tab" style="cursor: pointer;" data-bs-toggle="tab" data-bs-target="#nav-magnets" role="tab">磁鐵</a>
-              <a class="nav-link" id="nav-woods-tab" style="cursor: pointer;" data-bs-toggle="tab" data-bs-target="#nav-woods" role="tab">木板畫</a>
-              <a class="nav-link" id="nav-paintings-tab" style="cursor: pointer;" data-bs-toggle="tab" data-bs-target="#nav-paintings" role="tab">大畫</a>
-            </nav>
+            
+            <div class="sidebar d-flex flex-column">
+
+              <div class="sidebar-header">
+                <h4>全部商品</h4>
+              </div>
+
+              <ul class="nav nav-pills flex-column">
+                <li class="nav-item"><a class="nav-link active" style="cursor: pointer;" data-bs-toggle="tab" data-bs-target="#nav-mirror">鏡子</a></li>
+                <li class="nav-item"><a class="nav-link" style="cursor: pointer;" data-bs-toggle="tab" data-bs-target="#nav-magnet">磁鐵</a></li>
+                <li class="nav-item"><a class="nav-link" style="cursor: pointer;" data-bs-toggle="tab" data-bs-target="#nav-coaster">杯墊</a></li>
+                <li class="nav-item"><a class="nav-link" style="cursor: pointer;" data-bs-toggle="tab" data-bs-target="#nav-wood">木板畫</a></li>
+                <li class="nav-item"><a class="nav-link" style="cursor: pointer;" data-bs-toggle="tab" data-bs-target="#nav-painting">大畫</a></li>
+                <li class="nav-item"><a class="nav-link" style="cursor: pointer;" data-bs-toggle="tab" data-bs-target="#">桌曆</a></li>
+                <li class="nav-item"><a class="nav-link" style="cursor: pointer;" data-bs-toggle="tab" data-bs-target="#">吊飾</a></li>
+              </ul>
+
+              <div class="sidebar-footer">
+
+              </div>
+
+            </div>
           </div>
 
           <!-- 右側商品展示區 -->
           <div class="col-12 col-xl-10">
             <div class="tab-content" id="nav-tabContent">
 
-              <div class="tab-pane fade show active" id="nav-mirrors" role="tabpanel">
+              <div class="tab-pane fade active show" id="nav-mirror">
                 <div class="product-grid row row-cols-2 row-cols-sm-3 row-cols-md-4">
                   <!-- 商品卡片鏡子 -->
+                  <div class="col" style="padding: 0 6px;">
+                    <div class="product-item">
+                      <figure>
+                        <a title="鋼琴樣式鏡子"><img src="assets/img/1.png" class="tab-image"></a>
+                      </figure>
+                      <div class="p-2 d-flex justify-content-between align-items-center">
+                        <div>
+                          <span class="feature">鋼琴樣式鏡子</span>
+                          <span class="price">$130</span>
+                        </div>
+                        <a class="pe-2 nav-link align-self-end add-to-cart" data-key="mirror-1" style="cursor: pointer;">
+                          <svg width="24" height="24"><use xlink:href="#add-cart"></use></svg>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col" style="padding: 0 6px;">
+                    <div class="product-item">
+                      <figure>
+                        <a title="畢卡索樣式鏡子"><img src="assets/img/2.png" class="tab-image"></a>
+                      </figure>
+                      <div class="p-2 d-flex justify-content-between align-items-center">
+                        <div>
+                          <span class="feature">畢卡索樣式鏡子</span>
+                          <span class="price">$130</span>
+                        </div>
+                        <a class="pe-2 nav-link align-self-end add-to-cart" data-key="mirror-2" style="cursor: pointer;">
+                          <svg width="24" height="24"><use xlink:href="#add-cart"></use></svg>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col" style="padding: 0 6px;">
+                    <div class="product-item">
+                      <figure>
+                        <a title="花樣式鏡子"><img src="assets/img/3.png" class="tab-image"></a>
+                      </figure>
+                      <div class="p-2 d-flex justify-content-between align-items-center">
+                        <div>
+                          <span class="feature">花樣式鏡子</span>
+                          <span class="price">$130</span>
+                        </div>
+                        <a class="pe-2 nav-link align-self-end add-to-cart" data-key="mirror-3" style="cursor: pointer;">
+                          <svg width="24" height="24"><use xlink:href="#add-cart"></use></svg>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col" style="padding: 0 6px;">
+                    <div class="product-item">
+                      <figure>
+                        <a title="花樣式大畫"><img src="assets/img/4.png" class="tab-image"></a>
+                      </figure>
+                      <div class="p-2 d-flex justify-content-between align-items-center">
+                        <div>
+                          <span class="feature">花樣式大畫</span>
+                          <span class="price">$2000</span>
+                        </div>
+                        <a class="pe-2 nav-link align-self-end add-to-cart" data-key="painting-1" style="cursor: pointer;">
+                          <svg width="24" height="24"><use xlink:href="#add-cart"></use></svg>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col" style="padding: 0 6px;">
+                    <div class="product-item">
+                      <figure>
+                        <a title="花樣式大畫"><img src="assets/img/5.png" class="tab-image"></a>
+                      </figure>
+                      <div class="p-2 d-flex justify-content-between align-items-center">
+                        <div>
+                          <span class="feature">花樣式大畫</span>
+                          <span class="price">$2000</span>
+                        </div>
+                        <a class="pe-2 nav-link align-self-end add-to-cart" data-key="painting-2" style="cursor: pointer;">
+                          <svg width="24" height="24"><use xlink:href="#add-cart"></use></svg>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col" style="padding: 0 6px;">
+                    <div class="product-item">
+                      <figure>
+                        <a title="鋼琴樣式木板畫"><img src="assets/img/6.png" class="tab-image"></a>
+                      </figure>
+                      <div class="p-2 d-flex justify-content-between align-items-center">
+                        <div>
+                          <span class="feature">鋼琴樣式木板畫</span>
+                          <span class="price">$600</span>
+                        </div>
+                        <a class="pe-2 nav-link align-self-end add-to-cart" data-key="wood-1" style="cursor: pointer;">
+                          <svg width="24" height="24"><use xlink:href="#add-cart"></use></svg>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
               </div>
 
-              <div class="tab-pane fade" id="nav-coasters" role="tabpanel">
+              <div class="tab-pane fade" id="nav-coaster">
                 <div class="product-grid row row-cols-2 row-cols-sm-3 row-cols-md-4">
                   <!-- 商品卡片杯墊 -->
                 </div>
               </div>
 
-              <div class="tab-pane fade" id="nav-magnets" role="tabpanel">
+              <div class="tab-pane fade" id="nav-magnet">
                 <div class="product-grid row row-cols-2 row-cols-sm-3 row-cols-md-4">
                   <!-- 商品卡片磁鐵 -->
                 </div>
               </div>
 
-              <div class="tab-pane fade" id="nav-woods" role="tabpanel">
+              <div class="tab-pane fade" id="nav-wood">
                 <div class="product-grid row row-cols-2 row-cols-sm-3 row-cols-md-4">
                   <!-- 商品卡片木板畫 -->
                 </div>
               </div>
 
-              <div class="tab-pane fade" id="nav-paintings" role="tabpanel">
+              <div class="tab-pane fade" id="nav-painting">
                 <div class="product-grid row row-cols-2 row-cols-sm-3 row-cols-md-4">
                   <!-- 商品卡片大畫 -->
                 </div>
@@ -88,6 +204,6 @@
     <script src="assets/js/plugins.js"></script>
     <script type="module" src="assets/js/header-footer.js"></script>
     <script src="assets/js/database.js"></script>
-    <script src="assets/js/products.js"></script>
+    <script type="module" src="assets/js/products.js"></script>
   </body>
 </html>
