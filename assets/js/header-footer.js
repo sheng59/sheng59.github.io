@@ -96,29 +96,29 @@
                             <div class="offcanvas-body align-items-center">
                         
                             <ul class="navbar-nav justify-content-end menu-list list-unstyled d-flex gap-md-3 mb-0">
-                                <li class="nav-item active"><a href="/matt/index.html" class="nav-link text-dark">首頁</a></li>
-                                <li class="nav-item"><a href="/matt/about.html" class="nav-link text-dark">關於我們</a></li>
-                                <li class="nav-item"><a href="/matt/news.html" class="nav-link text-dark">訊息公佈</a></li>
-                                <li class="nav-item"><a href="/matt/teach.html" class="nav-link text-dark">繪畫課程</a></li>
+                                <li class="nav-item active"><a href="/index.html" class="nav-link text-dark">首頁</a></li>
+                                <li class="nav-item"><a href="/about.html" class="nav-link text-dark">關於我們</a></li>
+                                <li class="nav-item"><a href="/news.html" class="nav-link text-dark">訊息公佈</a></li>
+                                <li class="nav-item"><a href="/teach.html" class="nav-link text-dark">繪畫課程</a></li>
 
-                                <li class="nav-item d-none d-xl-block"><a href="/matt/products.html" class="nav-link text-dark">全部商品</a></li>
+                                <li class="nav-item d-none d-xl-block"><a href="/products.html" class="nav-link text-dark">全部商品</a></li>
 
                                 <li class="nav-item dropdown d-block d-xl-none">
                                 <a class="nav-link dropdown-toggle" role="button" id="pages" data-bs-toggle="dropdown" aria-expanded="false">全部商品</a>
                                 <ul class="dropdown-menu" aria-labelledby="pages">
-                                    <li><a class="dropdown-item text-dark" href="/matt/products.html?tab=nav-mirrors">鏡子</a></li>
-                                    <li><a class="dropdown-item text-dark" href="/matt/products.html?tab=nav-coasters">杯墊</a></li>
-                                    <li><a class="dropdown-item text-dark" href="/matt/products.html?tab=nav-magnets">磁鐵</a></li>
-                                    <li><a class="dropdown-item text-dark" href="/matt/products.html?tab=nav-woods">木板畫</a></li>
-                                    <li><a class="dropdown-item text-dark" href="/matt/products.html?tab=nav-paintings">大畫</a></li>
+                                    <li><a class="dropdown-item text-dark" href="/products.html?tab=nav-mirrors">鏡子</a></li>
+                                    <li><a class="dropdown-item text-dark" href="/products.html?tab=nav-coasters">杯墊</a></li>
+                                    <li><a class="dropdown-item text-dark" href="/products.html?tab=nav-magnets">磁鐵</a></li>
+                                    <li><a class="dropdown-item text-dark" href="/products.html?tab=nav-woods">木板畫</a></li>
+                                    <li><a class="dropdown-item text-dark" href="/products.html?tab=nav-paintings">大畫</a></li>
                                 </ul>
                                 </li>
 
-                                <li class="nav-item"><a href="/matt/contact.html" class="nav-link text-dark">擺攤位置</a></li>
+                                <li class="nav-item"><a href="/contact.html" class="nav-link text-dark">擺攤位置</a></li>
                             </ul>
                             
                             <div class="search-bar row bg-light p-2 my-2 rounded-4 ms-lg-5">
-                                <form id="search-form" class="d-flex w-100" action="/matt/search.html" method="get">
+                                <form id="search-form" class="d-flex w-100" action="/search.html" method="get">
                                 <div class="col-11">
                                     <input type="text" name="keyword" class="form-control border-0 bg-transparent" placeholder="找商品" />
                                 </div>
@@ -151,7 +151,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/matt/login.html" class="rounded-circle bg-light p-2 mx-1">
+                            <a href="/login.html" class="rounded-circle bg-light p-2 mx-1">
                             <svg width="24" height="24" viewBox="0 0 24 24"><use xlink:href="#user"></use></svg>
                             </a>
                         </li>
@@ -214,7 +214,7 @@
                         </li>
                     </ul>
             
-                    <button class="w-100 btn btn-primary btn-lg" type="submit" onclick="location.href='/matt/myorder.html';">前往結帳</button>
+                    <button class="w-100 btn btn-primary btn-lg" type="submit" onclick="location.href='/myorder.html';">前往結帳</button>
                     </div>
                 </div>
             </div>
@@ -227,7 +227,7 @@
 
                     <div class="col-lg-6 col-md-4">
                         <div class="footer-menu">
-                        <img src="assets/img/logo.png" alt="logo">
+                        <img src="/assets/img/logo.png" alt="logo">
                         <div class="social-links mt-5">
                             <ul class="d-flex list-unstyled gap-2">
                             <li>
@@ -265,19 +265,19 @@
                         <h5 class="widget-title">Matt Art</h5>
                         <ul class="menu-list list-unstyled">
                             <li class="menu-item">
-                            <a href="/matt/products.html" class="nav-link">關於我們</a>
+                            <a href="/products.html" class="nav-link">關於我們</a>
                             </li>
                             <li class="menu-item">
-                            <a href="/matt/products.html" class="nav-link">訊息公布</a>
+                            <a href="/products.html" class="nav-link">訊息公布</a>
                             </li>
                             <li class="menu-item">
-                            <a href="/matt/products.html" class="nav-link">繪畫課程</a>
+                            <a href="/products.html" class="nav-link">繪畫課程</a>
                             </li>
                             <li class="menu-item">
-                            <a href="/matt/products.html" class="nav-link">全部商品</a>
+                            <a href="/products.html" class="nav-link">全部商品</a>
                             </li>
                             <li class="menu-item">
-                            <a href="/matt/products.html" class="nav-link">擺攤位置</a>
+                            <a href="/products.html" class="nav-link">擺攤位置</a>
                             </li>
                         </ul>
                         </div>

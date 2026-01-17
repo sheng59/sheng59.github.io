@@ -113,12 +113,15 @@ import {setCookie, loadCartFromCookie, renderCart, getCart, setCart} from './mod
 
     initSwiper();
     initChocolat();
+
     if (isMobileDevice) {
       $('.tab-content').show();
-      $('.swiper-wrapper').hide();
+      $('.new-swiper').hide();
+      $('.hot-swiper').hide();
     } else {
       $('.tab-content').hide();
-      $('.swiper-wrapper').show();
+      $('.new-swiper').show();
+      $('.hot-swiper').show();
     }
   }); // End of a document
 
