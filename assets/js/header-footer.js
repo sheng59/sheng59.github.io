@@ -79,84 +79,88 @@
             <header class="fixed-top">
                 <div class="container-fluid">
                     <div class="row py-3">
-                    <div class="d-flex  justify-content-center justify-content-between align-items-center">
-                        <nav class="main-menu d-flex navbar navbar-expand-xl">
+                        <div class="d-flex  justify-content-center justify-content-between align-items-center">
+                            <nav class="main-menu d-flex navbar navbar-expand-xl">
 
-                        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
-                            aria-controls="offcanvasNavbar">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
+                                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                                    aria-controls="offcanvasNavbar">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>
 
-                        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                                <div class="navbar-logo px-2 d-md-none">
+                                    <h4 class="m-0">Matt</h4>
+                                </div>
 
-                            <div class="offcanvas-header justify-content-center">
-                                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                            </div>
+                                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
 
-                            <div class="offcanvas-body align-items-center">
-                        
-                            <ul class="navbar-nav justify-content-end menu-list list-unstyled d-flex gap-md-3 mb-0">
-                                <li class="nav-item active"><a href="/index.html" class="nav-link text-dark">首頁</a></li>
-                                <li class="nav-item"><a href="/about.html" class="nav-link text-dark">關於我們</a></li>
-                                <li class="nav-item"><a href="/news.html" class="nav-link text-dark">訊息公佈</a></li>
-                                <li class="nav-item"><a href="/teach.html" class="nav-link text-dark">繪畫課程</a></li>
+                                    <div class="offcanvas-header justify-content-center">
+                                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                    </div>
 
-                                <li class="nav-item d-none d-xl-block"><a href="/products.html" class="nav-link text-dark">全部商品</a></li>
+                                    <div class="offcanvas-body align-items-center">
+                                
+                                    <ul class="navbar-nav justify-content-end menu-list list-unstyled d-flex gap-md-3 mb-0">
+                                        <li class="nav-item active"><a href="/index.html" class="nav-link text-dark">首頁</a></li>
+                                        <li class="nav-item"><a href="/about.html" class="nav-link text-dark">關於我們</a></li>
+                                        <li class="nav-item"><a href="/news.html" class="nav-link text-dark">訊息公佈</a></li>
+                                        <li class="nav-item"><a href="/teach.html" class="nav-link text-dark">繪畫課程</a></li>
 
-                                <li class="nav-item dropdown d-block d-xl-none">
-                                <a class="nav-link dropdown-toggle" role="button" id="pages" data-bs-toggle="dropdown" aria-expanded="false">全部商品</a>
-                                <ul class="dropdown-menu" aria-labelledby="pages">
-                                    <li><a class="dropdown-item text-dark" href="/products.html?tab=nav-mirrors">鏡子</a></li>
-                                    <li><a class="dropdown-item text-dark" href="/products.html?tab=nav-coasters">杯墊</a></li>
-                                    <li><a class="dropdown-item text-dark" href="/products.html?tab=nav-magnets">磁鐵</a></li>
-                                    <li><a class="dropdown-item text-dark" href="/products.html?tab=nav-woods">木板畫</a></li>
-                                    <li><a class="dropdown-item text-dark" href="/products.html?tab=nav-paintings">大畫</a></li>
-                                </ul>
-                                </li>
+                                        <li class="nav-item d-none d-xl-block"><a href="/products.html" class="nav-link text-dark">全部商品</a></li>
 
-                                <li class="nav-item"><a href="/contact.html" class="nav-link text-dark">擺攤位置</a></li>
+                                        <li class="nav-item dropdown d-block d-xl-none">
+                                        <a class="nav-link dropdown-toggle" role="button" id="pages" data-bs-toggle="dropdown" aria-expanded="false">全部商品</a>
+                                        <ul class="dropdown-menu" aria-labelledby="pages">
+                                            <li><a class="dropdown-item text-dark" href="/products.html?tab=nav-mirrors">鏡子</a></li>
+                                            <li><a class="dropdown-item text-dark" href="/products.html?tab=nav-coasters">杯墊</a></li>
+                                            <li><a class="dropdown-item text-dark" href="/products.html?tab=nav-magnets">磁鐵</a></li>
+                                            <li><a class="dropdown-item text-dark" href="/products.html?tab=nav-woods">木板畫</a></li>
+                                            <li><a class="dropdown-item text-dark" href="/products.html?tab=nav-paintings">大畫</a></li>
+                                        </ul>
+                                        </li>
+
+                                        <li class="nav-item"><a href="/contact.html" class="nav-link text-dark">擺攤位置</a></li>
+                                    </ul>
+                                    
+                                    <div class="search-bar row bg-light p-2 my-2 rounded-4 ms-lg-5">
+                                        <form id="search-form" class="d-flex w-100" action="/search.html" method="get">
+                                        <div class="col-11">
+                                            <input type="text" name="keyword" class="form-control border-0 bg-transparent" placeholder="找商品" />
+                                        </div>
+                                        <div class="col-1">
+                                            <button type="submit" class="btn border-0 bg-transparent p-0">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                                <path fill="currentColor" d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z"/>
+                                            </svg>
+                                            </button>
+                                        </div>
+                                        </form>
+                                    </div>
+
+                                    
+                                    </div>
+
+                                </div>
+                            
+                            </nav>
+                            <ul class="d-flex justify-content-end list-unstyled m-0">
+                            <li>
+                                <a href="#" class="rounded-circle bg-light p-2 mx-1" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
+                                <svg width="24" height="24" viewBox="0 0 24 24"><use xlink:href="#cart"></use></svg>
+                                <span class="position-absolute top-10 start-10 translate-middle badge rounded-pill bg-primary cart-count">3</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="rounded-circle bg-light p-2 mx-1">
+                                <svg width="24" height="24" viewBox="0 0 24 24"><use xlink:href="#heart"></use></svg>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/login.html" class="rounded-circle bg-light p-2 mx-1">
+                                <svg width="24" height="24" viewBox="0 0 24 24"><use xlink:href="#user"></use></svg>
+                                </a>
+                            </li>
                             </ul>
-                            
-                            <div class="search-bar row bg-light p-2 my-2 rounded-4 ms-lg-5">
-                                <form id="search-form" class="d-flex w-100" action="/search.html" method="get">
-                                <div class="col-11">
-                                    <input type="text" name="keyword" class="form-control border-0 bg-transparent" placeholder="找商品" />
-                                </div>
-                                <div class="col-1">
-                                    <button type="submit" class="btn border-0 bg-transparent p-0">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                        <path fill="currentColor" d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z"/>
-                                    </svg>
-                                    </button>
-                                </div>
-                                </form>
-                            </div>
-
-                            
-                            </div>
-
                         </div>
-                        
-                        </nav>
-                        <ul class="d-flex justify-content-end list-unstyled m-0">
-                        <li>
-                            <a href="#" class="rounded-circle bg-light p-2 mx-1" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
-                            <svg width="24" height="24" viewBox="0 0 24 24"><use xlink:href="#cart"></use></svg>
-                            <span class="position-absolute top-10 start-10 translate-middle badge rounded-pill bg-primary cart-count">3</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="rounded-circle bg-light p-2 mx-1">
-                            <svg width="24" height="24" viewBox="0 0 24 24"><use xlink:href="#heart"></use></svg>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/login.html" class="rounded-circle bg-light p-2 mx-1">
-                            <svg width="24" height="24" viewBox="0 0 24 24"><use xlink:href="#user"></use></svg>
-                            </a>
-                        </li>
-                        </ul>
-                    </div>
                     </div>
                 </div>
             </header>
