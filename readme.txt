@@ -31,4 +31,3 @@ const folderMap = {
 4. 在supabase上的storage建立資料夾存放圖片
 5. 在supabase上的Table edit建立表格
 6. 在table edit建立RLS policy
-123
