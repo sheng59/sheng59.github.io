@@ -58,6 +58,17 @@
         font-size: 18px;
       }
 
+      @media (max-width: 768px) {
+        .responsive-table tr {
+          display: block;
+        }
+
+        .responsive-table td {
+          display: block;
+          width: 100% !important;
+        }
+      }
+
     </style>
 
   </head>
@@ -97,7 +108,7 @@
         <div class="bg-white p-3 mb-5 border">
           <table class="table align-middle text-center">
             <thead>
-              <th class="text-start">商品名稱</th>
+              <th class="text-start" style="white-space: nowrap;">商品名稱</th>
               <th width="30px">單價</th>
               <th width="60px">數量</th>
               <th width="30px">小計</th>
@@ -142,7 +153,7 @@
             <div class="bg-white p-4 border">
               <h5 class="mb-4 pb-2 border-bottom">購買人資訊</h5>
                 
-              <table>
+              <table class="responsive-table">
                 <thead>
                   <tr>
                     <th width="100px"></th>
@@ -150,31 +161,28 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td style="white-space: nowrap;"><label for="buyer-name" class="form-label fw-medium">姓名</label></td>
-                    <td><input type="text" class="form-control rounded-2" id="buyer-name" placeholder="請輸入姓名"></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td>※購買人姓名為日後訂單查詢使用，請確實填寫。</td>
+                  <tr style="vertical-align: top;">
+                    <td><label for="buyer-name" class="form-label fw-medium">姓名</label></td>
+                    <td>
+                      <input type="text" class="form-control rounded-2" id="buyer-name" placeholder="請輸入姓名">
+                      <div>※購買人姓名為日後訂單查詢使用，請確實填寫。</div>
+                    </td>
                   </tr>
                   
-                  <tr>
-                    <td style="white-space: nowrap;"><label for="buyer-email" class="form-label fw-medium">電子信箱</label></td>
-                    <td><input type="email" class="form-control rounded-2" id="buyer-email" placeholder="example@email.com"></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td>※請填寫常用的 E-mail 信箱，確保您能收到訂購相關訊息。</td>
+                  <tr style="vertical-align: top;">
+                    <td><label for="buyer-email" class="form-label fw-medium">電子信箱</label></td>
+                    <td>
+                      <input type="email" class="form-control rounded-2" id="buyer-email" placeholder="example@email.com">
+                      <div>※請填寫常用的 E-mail 信箱，確保您能收到訂購相關訊息。</div>
+                    </td>
                   </tr>
 
-                  <tr>
-                    <td style="white-space: nowrap;"><label for="buyer-phone" class="form-label fw-medium">電話號碼</label></td>
-                    <td><input type="tel" class="form-control rounded-2" id="buyer-phone" placeholder="0912-345-678"></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td>※ 電話號碼請以連續數字格式填寫。</br>※ 我們將以簡訊通知您交易訊息，為確保您能收到訊息，請優先填寫行動電話號碼。</td>
+                  <tr style="vertical-align: top;">
+                    <td><label for="buyer-phone" class="form-label fw-medium">電話號碼</label></td>
+                    <td>
+                      <input type="tel" class="form-control rounded-2" id="buyer-phone" placeholder="0912-345-678">
+                      <div>※ 電話號碼請以連續數字格式填寫。</br>※ 我們將以簡訊通知您交易訊息，為確保您能收到訊息，請優先填寫行動電話號碼。</div>
+                    </td>
                   </tr>
 
                 </tbody>
@@ -189,7 +197,7 @@
               <h5 class="mb-4 pb-2 border-bottom">收件人資訊</h5>
 
 
-              <table>
+              <table class="responsive-table">
                 <thead>
                   <tr>
                     <th width="100px"></th>
@@ -198,42 +206,38 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td style="white-space: nowrap;"><label for="recipient-name" class="form-label fw-medium me-4">收件人姓名</label></td>
-                    <td><input type="text" class="form-control rounded-2" id="recipient-name" placeholder="請輸入收件人姓名"></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td class="text-danger fw-bold">※收貨人姓名為物流配送使用，請確實填寫。</td>
+                    <td style="white-space: nowrap; vertical-align: top;"><label for="recipient-name" class="form-label fw-medium me-4">收件人姓名</label></td>
+                    <td>
+                      <input type="text" class="form-control rounded-2" id="recipient-name" placeholder="請輸入收件人姓名">
+                      <div class="text-danger fw-bold">※收貨人姓名為物流配送使用，請確實填寫。</div>
+                    </td>
                   </tr>
                   
                   <tr>
-                    <td style="white-space: nowrap;"><label for="recipient-email" class="form-label fw-medium me-4">電子信箱</label></td>
-                    <td><input type="email" class="form-control rounded-2" id="recipient-email" placeholder="example@email.com"></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td class="text-danger fw-bold">※請填寫常用的 E-mail 信箱，確保您能收到配送相關訊息。</td>
-                  </tr>
-
-                  <tr>
-                    <td style="white-space: nowrap;"><label for="recipient-phone" class="form-label fw-medium me-4">電話號碼</label></td>
-                    <td><input type="tel" class="form-control rounded-2" id="recipient-phone" placeholder="0912-345-678"></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td class="text-danger fw-bold">※ 電話號碼請以連續數字格式填寫。</br>※ 我們將以簡訊通知您交易訊息，為確保您能收到訊息，請優先填寫行動電話號碼。</td>
+                    <td style="white-space: nowrap; vertical-align: top;"><label for="recipient-email" class="form-label fw-medium me-4">電子信箱</label></td>
+                    <td>
+                      <input type="email" class="form-control rounded-2" id="recipient-email" placeholder="example@email.com">
+                      <div class="text-danger fw-bold">※請填寫常用的 E-mail 信箱，確保您能收到配送相關訊息。</div>
+                    </td>
                   </tr>
 
                   <tr>
-                    <td style="white-space: nowrap;"><label for="recipient-address" class="form-label fw-medium me-4">收貨地址</label></td>
-                    <td><input type="text" class="form-control rounded-2" id="recipient-address" placeholder="請輸入完整地址"></td>
+                    <td style="white-space: nowrap; vertical-align: top;"><label for="recipient-phone" class="form-label fw-medium me-4">電話號碼</label></td>
+                    <td>
+                      <input type="tel" class="form-control rounded-2" id="recipient-phone" placeholder="0912-345-678">
+                      <div class="text-danger fw-bold">※ 電話號碼請以連續數字格式填寫。</br>※ 我們將以簡訊通知您交易訊息，為確保您能收到訊息，請優先填寫行動電話號碼。</div>
+                    </td>
                   </tr>
+
                   <tr>
-                    <td></td>
-                    <td class="text-danger fw-bold">
+                    <td style="white-space: nowrap; vertical-align: top;"><label for="recipient-address" class="form-label fw-medium me-4">收貨地址</label></td>
+                    <td>
+                      <input type="text" class="form-control rounded-2" id="recipient-address" placeholder="請輸入完整地址">
+                      <div class="text-danger fw-bold">
                         ※ 商品配送時間為白天，請填寫白天可以簽收的中文地址，以利宅配人員辨識與聯繫。
                         </br>※ 因商品配送方式採用宅配到府，需要專人簽收，寄送地址請勿填寫郵政信箱。
                         </br>※ 單筆交易滿 NT$ 2,000 元免物流費。
+                      </div>
                     </td>
                   </tr>
 
