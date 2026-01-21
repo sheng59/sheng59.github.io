@@ -108,7 +108,7 @@
                                         <li class="nav-item d-none d-xl-block"><a href="/products.html" class="nav-link text-dark">全部商品</a></li>
 
                                         <li class="nav-item dropdown d-block d-xl-none">
-                                        <a class="nav-link dropdown-toggle" role="button" id="pages" data-bs-toggle="dropdown" aria-expanded="false">全部商品</a>
+                                        <a class="nav-link dropdown-toggle text-dark" role="button" id="pages" data-bs-toggle="dropdown" aria-expanded="false">全部商品</a>
                                         <ul class="dropdown-menu" aria-labelledby="pages">
                                             <li><a class="dropdown-item text-dark" href="/products.html?tab=nav-mirrors">鏡子</a></li>
                                             <li><a class="dropdown-item text-dark" href="/products.html?tab=nav-coasters">杯墊</a></li>
