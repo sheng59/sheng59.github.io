@@ -456,7 +456,7 @@ const renderOrdertList = function(device = 'desktop', cart = []) {
 						<td>
 							<img src="${img_url}${c.category}/${c.name}.png" class="img-fluid" style="min-width: 80px; max-width: 150px; width: 100%;">
 						</td>
-						<td class="text-start align-top" style="white-space: nowrap;">${c.feature}}樣式${tb_cn[c.category]}</td>
+						<td class="text-start align-top" style="white-space: nowrap;">${c.feature}樣式${tb_cn[c.category]}</td>
 						<td>
 							<div>
 							<select class="form-select w-25 mx-auto select-quantity" data-key="${c.category}-${c.id}" data-code="${c.datacode}" style="min-width: 60px; background-color: transparent;">
