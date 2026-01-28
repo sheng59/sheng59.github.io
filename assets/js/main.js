@@ -1,4 +1,4 @@
-import {setCookie, loadCartFromCookie, renderCart, getCart, setCart} from './modules/cart.js';
+import {createProduct, renderNewProducts, renderHotProducts, renderAllProducts, getProductList, renderBackendProduct} from './modules/product.js';
 
 (function($) {
 
@@ -114,15 +114,21 @@ import {setCookie, loadCartFromCookie, renderCart, getCart, setCart} from './mod
     initSwiper();
     initChocolat();
 
-    if (isMobileDevice) {
+    createProduct().then(() => {
+      if (isMobileDevice) {
+      renderNewProducts('mobile');
+      renderHotProducts('mobile');
       $('.tab-content').show();
       $('.new-swiper').hide();
       $('.hot-swiper').hide();
     } else {
+      renderNewProducts('desktop');
+      renderHotProducts('desktop');
       $('.tab-content').hide();
       $('.new-swiper').show();
       $('.hot-swiper').show();
     }
+    });
   }); // End of a document
 
 })(jQuery);

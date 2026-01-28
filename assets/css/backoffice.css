@@ -84,7 +84,7 @@ table.table td .add {
 /*--------------------------------------------------------------
 # Upload Image
 --------------------------------------------------------------*/
-.picture__input {
+.picture-input {
   display: none;
 }
 
@@ -114,11 +114,11 @@ table.table td .add {
   background: #ccc;
 }
 
-.picture__img {
+.picture-img {
   max-width: 100%;
 }
 
-.picture__image img {
+.picture-image img {
   max-width: 100%;
   height: auto;
   object-fit: contain; /* 縮放完整顯示 */
@@ -127,11 +127,11 @@ table.table td .add {
 /*--------------------------------------------------------------
 # pagination
 --------------------------------------------------------------*/
-.num_rows {
+.num-rows {
     width: 120px;
 }
 
-.tb_search {
+.tb-search {
     width: 400px;
 }
 
@@ -168,7 +168,7 @@ table.table td .add {
   border-color: #337ab7;
 }
 
-.rows_count {
+.rows-count {
   padding: 20px;
   width: 20%;
   text-align:right;
