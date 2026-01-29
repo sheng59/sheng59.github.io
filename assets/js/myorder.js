@@ -1,9 +1,16 @@
 import {setCookie, loadCartFromCookie, renderCart, getCart, setCart} from './modules/cart.js';
-import {createProduct, renderNewProducts, renderHotProducts, renderAllProducts, getProductList, renderBackendProduct, renderOrdertList} from './modules/product.js';
+import {createProduct, renderNewProducts, renderHotProducts, renderAllProducts, getProductList, renderBackendProduct, renderOrdertList, getPaymentAmt, setPaymentAmt} from './modules/product.js';
 
 (function($) {
 
   "use strict";
+
+    function updateOrderItemPrice(code, newQty, price) {
+        const $select = $(`.select-quantity[data-code="${code}"]`);
+        const $row = $select.closest('tr');
+
+        $row.find('td:eq(4)').text(`$${newQty*price}`);
+    }
 
     // document ready
     $(document).ready(function() {
@@ -21,10 +28,10 @@ import {createProduct, renderNewProducts, renderHotProducts, renderAllProducts, 
         $(document).on('change', '.select-quantity', function(e) {
             e.preventDefault();
 
-            //const currentScrollY = window.scrollY;
-
             const code = $(this).data('code');
             const newQty = parseInt($(this).val());
+            const totalAmount = $('#total-amount');
+            let newPayAmt = 0;
 
             if (!newQty) return;
 
@@ -34,13 +41,12 @@ import {createProduct, renderNewProducts, renderHotProducts, renderAllProducts, 
                 product.purchaseQty = newQty;
                 setCart(cart);
                 renderCart();
-                if (isMobileDevice) {
-                    renderOrdertList('mobile', cart);
-                } else {
-                    renderOrdertList('desktop', cart);
-                }
-
-                //window.scrollTo(0, currentScrollY);
+                updateOrderItemPrice(code, newQty, product.price);
+                cart.forEach(c => {
+                    newPayAmt += (c.price * c.purchaseQty);
+                });
+                totalAmount.text(`$${newPayAmt}`);
+                setPaymentAmt(newPayAmt);
             }
         });
         /**

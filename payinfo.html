@@ -106,7 +106,7 @@
         </div>
         
         <div class="bg-white p-3 mb-5 border">
-          <table class="table align-middle text-center">
+          <table class="table align-middle text-center" id="payinfo-table">
             <thead>
               <th class="text-start" style="white-space: nowrap;">商品名稱</th>
               <th width="30px">單價</th>
@@ -114,33 +114,6 @@
               <th width="30px">小計</th>
             </thead>
             <tbody>
-              <tr>
-                <td class="text-start">鋼琴樣式杯墊</td>
-                <td>$130</td>
-                <td>1</td>
-                <td>$130</td>
-              </tr>
-
-              <tr>
-                <td class="text-start">花樣式杯墊</td>
-                <td>$130</td>
-                <td>1</td>
-                <td>$130</td>
-              </tr>
-
-              <tr>
-                <td class="text-start">草原樣式杯墊</td>
-                <td>$130</td>
-                <td>1</td>
-                <td>$130</td>
-              </tr>
-
-              <tr>
-                <td colspan="4" class="text-end border-bottom-0">
-                  <span class="fs-4 fw-bold text-dark">合計</span>
-                  <span class="fs-4 fw-bold text-dark">$390</span>
-                </td>
-              </tr>
 
             </tbody>
           </table>
@@ -252,7 +225,7 @@
         <div class="order-footer">
           <div class="d-flex flex-column flex-md-row justify-content-between fw-bold">
             <a href="myorder.html" style="margin: 8px 0; padding: 8px 32px; border: solid 1px #ffc000; cursor: pointer; color: var(--bs-primary); text-align: center; text-decoration: none;">回購物車頁面</a>
-            <a href="payinfo.html" style="margin: 8px 0; padding: 8px 32px; border: solid 1px #ffc000; background-color: var(--bs-primary); cursor: pointer; color: white; text-align: center; text-decoration: none;">立即結帳</a>
+            <a href="test.html" style="margin: 8px 0; padding: 8px 32px; border: solid 1px #ffc000; background-color: var(--bs-primary); cursor: pointer; color: white; text-align: center; text-decoration: none;">立即結帳</a>
           </div>
         </div>
 
@@ -266,5 +239,22 @@
     <script src="assets/js/jquery-1.11.0.min.js"></script>
     <script src="assets/js/plugins.js"></script>
     <script type="module" src="assets/js/header-footer.js"></script>
+    <script type="module">
+      import {setCookie, loadCartFromCookie, renderCart, getCart, setCart} from './assets/js/modules/cart.js';
+      import {createProduct, renderNewProducts, renderHotProducts, renderAllProducts, getProductList, renderBackendProduct, renderOrdertList, renderPayList, getPaymentAmt, setPaymentAmt} from './assets/js/modules/product.js';
+
+      (function($) {
+
+        "use strict";
+
+        // document ready
+        $(document).ready(function() {
+          let cart = getCart();
+
+          renderPayList(cart);
+        });
+      })(jQuery);
+
+    </script>
   </body>
 </html>

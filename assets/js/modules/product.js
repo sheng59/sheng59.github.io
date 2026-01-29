@@ -24,6 +24,7 @@ const categoryPrefix = {
 };
 
 let productList = [];
+let paymentAmt = 0;
 
 function generateProductCode(category, id) {
 	if (!category) {
@@ -395,8 +396,6 @@ const renderBackendProduct = function() {
   * 渲染結帳頁面商品
   */
 const renderOrdertList = function(device = 'desktop', cart = []) {
-	let total = 0;
-
 	if (device === 'desktop') {
 		let $tbody = $(`#table-desktop tbody`);
 		$tbody.empty();
@@ -434,7 +433,7 @@ const renderOrdertList = function(device = 'desktop', cart = []) {
 						</td>
 					</tr>
 				`);
-				total += (c.price*c.purchaseQty);
+				paymentAmt += (c.price*c.purchaseQty);
 			});
 		}
 	} else if (device === 'mobile') {
@@ -454,9 +453,9 @@ const renderOrdertList = function(device = 'desktop', cart = []) {
 				$tbody.append(`
 					<tr>
 						<td>
-							<img src="${img_url}${c.category}/${c.name}.png" class="img-fluid" style="min-width: 80px; max-width: 150px; width: 100%;">
+							<img src="${img_url}${c.category}/${c.name}.png" class="img-fluid" style="min-width: 100px; max-width: 150px; width: 100%;">
 						</td>
-						<td class="text-start align-top" style="white-space: nowrap;">${c.feature}樣式${tb_cn[c.category]}</td>
+						<td class="text-start align-top">${c.feature}樣式${tb_cn[c.category]}</td>
 						<td>
 							<div>
 							<select class="form-select w-25 mx-auto select-quantity" data-key="${c.category}-${c.id}" data-code="${c.datacode}" style="min-width: 60px; background-color: transparent;">
@@ -475,12 +474,39 @@ const renderOrdertList = function(device = 'desktop', cart = []) {
 						</td>
 					</tr>
 				`);
-				total += (c.price*c.purchaseQty);
+				paymentAmt += (c.price*c.purchaseQty);
 			});
 		}
 	}
 	let totalAmount = $('#total-amount');
-	totalAmount.text(`$${total}`);
+	totalAmount.text(`$${paymentAmt}`);
+	setPaymentAmt(paymentAmt);
+}
+
+const renderPayList = function(cart = []) {
+	const $tbody = $('#payinfo-table tbody');
+
+	cart.forEach(c => {
+		$tbody.append(`
+			<tr>
+				<td class="text-start">${c.feature}樣式${tb_cn[c.category]}</td>
+				<td>$${c.price}</td>
+				<td>${c.purchaseQty}</td>
+				<td>$${c.price * c.purchaseQty}</td>
+			</tr>
+		`);
+	});
+
+	const totalAmount = parseFloat(sessionStorage.getItem('orderTotal')) || 0;
+	
+	$tbody.append(`
+		<tr>
+			<td colspan="4" class="text-end border-bottom-0">
+				<span class="fs-4 fw-bold text-dark">合計</span>
+				<span class="fs-4 fw-bold text-dark" id="pay-amount">$${totalAmount}</span>
+			</td>
+		</tr>
+	`);
 }
 
 const syncUpdateDatabase = function() {
@@ -589,6 +615,12 @@ const syncUpdateDatabase = function() {
 }
 
 const getProductList = () => productList;
+const getPaymentAmt = () => paymentAmt;
+
+const setPaymentAmt = (newAmt) => {
+	paymentAmt = newAmt;
+	sessionStorage.setItem('orderTotal', newAmt.toString());
+}
 
 export {
 	createProduct,
@@ -598,9 +630,12 @@ export {
 	renderSearchProducts,
 	renderBackendProduct,
 	renderOrdertList,
+	renderPayList,
 	syncUpdateDatabase,
 	checkUser,
 	logoutUser,
 	initLogin,
-	getProductList
+	getProductList,
+	getPaymentAmt, 
+	setPaymentAmt
 };
