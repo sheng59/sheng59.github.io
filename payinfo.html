@@ -286,27 +286,34 @@
             }*/
 
             try {
-              const response = await fetch('/api/send-line-message', {
-                  method: 'POST',
-                  headers: {
-                      'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify({
-                      to: 'U9f44bf9ba0f448f57ca9d6431d8453d5',
-                      message: 'Hello from Vercel!'
-                  })
-              });
-                  
-              const result = await response.json();
-                  
-              if (result.success) {
-                console.log('訊息發送成功！');
-              } else {
-                console.error('發送失敗：', result.error);
-              }
-              } catch (error) {
-                console.error('網路錯誤：', error);
-              }
+                console.log('開始發送請求...');
+                
+                const response = await fetch('/api/send-line-message', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        to: 'U9f44bf9ba0f448f57ca9d6431d8453d5',
+                        message: 'Hello from frontend!'
+                    })
+                });
+
+                console.log('Response status:', response.status);
+                console.log('Response headers:', Object.fromEntries(response.headers.entries()));
+                
+                const text = await response.text();
+                console.log('Raw response text:', text);
+                
+                // 檢查是否為 JSON
+                if (text.trim().startsWith('{')) {
+                    const result = JSON.parse(text);
+                    console.log('Parsed JSON:', result);
+                } else {
+                    console.error('❌ 回傳的不是 JSON，可能是 HTML 錯誤頁面');
+                }
+                
+            } catch (error) {
+                console.error('Fetch error:', error);
+            }
           });
         });
       })(jQuery);
