@@ -259,7 +259,7 @@
           renderPayList(cart);
 
           $('.pay-btn').click(async function() {
-            /*const requiredIds = [
+            const requiredIds = [
               'buyer-name', 'buyer-email', 'buyer-phone',
               'recipient-name', 'recipient-email', 'recipient-phone', 'recipient-address'
             ];
@@ -277,14 +277,79 @@
               } else {
                   $input.removeClass('is-invalid'); // 清除紅框
               }
-            });*/
+            });
 
 
-            /*if (hasError) {
+            if (hasError) {
               alert('請填寫所有必填欄位！');
               return false;
-            }*/
+            }
 
+            // 🔑 收集所有表單資料
+            const formData = {
+                buyer: {
+                    name: $('#buyer-name').val().trim(),
+                    email: $('#buyer-email').val().trim(),
+                    phone: $('#buyer-phone').val().trim()
+                },
+                recipient: {
+                    name: $('#recipient-name').val().trim(),
+                    email: $('#recipient-email').val().trim(),
+                    phone: $('#recipient-phone').val().trim(),
+                    address: $('#recipient-address').val().trim()
+                }
+            };
+
+            // 🔑 格式化訂單訊息
+            const orderMessage = `
+              會員註冊資訊：
+              姓名：${formData.buyer.name}
+              電子信箱：${formData.buyer.email}
+              電話：${formData.buyer.phone}
+
+              收件人資訊：
+              姓名：${formData.recipient.name}
+              電子信箱：${formData.recipient.email}
+              電話：${formData.recipient.phone}
+              地址：${formData.recipient.address}
+            `.trim();
+
+            try {
+              // 🔑 發送訂單訊息到 LINE
+              const response = await fetch('/api/send-line-message', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({
+                      to: 'U9f44bf9ba0f448f57ca9d6431d8453d5', // 你的 LINE User ID
+                      message: orderMessage
+                  })
+              });
+
+              const text = await response.text();
+              console.log('Raw response:', text);
+
+              // 檢查是否為 JSON
+              if (text.trim().startsWith('{')) {
+                  const result = JSON.parse(text);
+                  if (result.success) {
+                      alert('訂單已送出！我們會盡快處理您的訂單。');
+                      // 可以在此加入跳轉到成功頁面的邏輯
+                      window.location.href = 'test.html';
+                  } else {
+                      alert('訂單送出失敗，請稍後再試。');
+                      console.error('API Error:', result);
+                  }
+              } else {
+                  // 如果回傳的是 HTML（錯誤情況）
+                  alert('系統錯誤，請聯絡客服。');
+                  console.error('Unexpected response:', text);
+              }
+            } catch (error) {
+              console.error('網路錯誤：', error);
+              alert('網路連線錯誤，請檢查網路後重試。');
+            }
             
           });
         });
