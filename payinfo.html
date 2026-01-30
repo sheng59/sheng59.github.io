@@ -285,36 +285,7 @@
               return false;
             }*/
 
-            try {
-              const response = await fetch('/api/send-line-message', {
-                  method: 'POST',
-                  headers: {
-                      'Content-Type': 'application/json', // 🔑 必須有這個
-                      'Accept': 'application/json'
-                  },
-                  body: JSON.stringify({
-                      to: 'U9f44bf9ba0f448f57ca9d6431d8453d5',
-                      message: 'Hello from frontend!'
-                  })
-              });
-
-              console.log('Status:', response.status);
-              
-              // 先取得原始文字
-              const text = await response.text();
-              console.log('Raw response:', text);
-
-              // 只有當是 JSON 時才 parse
-              if (text.trim().startsWith('{')) {
-                  const result = JSON.parse(text);
-                  console.log('Parsed:', result);
-              } else {
-                  console.error('❌ 回傳的是 HTML:', text);
-              }
-                
-            } catch (error) {
-                console.error('Error:', error);
-            }
+            
           });
         });
       })(jQuery);
