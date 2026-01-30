@@ -69,6 +69,11 @@
         }
       }
 
+      label::after {
+        content: " *";
+        color: rgba(var(--bs-danger-rgb));
+      }
+
     </style>
 
   </head>
@@ -225,7 +230,7 @@
         <div class="order-footer">
           <div class="d-flex flex-column flex-md-row justify-content-between fw-bold">
             <a href="myorder.html" style="margin: 8px 0; padding: 8px 32px; border: solid 1px #ffc000; cursor: pointer; color: var(--bs-primary); text-align: center; text-decoration: none;">回購物車頁面</a>
-            <a href="test.html" style="margin: 8px 0; padding: 8px 32px; border: solid 1px #ffc000; background-color: var(--bs-primary); cursor: pointer; color: white; text-align: center; text-decoration: none;">立即結帳</a>
+            <a class="pay-btn" style="margin: 8px 0; padding: 8px 32px; border: solid 1px #ffc000; background-color: var(--bs-primary); cursor: pointer; color: white; text-align: center; text-decoration: none;">立即結帳</a>
           </div>
         </div>
 
@@ -252,6 +257,57 @@
           let cart = getCart();
 
           renderPayList(cart);
+
+          $('.pay-btn').click(async function() {
+            /*const requiredIds = [
+              'buyer-name', 'buyer-email', 'buyer-phone',
+              'recipient-name', 'recipient-email', 'recipient-phone', 'recipient-address'
+            ];
+
+            let hasError = false;
+    
+            requiredIds.forEach(id => {
+              const $input = $(`#${id}`);
+              const value = $input.val();
+
+              // 檢查是否為空
+              if (value == null || String(value).trim() === '') {
+                  $input.addClass('is-invalid'); // 🔑 讓框變紅
+                  hasError = true;
+              } else {
+                  $input.removeClass('is-invalid'); // 清除紅框
+              }
+            });*/
+
+
+            /*if (hasError) {
+              alert('請填寫所有必填欄位！');
+              return false;
+            }*/
+
+            try {
+              const response = await fetch('/api/send-line-message', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({
+                      to: 'U9f44bf9ba0f448f57ca9d6431d8453d5',
+                      message: 'Hello from Vercel!'
+                  })
+              });
+                  
+              const result = await response.json();
+                  
+              if (result.success) {
+                console.log('訊息發送成功！');
+              } else {
+                console.error('發送失敗：', result.error);
+              }
+              } catch (error) {
+                console.error('網路錯誤：', error);
+              }
+          });
         });
       })(jQuery);
 
