@@ -126,10 +126,10 @@
 
         <div class="row">
             
-          <!-- 購買人資訊 -->
+          <!-- 訂購人資訊 -->
           <div class="col-md-6 mb-3">
             <div class="bg-white p-4 border">
-              <h5 class="mb-4 pb-2 border-bottom">購買人資訊</h5>
+              <h5 class="mb-4 pb-2 border-bottom">訂購人資訊</h5>
                 
               <table class="responsive-table">
                 <thead>
@@ -143,7 +143,7 @@
                     <td><label for="buyer-name" class="form-label fw-medium">姓名</label></td>
                     <td>
                       <input type="text" class="form-control rounded-2" id="buyer-name" placeholder="請輸入姓名">
-                      <div>※購買人姓名為日後訂單查詢使用，請確實填寫。</div>
+                      <div>※訂購人姓名為日後訂單查詢使用，請確實填寫。</div>
                     </td>
                   </tr>
                   
@@ -183,6 +183,16 @@
                   </tr>
                 </thead>
                 <tbody>
+                  <tr>
+                    <td class="align-middle">
+                      <div class="d-flex align-items-center">
+                        <input type="checkbox" class="form-check-input me-2">
+                        <span>同訂購人</span>
+                      </div>
+                    </td>
+                    <td></td>
+                  </tr>
+
                   <tr>
                     <td style="white-space: nowrap; vertical-align: top;"><label for="recipient-name" class="form-label fw-medium me-4">收件人姓名</label></td>
                     <td>
@@ -246,11 +256,27 @@
     <script type="module" src="assets/js/header-footer.js"></script>
     <script type="module">
       import {setCookie, loadCartFromCookie, renderCart, getCart, setCart} from './assets/js/modules/cart.js';
-      import {createProduct, renderNewProducts, renderHotProducts, renderAllProducts, getProductList, renderBackendProduct, renderOrdertList, renderPayList, getPaymentAmt, setPaymentAmt} from './assets/js/modules/product.js';
+      import {createProduct, renderNewProducts, renderHotProducts, renderAllProducts, getProductList, renderBackendProduct, renderOrdertList, renderPayList, getPaymentAmt, createOrder, setPaymentAmt} from './assets/js/modules/product.js';
 
       (function($) {
 
         "use strict";
+
+        function generateUniqueOrderNumber() {
+          const now = new Date();
+          const year = String(now.getFullYear()).slice(-2);
+          const month = String(now.getMonth() + 1).padStart(2, '0');
+          const day = String(now.getDate()).padStart(2, '0');
+          
+          // 組合：毫秒 + 隨機數
+          const timestamp = now.getTime();  // 毫秒級時間戳
+          const random = Math.floor(Math.random() * 1000);  // 0-999 隨機數
+          
+          // 生成 5 位唯一編號
+          const uniqueId = String(timestamp % 100000 + random).padStart(5, '0');
+          
+          return `ORD-${year}${month}${day}${uniqueId}`;
+        }
 
         // document ready
         $(document).ready(function() {
@@ -259,8 +285,6 @@
           renderPayList(cart);
 
           $('.pay-btn').click(async function() {
-            const pay = parseFloat(sessionStorage.getItem('orderTotal')) || 0;
-
             const requiredIds = [
               'buyer-name', 'buyer-email', 'buyer-phone',
               'recipient-name', 'recipient-email', 'recipient-phone', 'recipient-address'
@@ -288,21 +312,53 @@
             }
 
             const orderData = {
-              userId: "U9f44bf9ba0f448f57ca9d6431d8453d5",  // 你的 LINE User ID
-              orderId: "0123456789",                          // 訂單編號
-              orderDate: "2026/02/02",                        // 訂單日期
-              paymentMethod: "Line Pay",                      // 付款方式
-              amount: 1314,                                   // 訂單金額
-              recipientName: $('#recipient-name').val(),      // 收件人姓名
-              recipientPhone: $('#recipient-phone').val(),    // 收件人電話
-              recipientAddress: $('#recipient-address').val() // 收件人地址
-            };
+              order_number: generateUniqueOrderNumber(),
+              order_date: new Date().toLocaleString('zh-TW', {
+                              year: 'numeric',
+                              month: '2-digit',
+                              day: '2-digit',
+                              hour: '2-digit',
+                              minute: '2-digit',
+                              hour12: false
+                            }),
+              order_status: 'pending',
+              buyer_name: $('#buyer-name').val(),
+              buyer_email: $('#buyer-email').val(),
+              buyer_phone: $('#buyer-phone').val(),
+              recipient_name: $('#recipient-name').val(),
+              recipient_email: $('#recipient-email').val(),
+              recipient_phone: $('#recipient-phone').val(),
+              recipient_address: $('#recipient-address').val(),
+              payment_method: 'line_pay',
+              payment_status: 'unpaid',
+              total_amount: parseFloat(sessionStorage.getItem('orderTotal')) || 0,
+              shipping_fee: 60,
+              discount_amount: 0
+            }
+
+            const cartItems = cart.map(item => ({
+              datacode: item.datacode,
+              name: item.feature,       // 商品名稱
+              price: item.price,        // 商品價格
+              quantity: item.purchaseQty // 購買數量
+            }));
+
+            const { order } = await createOrder(orderData, cartItems);
 
             $.ajax({
               url: 'https://flask-two-topaz.vercel.app/sendmessage',
               type: 'POST',
               contentType: 'application/json',
-              data: JSON.stringify(orderData),
+              data: JSON.stringify({
+                userId: "U9f44bf9ba0f448f57ca9d6431d8453d5",
+                orderId: order.order_number,
+                orderDate: new Date().toLocaleDateString('zh-TW'),
+                paymentMethod: "Line Pay",
+                amount: "$" + order.total_amount,
+                recipientName: order.recipient_name,
+                recipientPhone: order.recipient_phone,
+                recipientAddress: order.recipient_address
+              }),
               success: function(result) {
                   alert('✅ 訊息已成功發送到 LINE！');
                   console.log('LINE 回應:', result);

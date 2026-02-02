@@ -1,4 +1,4 @@
-import {createProduct, renderNewProducts, renderHotProducts, renderAllProducts, getProductList, renderBackendProduct, syncUpdateDatabase, checkUser, logoutUser} from './modules/product.js';
+import {createProduct, renderNewProducts, renderHotProducts, renderAllProducts, getProductList, renderBackendProduct, syncUpdateDatabase, renderOrder, checkUser, logoutUser} from './modules/product.js';
 
 /**
   * 關鍵字搜尋後台管理商品
@@ -146,6 +146,8 @@ function FilterkeyWord_all_table() {
             getPagination(`#mirror-table`);
             $('#maxRows').trigger('change');
         });
+
+        renderOrder();
 
         $('.logout-btn').click(logoutUser);
 

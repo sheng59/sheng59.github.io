@@ -509,6 +509,102 @@ const renderPayList = function(cart = []) {
 	`);
 }
 
+const createOrder = async function(orderData, cartItems) {
+	try {
+		const {  data: order, error } = await mysupabase
+		.from('orders')
+		.insert(orderData)
+		.select()
+		.single();
+
+		console.log(orderData);
+
+		if (error) {
+			console.error('❌ 訂單插入失敗:', error);
+			throw new Error(error.message);
+		}
+
+		console.log('✅ 訂單建立成功，ID:', order.id);
+
+		const orderItems = cartItems.map(item => ({
+			order_id: order.id,
+			product_id: item.datacode,
+			product_name: item.name,
+			unit_price: item.price,
+			quantity: item.quantity,
+			subtotal: item.price * item.quantity
+		}));
+
+		/*const orderItems = cartItems.map(item => ({
+			order_id: order.id,
+			product_id: '123',
+			product_name: '456',
+			unit_price: '789',
+			quantity: '1',
+			subtotal: '23'
+		}));*/
+
+		console.log(orderItems);
+
+		const {  data: items, error: itemsError } = await mysupabase
+			.from('order_items')
+			.insert(orderItems)
+			.select();
+
+		if (itemsError) {
+			console.error('❌ 商品項目插入失敗:', itemsError);
+			throw new Error(itemsError.message);
+		}
+
+		console.log('✅ 商品項目建立成功，數量:', items.length);
+		return { order, items };
+
+	} catch(err) {
+		console.error('❌ 發生錯誤:', err);
+    	throw err;
+	}
+}
+
+const renderOrder = async function() {
+	const $tbody = $('#order-table tbody');
+	$tbody.empty();
+
+	let { data, error } = await mysupabase
+		.from('orders')
+		.select('*')
+		//.order("id", { ascending: true })
+
+	data.forEach(row => {
+		console.log(row);
+		$tbody.append(`
+			<tr>
+				<td>${row.order_number}</td>
+				<td>${row.order_date}</td>
+				<td>${row.order_status}</td>
+				<td>${row.buyer_name}</td>
+				<td>${row.buyer_email}</td>
+				<td>${row.buyer_phone}</td>
+				<td>${row.recipient_name}</td>
+				<td>${row.recipient_email}</td>
+				<td>${row.recipient_phone}</td>
+				<td>${row.recipient_address}</td>
+				<td>${row.payment_method}</td>
+				<td>${row.payment_status}</td>
+				<td>${row.total_amount}</td>
+				<td>${row.shipping_fee}</td>
+				<td>${row.discount_amount}</td>
+				<td>${row.notes}</td>
+				<td>${row.created_at}</td>
+				<td>${row.updated_at}</td>
+				<td>
+					<span>123</span>
+					<span>33</span>
+				</td>
+			</tr>
+		`);
+	});
+}
+
 const syncUpdateDatabase = function() {
 	$(".tab-content table").each(async function () {
 		const $table = $(this);
@@ -636,6 +732,8 @@ export {
 	logoutUser,
 	initLogin,
 	getProductList,
+	createOrder,
+	renderOrder,
 	getPaymentAmt, 
 	setPaymentAmt
 };

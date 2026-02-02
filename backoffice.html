@@ -22,6 +22,53 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+        <style>
+            /* 表格容器樣式 */
+            .table-container {
+                height: 400px;  /* 固定高度 */
+                overflow-y: auto;  /* 垂直滾動 */
+                overflow-x: auto;  /* 水平滾動（如果需要） */
+            }
+
+            /* 表格樣式 */
+            #order-table {
+                min-width: 1800px;  /* 確保表格足夠寬 */
+                white-space: nowrap;  /* 🔑 不換行 */
+            }
+
+            /* 表頭固定 */
+            #order-table thead {
+                position: sticky;
+                top: 0;
+                z-index: 10;
+                background-color: #f8f9fa;
+            }
+
+            /* 儲存格樣式 */
+            #order-table td,
+            #order-table th {
+                padding: 0.75rem;  /* 增加內距 */
+                vertical-align: middle;
+                white-space: nowrap;  /* 🔑 不換行 */
+                overflow: hidden;
+            }
+
+            /* 表格邊框樣式 */
+            #order-table {
+                border-collapse: separate;
+                border-spacing: 0;
+                table-layout: auto;
+            }
+
+            #order-table thead th {
+                border-bottom: 2px solid #dee2e6;
+            }
+
+            #order-table tbody td {
+                border-bottom: 1px solid #dee2e6;
+            }
+        </style>
     </head>
     <body>
     
@@ -36,6 +83,7 @@
                 <div class="backend-tabs">
                     <ul class="nav nav-tabs">
                         <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#product">商品管理</a></li>
+                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#order">訂單管理</a></li>
                         <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#analysis">分析</a></li>
                         <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#settings">設定</a></li>
                     </ul>
@@ -190,6 +238,45 @@
 
                         <button class="add-new btn btn-primary">新增資料</button>
 
+                    </div>
+
+                </div>
+                <div class="tab-pane fade" id="order">
+                    <div class="tab-header border-bottom d-flex justify-content-start align-items-center p-2">
+                        <div class="tab-title">
+                            <h5 class="m-0">訂單列表</h5>
+                        </div>
+                    </div>
+
+                    <div class="table-container" style="height: 400px; overflow-y: auto;">
+                        <table class="table table-bordered text-center align-middle m-0" id="order-table">
+                            <thead>
+                                <tr>
+                                    <th>訂單編號</th>
+                                    <th>訂單日期</th>
+                                    <th>訂單狀態</th>
+                                    <th>訂購人姓名</th>
+                                    <th>訂購人信箱</th>
+                                    <th>訂購人電話</th>
+                                    <th>收件人姓名</th>
+                                    <th>收件人信箱</th>
+                                    <th>收件人手機</th>
+                                    <th>收件人地址</th>
+                                    <th>付款方式</th>
+                                    <th>付款狀態</th>
+                                    <th>結帳金額</th>
+                                    <th>運費</th>
+                                    <th>折扣</th>
+                                    <th>備註</th>
+                                    <th>建立時間</th>
+                                    <th>更新時間</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
                     </div>
 
                 </div>

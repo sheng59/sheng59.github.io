@@ -670,7 +670,7 @@ h1,h2,h3,h4,h5,h6 {
 .product-item .btn-link {
   text-decoration: none;
 }
-.product-item #quantity {
+#table-desktop #quantity {
   height: auto;
   width: 28px;
   text-align: center;
@@ -678,7 +678,7 @@ h1,h2,h3,h4,h5,h6 {
   margin: 0;
   padding: 0;
 }
-.product-item .btn-number {
+#table-desktop .btn-number {
   width: 26px;
   height: 26px;
   line-height: 1;
@@ -690,14 +690,12 @@ h1,h2,h3,h4,h5,h6 {
   padding: 0;
 }
 
-.product-item input {
+#table-desktop input {
   border-color: #F7F7F7;
 }
 
 /* cart */
-.cart .product-qty {
-  min-width: 130px;
-}
+
 
 /* floating image */
 .image-float {
