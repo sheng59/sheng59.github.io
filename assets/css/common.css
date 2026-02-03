@@ -694,7 +694,19 @@ h1,h2,h3,h4,h5,h6 {
   border-color: #F7F7F7;
 }
 
-/* cart */
+.order-div.enable {
+  background-color: var(--bs-primary);
+  color: white;
+  padding: 4px 32px;
+  border-radius: 5px;
+}
+
+.order-div.disable {
+  background-color: var(--bs-secondary);
+  color: white;
+  padding: 4px 32px;
+  border-radius: 5px;
+}
 
 
 /* floating image */

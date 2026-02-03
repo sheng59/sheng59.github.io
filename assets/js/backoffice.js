@@ -197,9 +197,9 @@ function FilterkeyWord_all_table() {
             let index = $tbody.find('tr').length + 1;
             let inputId = "picture-" + currentTableId + "-" + index;
 
-            let act_div =   '<a class="add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>' + 
-                            '<a class="edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>' + 
-                            '<a class="delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>';
+            let act_div =   '<a class="add" data-toggle="tooltip"><svg width="28" height="28" viewBox="0 0 28 28"><use xlink:href="#add"></use></svg></a>' + 
+                            '<a class="edit" data-toggle="tooltip"><svg width="28" height="28" viewBox="0 0 28 28"><use xlink:href="#edit"></use></svg></a>' + 
+                            '<a class="delete" data-toggle="tooltip"><svg width="28" height="28" viewBox="0 0 28 28"><use xlink:href="#delete"></use></svg></a>';
 
             let img_div = `
                             <label class="picture" for="${inputId}" + tabIndex="0">

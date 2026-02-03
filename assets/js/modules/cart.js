@@ -70,7 +70,6 @@ const renderCart = function() {
         badge.style.display = 'none';
     } else {
         cart.forEach(item => {
-        const cate_cn = categoryMap_cn[item.category];
         //totalQty += item.purchaseQty;
         totalQty += 1;
 
@@ -79,12 +78,12 @@ const renderCart = function() {
 
         li.innerHTML = `
             <div>
-                <div class="my-2">${item.feature}樣式${cate_cn}</div>
+                <div class="my-2">${item.feature}樣式${item.category_cn}</div>
                 <div class="my-2 text-danger fw-bold">
                     $${item.price}
                 </div>
             </div>
-            <span class="my-2 delete-item" data-key="${item.category}-${item.id}" data-code="${item.datacode}" style="cursor: pointer;">
+            <span class="my-2 delete-item" data-key="${item.category_en}-${item.id}" data-code="${item.datacode}" style="cursor: pointer;">
                 <svg width="24" height="24" viewBox="0 0 24 24">
                     <use xlink:href="#delete"></use>
                 </svg>

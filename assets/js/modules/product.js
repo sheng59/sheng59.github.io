@@ -1,5 +1,8 @@
-const supabaseUrl = "https://yvemaakibhtbtohrenjc.supabase.co";
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl2ZW1hYWtpYmh0YnRvaHJlbmpjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU4NTg2NjMsImV4cCI6MjA3MTQzNDY2M30.gjCwUCG2onNhKjaHLPRrAz6NpWOq6TcdXsdcF3deYVY"; 
+//const supabaseUrl = "https://yvemaakibhtbtohrenjc.supabase.co";
+//const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl2ZW1hYWtpYmh0YnRvaHJlbmpjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU4NTg2NjMsImV4cCI6MjA3MTQzNDY2M30.gjCwUCG2onNhKjaHLPRrAz6NpWOq6TcdXsdcF3deYVY"; 
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_ANON_KEY;
+
 const mysupabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
 const bucketName = "cloud";
@@ -119,7 +122,8 @@ const createProduct = async function() {
 		data.forEach(product => {
 			const item = {
 				...product,
-				category: t,
+				category_cn: tb_cn[t],
+				category_en: t, 
 				datacode: generateProductCode(t, product.id),
 				stockQty: product.quantity,
 			};
@@ -149,14 +153,14 @@ const renderNewProducts = function(device='desktop') {
 					$('.new-swiper .swiper-wrapper').append(`
 						<div class="product-item swiper-slide">
 							<figure>
-								<a title="${product.feature}樣式${tb_cn[product.category]}"><img src="${img_url}${product.category}/${product.name}.png" class="tab-image"></a>
+								<a title="${product.feature}樣式${product.category_cn}"><img src="${img_url}${product.category_en}/${product.name}.png" class="tab-image"></a>
 							</figure>
 							<div class="p-2 d-flex justify-content-between align-items-center">
 								<div>
-									<span class="feature">${product.feature}樣式${tb_cn[product.category]}</span>
+									<span class="feature">${product.feature}樣式${product.category_cn}</span>
 									<span class="price">$${product.price}</span>
 								</div>
-								<a class="pe-2 nav-link align-self-end add-to-cart" data-key="${product.category}-${product.id}" data-code="${product.datacode}" style="cursor: pointer;">
+								<a class="pe-2 nav-link align-self-end add-to-cart" data-key="${product.category_en}-${product.id}" data-code="${product.datacode}" style="cursor: pointer;">
 									<svg width="24" height="24"><use xlink:href="#add-cart"></use></svg>
 								</a>
 							</div>
@@ -168,14 +172,14 @@ const renderNewProducts = function(device='desktop') {
 						<div class="col">
 							<div class="product-item">
 								<figure>
-									<a title="${product.feature}樣式${tb_cn[product.category]}"><img src="${img_url}${product.category}/${product.name}.png" class="tab-image"></a>
+									<a title="${product.feature}樣式${product.category_cn}"><img src="${img_url}${product.category_en}/${product.name}.png" class="tab-image"></a>
 								</figure>
 								<div class="p-2 d-flex justify-content-between align-items-center">
 									<div>
-										<span class="feature">${product.feature}樣式${tb_cn[product.category]}</span>
+										<span class="feature">${product.feature}樣式${product.category_cn}</span>
 										<span class="price">$${product.price}</span>
 									</div>
-									<a class="pe-2 nav-link align-self-end add-to-cart" data-key="${product.category}-${product.id}" data-code="${product.datacode}" style="cursor: pointer;">
+									<a class="pe-2 nav-link align-self-end add-to-cart" data-key="${product.category_en}-${product.id}" data-code="${product.datacode}" style="cursor: pointer;">
 										<svg width="24" height="24"><use xlink:href="#add-cart"></use></svg>
 									</a>
 								</div>
@@ -210,14 +214,14 @@ const renderHotProducts = function(device='desktop') {
 				$('.hot-swiper .swiper-wrapper').append(`
 					<div class="product-item swiper-slide">
 						<figure>
-							<a title="${product.feature}樣式${tb_cn[product.category]}"><img src="${img_url}${product.category}/${product.name}.png" class="tab-image"></a>
+							<a title="${product.feature}樣式${product.category_cn}"><img src="${img_url}${product.category_en}/${product.name}.png" class="tab-image"></a>
 						</figure>
 						<div class="p-2 d-flex justify-content-between align-items-center">
 							<div>
-								<span class="feature">${product.feature}樣式${tb_cn[product.category]}</span>
+								<span class="feature">${product.feature}樣式${product.category_cn}</span>
 								<span class="price">$${product.price}</span>
 							</div>
-							<a class="pe-2 nav-link align-self-end add-to-cart" data-key="${product.category}-${product.id}" data-code="${product.datacode}" style="cursor: pointer;">
+							<a class="pe-2 nav-link align-self-end add-to-cart" data-key="${product.category_en}-${product.id}" data-code="${product.datacode}" style="cursor: pointer;">
 								<svg width="24" height="24"><use xlink:href="#add-cart"></use></svg>
 							</a>
 						</div>
@@ -229,14 +233,14 @@ const renderHotProducts = function(device='desktop') {
 					<div class="col">
 						<div class="product-item">
 							<figure>
-								<a title="${product.feature}樣式${tb_cn[product.category]}"><img src="${img_url}${product.category}/${product.name}.png" class="tab-image"></a>
+								<a title="${product.feature}樣式${product.category_cn}"><img src="${img_url}${product.category_en}/${product.name}.png" class="tab-image"></a>
 							</figure>
 							<div class="p-2 d-flex justify-content-between align-items-center">
 								<div>
-									<span class="feature">${product.feature}樣式${tb_cn[product.category]}</span>
+									<span class="feature">${product.feature}樣式${product.category_cn}</span>
 									<span class="price">$${product.price}</span>
 								</div>
-								<a class="pe-2 nav-link align-self-end add-to-cart" data-key="${product.category}-${product.id}" data-code="${product.datacode}" style="cursor: pointer;">
+								<a class="pe-2 nav-link align-self-end add-to-cart" data-key="${product.category_en}-${product.id}" data-code="${product.datacode}" style="cursor: pointer;">
 									<svg width="24" height="24"><use xlink:href="#add-cart"></use></svg>
 								</a>
 							</div>
@@ -270,19 +274,19 @@ const renderAllProducts = function() {
                 if (product.jarr === true && product.hot === true)
                     badge = '<span class="badge bg-danger position-absolute m-2">NEW</span>';
 
-                $(`#nav-${product.category} .product-grid`).append(`
+                $(`#nav-${product.category_en} .product-grid`).append(`
                     <div class="col p-xl-3">
                         <div class="product-item">
                             ${badge}
                             <figure>
-                                <a title="${product.feature}樣式${tb_cn[product.category]}"><img src="${img_url}${t}/${product.name}.png" class="tab-image"></a>
+                                <a title="${product.feature}樣式${product.category_cn}"><img src="${img_url}${product.category_en}/${product.name}.png" class="tab-image"></a>
                             </figure>
                             <div class="p-2 d-flex justify-content-between align-items-center">
                                 <div>
-                                    <span class="feature">${product.feature}樣式${tb_cn[product.category]}</span>
+                                    <span class="feature">${product.feature}樣式${product.category_cn}</span>
                                     <span class="price">$${product.price}</span>
                                 </div>
-                                <a class="pe-2 nav-link align-self-end add-to-cart" data-key="${product.category}-${product.id}" data-code="${product.datacode}" style="cursor: pointer;">
+                                <a class="pe-2 nav-link align-self-end add-to-cart" data-key="${product.category_en}-${product.id}" data-code="${product.datacode}" style="cursor: pointer;">
                                     <svg width="24" height="24"><use xlink:href="#add-cart"></use></svg>
                                 </a>
                             </div>
@@ -324,14 +328,14 @@ const renderSearchProducts = function(keyword) {
                         <div class="product-item">
                             ${badge}
                             <figure>
-                                <a title="${product.feature}樣式${tb_cn[product.category]}"><img src="${img_url}${t}/${product.name}.png" class="tab-image"></a>
+                                <a title="${product.feature}樣式${product.category_cn}"><img src="${img_url}${product.category_en}/${product.name}.png" class="tab-image"></a>
                             </figure>
                             <div class="p-2 d-flex justify-content-between align-items-center">
                                 <div>
-                                    <span class="feature">${product.feature}樣式${tb_cn[product.category]}</span>
+                                    <span class="feature">${product.feature}樣式${product.category_cn}</span>
                                     <span class="price">$${product.price}</span>
                                 </div>
-                                <a class="pe-2 nav-link align-self-end add-to-cart" data-key="${product.category}-${product.id}" data-code="${product.datacode}" style="cursor: pointer;">
+                                <a class="pe-2 nav-link align-self-end add-to-cart" data-key="${product.category_en}-${product.id}" data-code="${product.datacode}" style="cursor: pointer;">
                                     <svg width="24" height="24"><use xlink:href="#add-cart"></use></svg>
                                 </a>
                             </div>
@@ -370,9 +374,9 @@ const renderBackendProduct = function() {
                                 '<input type="file" class="picture-input" id="' + inputId + '" disabled>';
 
                 // 操作按鈕
-                const act_div = '<a class="add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>' + 
-                                '<a class="edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>' + 
-                                '<a class="delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>';
+                const act_div =  	'<a class="add" data-toggle="tooltip"><svg width="28" height="28" viewBox="0 0 28 28"><use xlink:href="#add"></use></svg></a>' + 
+                            	 	'<a class="edit" data-toggle="tooltip"><svg width="28" height="28" viewBox="0 0 28 28"><use xlink:href="#edit"></use></svg></a>' + 
+                            		'<a class="delete" data-toggle="tooltip"><svg width="28" height="28" viewBox="0 0 28 28"><use xlink:href="#delete"></use></svg></a>';
 
                 // 建立表格列
                 const tr = `<tr data-file-path="${filePath}" data-image-url="${url}">
@@ -410,15 +414,16 @@ const renderOrdertList = function(device = 'desktop', cart = []) {
 			`);
 		} else {
 			cart.forEach(c => {
+				console.log(c);
 				$tbody.append(`
 					<tr>
 						<td>
-							<img src="${img_url}${c.category}/${c.name}.png" class="img-fluid" style="max-width: 150px; height: auto;">
+							<img src="${img_url}${c.category_en}/${c.name}.png" class="img-fluid" style="max-width: 150px; height: auto;">
 						</td>
-						<td>${c.feature}樣式${tb_cn[c.category]}</td>
+						<td>${c.feature}樣式${c.category_cn}</td>
 						<td>$${c.price}</td>
 						<td>
-							<select class="form-select w-25 mx-auto select-quantity" data-key="${c.category}-${c.id}" data-code="${c.datacode}" style="min-width: 60px; background-color: transparent;">
+							<select class="form-select w-25 mx-auto select-quantity" data-key="${c.category_en}-${c.id}" data-code="${c.datacode}" style="min-width: 60px; background-color: transparent;">
 								<option value="1" ${c.purchaseQty == 1 ? 'selected' : ''}>1</option>
 								<option value="2" ${c.purchaseQty == 2 ? 'selected' : ''}>2</option>
 								<option value="3" ${c.purchaseQty == 3 ? 'selected' : ''}>3</option>
@@ -426,7 +431,7 @@ const renderOrdertList = function(device = 'desktop', cart = []) {
 						</td>
 						<td>$${c.price*c.purchaseQty}</td>
 						<td>
-							<span style="cursor: pointer;" class="delete-shop-item" data-key="${c.category}-${c.id}" data-code="${c.datacode}">
+							<span style="cursor: pointer;" class="delete-shop-item" data-key="${c.category_en}-${c.id}" data-code="${c.datacode}">
 								<svg width="24" height="24" viewBox="0 0 24 24"><use xlink:href="#delete"></use>
 								</svg>
 							</span>
@@ -453,12 +458,12 @@ const renderOrdertList = function(device = 'desktop', cart = []) {
 				$tbody.append(`
 					<tr>
 						<td>
-							<img src="${img_url}${c.category}/${c.name}.png" class="img-fluid" style="min-width: 100px; max-width: 150px; width: 100%;">
+							<img src="${img_url}${c.category_en}/${c.name}.png" class="img-fluid" style="min-width: 100px; max-width: 150px; width: 100%;">
 						</td>
-						<td class="text-start align-top">${c.feature}樣式${tb_cn[c.category]}</td>
+						<td class="text-start align-top">${c.feature}樣式${c.category_cn}</td>
 						<td>
 							<div>
-							<select class="form-select w-25 mx-auto select-quantity" data-key="${c.category}-${c.id}" data-code="${c.datacode}" style="min-width: 60px; background-color: transparent;">
+							<select class="form-select w-25 mx-auto select-quantity" data-key="${c.category_en}-${c.id}" data-code="${c.datacode}" style="min-width: 60px; background-color: transparent;">
 								<option value="1" ${c.purchaseQty == 1 ? 'selected' : ''}>1</option>
 								<option value="2" ${c.purchaseQty == 2 ? 'selected' : ''}>2</option>
 								<option value="3" ${c.purchaseQty == 3 ? 'selected' : ''}>3</option>
@@ -466,7 +471,7 @@ const renderOrdertList = function(device = 'desktop', cart = []) {
 							</div>
 							<div>$${c.price*c.purchaseQty}</div>
 							<div>
-							<span style="cursor: pointer;" class="delete-shop-item" data-key="${c.category}-${c.id}" data-code="${c.datacode}">
+							<span style="cursor: pointer;" class="delete-shop-item" data-key="${c.category_en}-${c.id}" data-code="${c.datacode}">
 								<svg width="24" height="24" viewBox="0 0 24 24"><use xlink:href="#delete"></use>
 								</svg>
 							</span>
@@ -489,7 +494,7 @@ const renderPayList = function(cart = []) {
 	cart.forEach(c => {
 		$tbody.append(`
 			<tr>
-				<td class="text-start">${c.feature}樣式${tb_cn[c.category]}</td>
+				<td class="text-start">${c.feature}樣式${c.category_cn}</td>
 				<td>$${c.price}</td>
 				<td>${c.purchaseQty}</td>
 				<td>$${c.price * c.purchaseQty}</td>
@@ -544,8 +549,6 @@ const createOrder = async function(orderData, cartItems) {
 			subtotal: '23'
 		}));*/
 
-		console.log(orderItems);
-
 		const {  data: items, error: itemsError } = await mysupabase
 			.from('order_items')
 			.insert(orderItems)
@@ -575,21 +578,42 @@ const renderOrder = async function() {
 		//.order("id", { ascending: true })
 
 	data.forEach(row => {
-		console.log(row);
+		let os_div, pm_div, ps_div;
+
+		let act_div =   '<a class="add" data-toggle="tooltip"><svg width="28" height="28" viewBox="0 0 28 28"><use xlink:href="#add"></use></svg></a>' + 
+						'<a class="edit" data-toggle="tooltip"><svg width="28" height="28" viewBox="0 0 28 28"><use xlink:href="#edit"></use></svg></a>' + 
+						'<a class="delete" data-toggle="tooltip"><svg width="28" height="28" viewBox="0 0 28 28"><use xlink:href="#delete"></use></svg></a>';
+
+		if (row.order_status === 'pending')
+			os_div = '<div class="order-div enable">下單</div>';
+		else if (row.order_status === 'cancelled')
+			os_div = '<div class="order-div disbale">棄單</div>';
+
+		if (row.payment_method === 'Line Pay')
+			pm_div = '<div class="order-div enable">Line Pay</div>';
+
+		if (row.payment_status === 'unpaid')
+			ps_div = '<div class="order-div enable">未付款</div>';
+
+
 		$tbody.append(`
 			<tr>
 				<td>${row.order_number}</td>
 				<td>${row.order_date}</td>
-				<td>${row.order_status}</td>
-				<td>${row.buyer_name}</td>
-				<td>${row.buyer_email}</td>
-				<td>${row.buyer_phone}</td>
-				<td>${row.recipient_name}</td>
-				<td>${row.recipient_email}</td>
-				<td>${row.recipient_phone}</td>
-				<td>${row.recipient_address}</td>
-				<td>${row.payment_method}</td>
-				<td>${row.payment_status}</td>
+				<td class="text-start align-top">
+					<div>${row.buyer_name}</div>
+					<div>${row.buyer_email}</div>
+					<div>${row.buyer_phone}</div>
+				</td>
+				<td class="text-start align-top">
+					<div>${row.recipient_name}</div>
+					<div>${row.recipient_email}</div>
+					<div>${row.recipient_phone}</div>
+					<div>${row.recipient_address}</div>
+				</td>
+				<td>${os_div}</td>
+				<td>${pm_div}</td>
+				<td>${ps_div}</td>
 				<td>${row.total_amount}</td>
 				<td>${row.shipping_fee}</td>
 				<td>${row.discount_amount}</td>
@@ -597,8 +621,7 @@ const renderOrder = async function() {
 				<td>${row.created_at}</td>
 				<td>${row.updated_at}</td>
 				<td>
-					<span>123</span>
-					<span>33</span>
+					${act_div}
 				</td>
 			</tr>
 		`);
