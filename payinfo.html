@@ -183,7 +183,7 @@
 
             </div>
 
-            <div class="bg-white p-4 border mb-3">
+            <div class="bg-white p-4 border mb-3 payment-section">
               <h5 class="mb-4 pb-2 border-bottom">選擇付款方式</h5>
 
               <div class="row row-cols-4">
@@ -200,22 +200,25 @@
 
             </div>
 
-            <div class="bg-white p-4 border mb-3">
+            <div class="bg-white p-4 border mb-3 shipping-section">
               <h5 class="mb-4 pb-2 border-bottom">選擇運送方式</h5>
 
               <div class="row row-cols-4">
                 <div class="col">
-                  <div class="paytype" data-value="Line Pay">超商取貨</div>
+                  <div class="paytype" data-value="1">超商取貨</div>
                 </div>
                 <div class="col">
-                  <div class="paytype" data-value="aaaa">攤位取貨</div>
+                  <div class="paytype" data-value="2">攤位取貨</div>
                 </div>
                 <div class="col">
-                  <div class="paytype" data-value="cash">送給別人</div>
+                  <div class="paytype" data-value="3">送給別人</div>
                 </div>
               </div>
 
             </div>
+
+            <input type="hidden" id="selected-payment-method" value="">
+            <input type="hidden" id="selected-shipping-method" value="">
 
           </div>
 
@@ -341,13 +344,30 @@
 
           renderPayList(cart);
 
-          $('.paytype').on('click', function() {
-            $('.paytype').removeClass('choosed');
+          $('.payment-section .paytype').on('click', function() {
+            $('.payment-section .paytype').removeClass('choosed');
+        
+            // 添加 .choosed 到點擊的元素
             $(this).addClass('choosed');
+            
+            // 儲存選擇的值
+            const value = $(this).data('value');
+            $('#selected-payment-method').val(value);
+            console.log('✅ 付款方式:', value);
+          });
 
-            const val = $(this).data('value');
-            console.log(val);
-          })
+          $('.shipping-section .paytype').on('click', function() {
+            // 移除同區域所有 .choosed 類別
+            $('.shipping-section .paytype').removeClass('choosed');
+            
+            // 添加 .choosed 到點擊的元素
+            $(this).addClass('choosed');
+            
+            // 儲存選擇的值
+            const value = $(this).data('value');
+            $('#selected-shipping-method').val(value);
+            console.log('✅ 運送方式:', value);
+          });
 
           $('#is-same-buyer').on('change', function(e){
             const isChecked = $(this).prop('checked');
@@ -399,6 +419,20 @@
               return false;
             }
 
+            const selectedPayment = $('#selected-payment-method').val();
+            const selectedShipping = $('#selected-shipping-method').val();
+            console.log(selectedPayment);
+            
+            if (!selectedPayment) {
+                alert('請選擇付款方式！');
+                return;
+            }
+            
+            if (!selectedShipping) {
+                alert('請選擇運送方式！');
+                return;
+            }
+
             const nowtime = new Date().toLocaleString('zh-TW', {
                               year: 'numeric',
                               month: '2-digit',
@@ -419,7 +453,7 @@
               recipient_email: $('#recipient-email').val(),
               recipient_phone: $('#recipient-phone').val(),
               recipient_address: $('#recipient-address').val(),
-              payment_method: 'Line Pay',
+              payment_method: selectedPayment,
               payment_status: 'unpaid',
               total_amount: parseFloat(sessionStorage.getItem('orderTotal')) || 0,
               shipping_fee: 60,
@@ -429,51 +463,54 @@
               updated_at: nowtime
             }
 
-            const cartItems = cart.map(item => ({
-              datacode: item.datacode,
-              name: item.feature + item.category_cn,       // 商品名稱
-              price: item.price,        // 商品價格
-              quantity: item.purchaseQty // 購買數量
+            const orderItems = cart.map(item => ({
+              order_id: "TEMP",  // 前端隨便填，後端會覆蓋
+              product_id: item.datacode,
+              product_name: `${item.feature}樣式${item.category_cn}`,
+              unit_price: item.price,
+              quantity: item.purchaseQty,
+              subtotal: item.price * item.purchaseQty,
+              created_at: nowtime
             }));
-            console.log(cart);
 
-            const { order, items } = await createOrder(orderData, cartItems);
-            console.log(items);
-            const itemsList = items.map(item =>
-              `• ${item.product_name} x ${item.quantity}`
+            const itemsList = cart.map(item => 
+              `• ${item.feature}樣式${item.category_cn} x ${item.purchaseQty} = $${item.price * item.purchaseQty}`
             ).join('\n');
 
-            $.ajax({
-              url: 'https://flask-two-topaz.vercel.app/sendmessage',
-              //url: 'http://127.0.0.1:3000/sendmessage',
-              type: 'POST',
-              contentType: 'application/json',
-              data: JSON.stringify({
-                userId: "U9f44bf9ba0f448f57ca9d6431d8453d5",
-                message: [
-                            `訂單編號: ${order.order_number}`,
-                            `訂單日期: ${order.order_date}`,
-                            `付款方式: ${order.payment_method}`,
-                            `訂單金額: $${order.total_amount}`,
-                            `收件資料: ${order.recipient_name}`,
-                            `               ${order.recipient_phone}`,
-                            `               ${order.recipient_address}`,
-                            `購買商品:`,
-                            itemsList
+            const orderMessage = [
+                  `🎉 訂單成立通知`,
+                  ``,
+                  `📦 訂單編號: ${orderData.order_number}`,
+                  `📅 訂單日期: ${orderData.order_date}`,
+                  `💳 付款方式: ${orderData.payment_method}`,
+                  `💰 訂單金額: $${orderData.total_amount}`,
+                  ``,
+                  `📍 收件資料`,
+                  `${orderData.recipient_name}`,
+                  `${orderData.recipient_phone}`,
+                  `${orderData.recipient_address}`,
+                  ``,
+                  `🛍️ 購買商品`,
+                  itemsList,
+                  ``,
+                  `💵 總計: $${orderData.total_amount + orderData.shipping_fee - orderData.discount_amount}`
+              ].join('\n').trim();
 
-                        ].join('\n').trim()
-              }),
-              success: function(result) {
-                  alert('✅ 訊息已成功發送到 LINE！');
-                  console.log('LINE 回應:', result);
-              },
-              error: function(xhr, status, error) {
-                  const errorMsg = xhr.responseJSON?.error || xhr.responseJSON?.message || '發送失敗';
-                  alert(`❌ ${errorMsg}`);
-                  console.error('錯誤:', error);
+            try {
+              const result = await createOrder(orderData, orderItems, orderMessage);
+              
+              if (result.success) {
+                  alert(`✅ 訂單建立成功！\n訂單編號: ${orderData.order_number}`);
+                  
+                  // 清空購物車並跳轉
+                  //localStorage.removeItem('cart');
+                  //window.location.href = 'order-success.html';
               }
-            });
-            
+                
+            } catch (error) {
+                console.error('建立訂單失敗:', error);
+                alert('建立訂單失敗，請稍後再試');
+            }       
           });
         });
       })(jQuery);

@@ -1,10 +1,7 @@
-//const supabaseUrl = "https://yvemaakibhtbtohrenjc.supabase.co";
-//const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl2ZW1hYWtpYmh0YnRvaHJlbmpjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU4NTg2NjMsImV4cCI6MjA3MTQzNDY2M30.gjCwUCG2onNhKjaHLPRrAz6NpWOq6TcdXsdcF3deYVY"; 
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_ANON_KEY;
+const API_BASE_URL = 'sheng59-github-io.vercel.app';
+//const API_BASE_URL = 'http://127.0.0.1:3000';
 
-const mysupabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-
+const supabaseUrl = "https://yvemaakibhtbtohrenjc.supabase.co";
 const bucketName = "cloud";
 const img_url = `${supabaseUrl}/storage/v1/object/public/${bucketName}/`;
 
@@ -39,17 +36,58 @@ function generateProductCode(category, id) {
 	return `${prefix}${codeNumber}`;
 }
 
+const saveToken = (token) => {
+    localStorage.setItem('auth_token', token);
+};
+
+const getToken = () => {
+    return localStorage.getItem('auth_token');
+};
+
+const clearToken = () => {
+    localStorage.removeItem('auth_token');
+};
+
 /**
   * 檢查使用者是否登入
   */
 const checkUser = async function() {
-	const { data: { user } } = await mysupabase.auth.getUser();
-	if (user) {
-	    console.log("目前登入的使用者:", user.email);
-	} else {
-	    alert("尚未登入，請先登入！");
-	    window.location.href = "login.html";
-	}
+	try {
+        const token = getToken();
+        
+        if (!token) {
+            alert("尚未登入，請先登入！");
+            window.location.href = "login.html";
+            return false;
+        }
+        
+        const response = await fetch(`${API_BASE_URL}/api/auth/check`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        
+        const result = await response.json();
+
+		console.log(result);
+        
+        if (result.logged_in) {
+            console.log("目前登入的使用者:", result.data?.email);
+            return true;
+        } else {
+            clearToken();
+            alert("登入狀態已過期，請重新登入！");
+            window.location.href = "login.html";
+            return false;
+        }
+        
+    } catch (error) {
+        console.error('檢查登入狀態失敗:', error);
+        clearToken();
+        alert("登入狀態檢查失敗，請重新登入！");
+        window.location.href = "login.html";
+        return false;
+    }
 }
 
 /**
@@ -57,81 +95,163 @@ const checkUser = async function() {
   */
 
 const logoutUser = async function() {
-	const { error } = await mysupabase.auth.signOut();
-	if (error) {
-		alert("登出失敗: " + error.message);
-	} else {
-		alert("已登出");
-		window.location.href = "login.html"; // 登出後跳回登入頁
-	}
+	try {
+        const token = getToken();
+        
+        if (!token) {
+            alert("尚未登入");
+            return;
+        }
+        
+        const response = await fetch(`${API_BASE_URL}/api/auth/logout`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            clearToken();
+            alert("已登出");
+            window.location.href = "login.html";
+        } else {
+            alert("登出失敗: " + result.error);
+        }
+        
+    } catch (error) {
+        console.error('登出失敗:', error);
+        alert("登出失敗: " + error.message);
+    }
 }
 
 /**
   * 初始化登入功能
   */
 const initLogin = function(formId = "loginForm") {
-	document.addEventListener("DOMContentLoaded", () => {
-		const form = document.getElementById(formId);
-		if (!form) {
-		  console.error(`找不到 #${formId} 元素`);
-		  return;
-		}
+    document.addEventListener("DOMContentLoaded", async () => {
+        
+        // ✅ 檢查是否已登入
+        const token = getToken();
+        if (token) {
+            console.log('🔄 檢測到登入狀態，正在驗證...');
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/auth/check`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                const result = await response.json();
+                
+                if (result.logged_in) {
+                    // ✅ 已登入，直接跳轉
+                    console.log('✅ 您已登入，正在跳轉至後台...');
+                    alert('您已登入，正在跳轉至後台...');
+                    window.location.href = "backoffice.html";
+                    return; // 阻止後續代碼執行
+                } else {
+                    // Token 無效，清除並繼續顯示登入頁
+                    clearToken();
+                    console.log('⚠️ Token 無效，請重新登入');
+                }
+            } catch (error) {
+                console.error('❌ 驗證登入狀態失敗:', error);
+                clearToken();
+            }
+        }
+        
+        // 👇 以下為原有的登入表單邏輯
+        const form = document.getElementById(formId);
+        if (!form) {
+            console.error(`找不到 #${formId} 元素`);
+            return;
+        }
 
-		form.addEventListener("submit", async (e) => {
-		  e.preventDefault();
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
 
-		  const email = document.getElementById("email").value.trim();
-		  const password = document.getElementById("password").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
 
-		  const { data, error } = await mysupabase.auth.signInWithPassword({
-			email,
-			password,
-		  });
+            if (!email || !password) {
+                alert("請輸入電子郵件和密碼");
+                return;
+            }
 
-		  if (error) {
-			alert("登入失敗：" + error.message);
-			console.error("登入錯誤：", error);
-			return;
-		  }
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
 
-		  alert("登入成功！");
-		  console.log("Session:", data.session);
-		  window.location.href = "backoffice.html";
-		});
-	});
+                const result = await response.json();
+
+                if (!response.ok) {
+                    alert("登入失敗：" + result.error);
+                    console.error("登入錯誤：", result);
+                    return;
+                }
+
+                // 儲存 token
+                saveToken(result.session.access_token);
+                
+                alert("登入成功！");
+                console.log("使用者:", result.user);
+                window.location.href = "backoffice.html";
+                
+            } catch (error) {
+                console.error('登入請求失敗:', error);
+                alert("登入失敗: " + error.message);
+            }
+        });
+    });
 }
 
 const createProduct = async function() {
-	productList = {};
-
-	for (const t of tb_en) {
-		let { data, error } = await mysupabase
-		.from(t)
-		.select('*')
-		.order("id", { ascending: true })
-
-		if (error) {
-			console.error(`[${t}] 讀取資料失敗:`, error);
-			continue;
-		}
-		
-		if (!productList[t]) {
-            productList[t] = [];
+	try {
+        const response = await fetch(`${API_BASE_URL}/api/products`);
+        const result = await response.json();
+        
+        if (!result.success) {
+            throw new Error(result.error || '取得商品失敗');
         }
+        
+        // 轉換後端資料格式為前端需要的格式
+        productList = {};
+        for (const [category, products] of Object.entries(result.allProducts)) {
+            if (!productList[category]) {
+                productList[category] = [];
+            }
+            
+            products.forEach(product => {
+                const item = {
+                    ...product,
+                    category_cn: tb_cn[category] || category,
+                    category_en: category,
+                    datacode: generateProductCode(category, product.id),
+                    stockQty: product.quantity || 0
+                };
+				delete item.quantity;
 
-		data.forEach(product => {
-			const item = {
-				...product,
-				category_cn: tb_cn[t],
-				category_en: t, 
-				datacode: generateProductCode(t, product.id),
-				stockQty: product.quantity,
-			};
-			delete item.quantity;
-
-			productList[t].push(item);
-		});
-	}
+                productList[category].push(item);
+            });
+        }
+        
+        console.log('✅ 商品資料加載完成', productList);
+        return true;
+        
+    } catch (error) {
+        console.error('❌ 取得商品失敗:', error);
+        alert(`載入商品失敗: ${error.message}`);
+        return false;
+    }
 }
 
 /**
@@ -265,7 +385,7 @@ const renderAllProducts = function() {
 			.forEach(product => {
                 var badge = '';
 
-                if (product.quantity === 0)
+                if (product.stockQty === 0)
                     badge = '<span class="badge bg-danger position-absolute m-2">0</span>';
                 if (product.jarr === true)
                     badge = '<span class="badge bg-danger position-absolute m-2">NEW</span>';
@@ -314,7 +434,7 @@ const renderSearchProducts = function(keyword) {
 
                 var badge = '';
         
-                if (product.quantity === 0)
+                if (product.stockQty === 0)
                     badge = '<span class="badge bg-danger position-absolute m-2">0</span>';
                 if (product.jarr === true)
                     badge = '<span class="badge bg-danger position-absolute m-2">NEW</span>';
@@ -514,58 +634,40 @@ const renderPayList = function(cart = []) {
 	`);
 }
 
-const createOrder = async function(orderData, cartItems) {
+const createOrder = async function(orderData, orderItems, orderMessage) {
 	try {
-		const {  data: order, error } = await mysupabase
-		.from('orders')
-		.insert(orderData)
-		.select()
-		.single();
+        // 準備後端需要的格式
+        const payload = {
+            orderData: orderData,
+            orderItems: orderItems,
+			orderMessage: orderMessage
+        };
 
-		console.log(orderData);
+		console.log(payload);
 
-		if (error) {
-			console.error('❌ 訂單插入失敗:', error);
-			throw new Error(error.message);
-		}
+        // 呼叫後端 API
+        const response = await fetch(`${API_BASE_URL}/api/orders`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        });
 
-		console.log('✅ 訂單建立成功，ID:', order.id);
-
-		const orderItems = cartItems.map(item => ({
-			order_id: order.id,
-			product_id: item.datacode,
-			product_name: item.name,
-			unit_price: item.price,
-			quantity: item.quantity,
-			subtotal: item.price * item.quantity
-		}));
-
-		/*const orderItems = cartItems.map(item => ({
-			order_id: order.id,
-			product_id: '123',
-			product_name: '456',
-			unit_price: '789',
-			quantity: '1',
-			subtotal: '23'
-		}));*/
-
-		const {  data: items, error: itemsError } = await mysupabase
-			.from('order_items')
-			.insert(orderItems)
-			.select();
-
-		if (itemsError) {
-			console.error('❌ 商品項目插入失敗:', itemsError);
-			throw new Error(itemsError.message);
-		}
-
-		console.log('✅ 商品項目建立成功，數量:', items.length);
-		return { order, items };
-
-	} catch(err) {
-		console.error('❌ 發生錯誤:', err);
-    	throw err;
-	}
+        const result = await response.json();
+        
+        if (!response.ok) {
+            throw new Error(result.error || result.details || '建立訂單失敗');
+        }
+        
+        console.log('✅ 訂單建立成功', result);
+        return result;
+        
+    } catch (error) {
+        console.error('❌ 建立訂單失敗:', error);
+        alert(`建立訂單失敗: ${error.message}`);
+        throw error;
+    }
 }
 
 const renderOrder = async function() {
@@ -628,109 +730,73 @@ const renderOrder = async function() {
 	});
 }
 
-const syncUpdateDatabase = function() {
-	$(".tab-content table").each(async function () {
-		const $table = $(this);
-		const tableName = $table.attr('id').split('-')[0];
-		const folder = $table.attr('id').split('-')[0];
-
-		const keepFiles = [];
-		const uploadTasks = [];
-		const upsertTasks = [];
-
-		$table.find("tbody tr").each((rowIndex, tr) => {
-			const $row = $(tr);
-			const input = tr.querySelector(".picture-input");
-
-			const id = rowIndex + 1;
-			const name = $row.find("td:eq(0)").text().trim();
-			const feature = $row.find("td:eq(2)").text().trim();
-			var price = $row.find("td:eq(3)").text().trim();
-			var quantity = $row.find("td:eq(4)").text().trim();
-			var jarr = $row.find("td:eq(5)").find("input[type=checkbox]").prop("checked");
-			var hot   = $row.find("td:eq(6)").find("input[type=checkbox]").prop("checked");
-
-			price = price === "" ? null : parseInt(price, 10);
-			quantity = quantity === "" ? null : parseInt(quantity, 10);
-
-			const existingPath = $row.attr("data-file-path");
-			if (existingPath) keepFiles.push(existingPath);
-
-			if (input && input.files && input.files.length > 0) {
-				const file = input.files[0];
-				const filePath = `${folder}/${name}.png`;
-				uploadTasks.push({ file, filePath, $row });
-				keepFiles.push(filePath);
-				$row.attr("data-file-path", filePath); // 更新 path
-			} else if (existingPath) {
-				// 使用者沒選新圖 → 保留原路徑
-				keepFiles.push(existingPath);
-			}
-
-			// 收集表格的資料
-			upsertTasks.push({ id, name, feature, price, quantity, jarr, hot });
-		});
-
-		// === 2️⃣ 刪除 Supabase Storage 多餘的檔案 ===
-		const { data: listData, error: listError } = await mysupabase.storage.from(bucketName).list(folder);
-
-		if (!listError && listData) {
-			const deleteFiles = listData
-				.map(f => `${folder}/${f.name}`)
-				.filter(path => !keepFiles.includes(path) && !path.endsWith(".emptyFolderPlaceholder"));
-
-			if (deleteFiles.length > 0) {
-				const { error: delError } = await mysupabase.storage.from(bucketName).remove(deleteFiles);
-				if (delError) console.error(`[${folder}] 刪除失敗:`, delError);
-				else console.log(`[${folder}] 已刪除檔案:`, deleteFiles);
-			}
-		}
-
-		// === 3️⃣ 上傳新圖片 ===
-		for (const task of uploadTasks) {
-			// 先刪掉舊的，再上傳，保證更新
-			await mysupabase.storage.from(bucketName).remove([task.filePath]);
-
-			const { error } = await mysupabase.storage.from(bucketName).upload(
-				task.filePath,
-				task.file,
-				{ upsert: true }
-			);
-
-			if (!error) {
-				const { data: urlData } = mysupabase.storage.from(bucketName).getPublicUrl(task.filePath);
-				//const bustUrl = `${urlData.publicUrl}?t=${Date.now()}`;
-
-				// 更新這一列的資料屬性 & 圖片 src
-				task.$row.attr("data-image-url", urlData.publicUrl);
-				task.$row.find("img.picture-image").attr("src", urlData.publicUrl);
-
-				// 鎖定 input
-				task.$row.find(".picture-input").prop("disabled", true);
-
-				console.log(`[${folder}] 圖片已上傳並更新顯示:`, task.filePath);
-			} else {
-				console.error(`[${folder}] 上傳失敗:`, task.filePath, error);
-			}
-		}
-
-		// === 4️⃣ 同步資料庫 (刪除多餘 + upsert) ===
-		const { data: serverRows, error: fetchError } = await mysupabase.from(tableName).select("id");
-		if (!fetchError && serverRows) {
-			const serverIds = serverRows.map(r => r.id);
-			const localIds = upsertTasks.map(r => r.id);
-			const deleteIds = serverIds.filter(id => !localIds.includes(id));
-			if (deleteIds.length > 0) {
-				const { error: delError } = await mysupabase.from(tableName).delete().in("id", deleteIds);
-				if (delError) console.error(`[${tableName}] 刪除失敗:`, delError);
-				else console.log(`[${tableName}] 已刪除多餘資料:`, deleteIds);
-			}
-		}
-
-		const { error: dbError } = await mysupabase.from(tableName).upsert(upsertTasks, { onConflict: ["id"] });
-		if (dbError) console.error(`[${tableName}] DB 更新失敗:`, dbError);
-		else console.log(`[${tableName}] DB 已同步`);
-	});
+const syncUpdateDatabase = async function() {
+	try {
+        // 1. 收集所有表格資料
+        const tablesData = [];
+        
+        $(".tab-content table").each(function() {
+            const $table = $(this);
+            const tableName = $table.attr('id').split('-')[0];
+            const folder = tableName;
+            
+            const rows = [];
+            
+            $table.find("tbody tr").each((rowIndex, tr) => {
+                const $row = $(tr);
+                const id = rowIndex + 1;
+                const name = $row.find("td:eq(0)").text().trim();
+                const feature = $row.find("td:eq(2)").text().trim();
+                const price = $row.find("td:eq(3)").text().trim();
+                const quantity = $row.find("td:eq(4)").text().trim();
+                const jarr = $row.find("td:eq(5) input[type=checkbox]").prop("checked");
+                const hot = $row.find("td:eq(6) input[type=checkbox]").prop("checked");
+                
+                rows.push({
+                    id: id,
+                    name: name,
+                    feature: feature,
+                    price: price === "" ? null : parseInt(price, 10),
+                    quantity: quantity === "" ? null : parseInt(quantity, 10),
+                    jarr: jarr,
+                    hot: hot
+                });
+            });
+            
+            tablesData.push({
+                tableName: tableName,
+                folder: folder,
+                rows: rows
+            });
+        });
+        
+        // 2. 發送到後端同步
+        const response = await fetch(`${API_BASE_URL}/api/sync`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ tables: tablesData })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            alert("✅ 資料庫同步成功！");
+            console.log("同步結果:", result.results);
+        } else {
+            const errors = result.results.filter(r => !r.success);
+            alert(`⚠️ 部分同步失敗:\n${errors.map(e => `${e.table}: ${e.error}`).join('\n')}`);
+            console.error("同步錯誤:", errors);
+        }
+        
+        return result;
+        
+    } catch (error) {
+        console.error('同步失敗:', error);
+        alert("同步失敗: " + error.message);
+        throw error;
+    }
 }
 
 const getProductList = () => productList;
